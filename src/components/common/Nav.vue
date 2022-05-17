@@ -7,12 +7,12 @@
           <a href="#menu" class="menuToggle"><span>Menu</span></a>
           <div id="menu">
             <ul>
-              <li><a href="index.html">Home</a></li>
-              <li><a href="generic.html">Generic</a></li>
-              <li><a href="elements.html">Elements</a></li>
-              <li><a href="noticeList.html">Notice</a></li>
-              <li><a href="signUp.html">Sign Up</a></li>
-              <li><a href="login.html">Log In</a></li>
+              <li><a href="#">Home</a></li>
+              <li><a href="#">Generic</a></li>
+              <li><a href="#">Elements</a></li>
+              <li><a href="#">Notice</a></li>
+              <li><a href="#">Sign Up</a></li>
+              <li><a href="#">Log In</a></li>
             </ul>
           </div>
         </li>
