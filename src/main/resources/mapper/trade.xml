@@ -1,0 +1,47 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.happyhouse.model.mapper.TradeMapper">
+    <select id="getSiList" resultType="string">
+        select distinct sidoName
+        from baseaddress
+    </select>
+
+    <select id="getGuList" parameterType="string" resultType="string">
+        select distinct gugunName
+        from baseaddress
+        where sidoName = #{si}
+    </select>
+
+    <select id="getDongList" parameterType="string" resultType="string">
+        select distinct dongName
+        from baseaddress
+        where gugunName = #{gu}
+    </select>
+
+    <select id="getList" parameterType="map" resultType="tradeInfo">
+        select hi.aptName, hi.dongName, hi.buildYear, hd.area, hd.floor, hd.dealAmount, hd.type
+        from houseinfo hi
+                 join housedeal hd
+                      on hi.aptCode = hd.aptCode
+        where hi.dongCode in
+              (select dongCode from baseaddress where sidoName = #{si} and gugunName = #{gu} and dongName = #{dong})
+    </select>
+
+    <select id="searchByApt" parameterType="string" resultType="tradeInfo">
+        select hi.aptName, hi.dongName, hi.buildYear, hd.area, hd.floor, hd.dealAmount, hd.type
+        from houseinfo hi
+                 join housedeal hd
+                      on hi.aptCode = hd.aptCode
+        where hi.aptName like concat('%', #{aptName}, '%')
+    </select>
+
+    <select id="searchByDong" parameterType="string" resultType="tradeInfo">
+        select hi.aptName, hi.dongName, hi.buildYear, hd.area, hd.floor, hd.dealAmount, hd.type
+        from houseinfo hi
+                 join housedeal hd
+                      on hi.aptCode = hd.aptCode
+        where hi.dongCode in
+              (select dongCode from baseaddress where dongName like concat('%', #{dongName}, '%'))
+    </select>
+</mapper>
