@@ -32,7 +32,7 @@
                answer.createDate   answer_createDate,
                answer.questionId   answer_questionId
         from question
-                 join answer on question.questionId = answer.questionId
+                 left join answer on question.questionId = answer.questionId
         where answerId = #{answerId};
     </select>
 
@@ -55,7 +55,7 @@
                answer.createDate   answer_createDate,
                answer.questionId   answer_questionId
         from question
-                 join answer
+                 left join answer
                            on question.questionId = answer.questionId
         where question.questionId = #{questionId};
     </select>
