@@ -6,6 +6,12 @@
         select * from question;
     </select>
 
+    <select id="getDetail" resultType="question">
+        select *
+        from question
+        where questionId = #{questionId};
+    </select>
+
     <insert id="register" parameterType="question">
         insert into question (title, content, author, createDate, status)
         values (#{title}, #{content}, #{author}, now(), #{status});

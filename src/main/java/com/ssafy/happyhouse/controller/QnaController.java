@@ -26,6 +26,16 @@ public class QnaController {
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
+    @GetMapping("/{questionId}")
+    public ResponseEntity<Question> getDetail(@PathVariable int questionId) {
+        Question question = qnaService.getDetail(questionId);
+        if (question != null) {
+            return new ResponseEntity<>(question, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @PostMapping
     public ResponseEntity<Void> register(@RequestBody Question question) {
         int result = qnaService.register(question);

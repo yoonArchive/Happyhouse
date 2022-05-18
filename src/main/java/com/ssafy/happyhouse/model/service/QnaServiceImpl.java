@@ -19,6 +19,11 @@ public class QnaServiceImpl implements QnaService {
     }
 
     @Override
+    public Question getDetail(int questionId) {
+        return qnaMapper.getDetail(questionId);
+    }
+
+    @Override
     public int register(Question question) {
         return qnaMapper.register(question);
     }

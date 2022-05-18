@@ -8,5 +8,7 @@ public interface QnaMapper {
 
     List<Question> getList();
 
+    Question getDetail(int questionId);
+
     int register(Question question);
 }
