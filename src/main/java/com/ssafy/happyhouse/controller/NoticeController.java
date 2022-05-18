@@ -36,7 +36,7 @@ public class NoticeController {
         }
     }
 
-    @GetMapping("{noticeId}")
+    @GetMapping("/{noticeId}")
     public ResponseEntity<Notice> getDetail(@PathVariable String noticeId) {
         Notice notice = noticeService.getDetail(noticeId);
         if (notice != null) {
@@ -46,7 +46,7 @@ public class NoticeController {
         }
     }
 
-    @PutMapping("{noticeId}")
+    @PutMapping(/"{noticeId}")
     public ResponseEntity<Void> update(@RequestBody Notice notice) {
         int result = noticeService.update(notice);
         if (result == 1) {
@@ -56,7 +56,7 @@ public class NoticeController {
         }
     }
 
-    @DeleteMapping("{noticeId}")
+    @DeleteMapping("/{noticeId}")
     public ResponseEntity<Void> delete(@PathVariable String noticeId) {
         int result = noticeService.delete(noticeId);
         if (result == 1) {
