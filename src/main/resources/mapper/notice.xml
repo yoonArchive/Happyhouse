@@ -13,8 +13,8 @@
     </select>
 
     <insert id="regist" parameterType="notice">
-        insert into notice (title, content, author, createDate)
-        values (#{title}, #{content}, #{author}, now());
+        insert into notice (title, content, author, category, createDate)
+        values (#{title}, #{content}, #{author}, #{category},now());
     </insert>
 
     <update id="update" parameterType="notice">
