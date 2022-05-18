@@ -7,4 +7,6 @@ import java.util.List;
 public interface QnaService {
 
     List<Question> getList();
+
+    int register(Question question);
 }

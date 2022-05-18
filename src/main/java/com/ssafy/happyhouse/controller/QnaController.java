@@ -25,4 +25,14 @@ public class QnaController {
         }
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
+
+    @PostMapping
+    public ResponseEntity<Void> register(@RequestBody Question question) {
+        int result = qnaService.register(question);
+        if (result == 1) {
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        } else {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

@@ -17,4 +17,9 @@ public class QnaServiceImpl implements QnaService {
     public List<Question> getList() {
         return qnaMapper.getList();
     }
+
+    @Override
+    public int register(Question question) {
+        return qnaMapper.register(question);
+    }
 }

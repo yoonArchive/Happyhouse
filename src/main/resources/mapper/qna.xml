@@ -5,4 +5,9 @@
     <select id="getList" resultType="question">
         select * from question;
     </select>
+
+    <insert id="register" parameterType="question">
+        insert into question (title, content, author, createDate, status)
+        values (#{title}, #{content}, #{author}, now(), #{status});
+    </insert>
 </mapper>
