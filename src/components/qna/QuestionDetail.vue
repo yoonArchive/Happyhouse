@@ -122,13 +122,13 @@ export default {
     goModifyQuestion() {
       this.$router.push({
         name: "QuestionModify",
-        params: this.$route.params.questionId,
+        params: this.questionForm.questionId,
       });
     },
     deleteQuestion() {
       if (confirm("정말 삭제하시겠습니까?")) {
         this.$axios
-          .delete(`/qnas/${this.$route.params.questionId}`)
+          .delete(`/qnas/question/${this.questionForm.questionId}`)
           .then(() => {
             alert("삭제되었습니다.");
             this.goList();
@@ -144,7 +144,6 @@ export default {
         author: this.commentForm.author,
         content: this.commentForm.content,
       };
-      console.log(commentInfo);
       this.$axios
         .post("/qnas/answer", commentInfo)
         .then(() => {

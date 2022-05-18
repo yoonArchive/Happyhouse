@@ -1,7 +1,23 @@
 <template>
   <header id="header">
     <h1><router-link to="/">Happy House</router-link></h1>
-    <nav id="nav">
+    <nav class="navbar navbar-expand-sm bg-dark">
+      <ul class="navbar-nav">
+        <li class="nav-item active mr-2">
+          <router-link to="/notice">공지사항</router-link>
+        </li>
+        <li class="nav-item mr-2">
+          <router-link to="/qna">Q&A</router-link>
+        </li>
+        <li class="nav-item mr-2">
+          <router-link to="/user/login">Login</router-link>
+        </li>
+        <li class="nav-item mr-2">
+          <router-link to="/user/signup">SignUp</router-link>
+        </li>
+      </ul>
+    </nav>
+    <!--<nav id="nav">
       <ul>
         <li class="special">
           <a href="#menu" class="menuToggle" @click="showMenu"
@@ -19,7 +35,7 @@
           </div>
         </li>
       </ul>
-    </nav>
+    </nav>-->
   </header>
 </template>
 

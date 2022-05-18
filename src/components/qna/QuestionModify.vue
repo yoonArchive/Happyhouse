@@ -93,7 +93,7 @@ export default {
       };
       console.log(questionInfo);
       this.$axios
-        .put(`/qnas/qusetion/${this.updateForm.questionId}`, questionInfo)
+        .put(`/qnas/question/${this.updateForm.questionId}`, questionInfo)
         .then(() => {
           alert("수정 성공");
           this.goDetail();

@@ -14,7 +14,7 @@ const routes = [
     path: "/about",
     name: "about",
     component: () =>
-      import(/* webpackChunkName: "about" */ "../views/AboutView.vue"),
+      import(/* webpackChunkName: "about" */ "@/views/AboutView.vue"),
   },
   // 회원 관리
   {
