@@ -1,4 +1,6 @@
-package com.ssafy.happyhouse.domain;
+package com.ssafy.happyhouse.common;
+
+import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum NoticeCategory {
 
@@ -6,6 +8,7 @@ public enum NoticeCategory {
     BUG("버그 개선"),
     NOTICE("알림");
 
+    @JsonValue
     private String message;
 
     NoticeCategory(String message) {

@@ -1,4 +1,4 @@
-package com.ssafy.happyhouse.domain;
+package com.ssafy.happyhouse.common;
 
 public enum AnswerStatus {
 
