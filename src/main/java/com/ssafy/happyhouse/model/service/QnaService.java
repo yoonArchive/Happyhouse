@@ -22,4 +22,12 @@ public interface QnaService {
     int updateAnswer(Answer answer);
 
     int deleteAnswer(int answerId);
+
+    List<Question> searchAll(String keyword);
+
+    List<Question> searchByTitle(String keyword);
+
+    List<Question> searchByContent(String keyword);
+
+    List<Question> searchByAuthor(String keyword);
 }

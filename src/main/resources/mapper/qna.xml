@@ -85,4 +85,22 @@
         from question
         where title like concat('%', #{keyword}, '%') or content like concat('%', #{keyword}, '%') or author like concat('%', #{keyword}, '%');
     </select>
+
+    <select id="searchByTitle" resultType="question">
+        select *
+        from question
+        where title like concat('%', #{keyword}, '%');
+    </select>
+
+    <select id="searchByContent" resultType="question">
+        select *
+        from question
+        where content like concat('%', #{keyword}, '%');
+    </select>
+
+    <select id="searchByAuthor" resultType="question">
+        select *
+        from question
+        where author like concat('%', #{keyword}, '%');
+    </select>
 </mapper>

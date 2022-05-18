@@ -1,6 +1,6 @@
 package com.ssafy.happyhouse.model.service;
 
-import com.ssafy.happyhouse.domain.AnswerStatus;
+import com.ssafy.happyhouse.common.AnswerStatus;
 import com.ssafy.happyhouse.dto.Answer;
 import com.ssafy.happyhouse.dto.Question;
 import com.ssafy.happyhouse.model.mapper.QnaMapper;
@@ -65,5 +65,25 @@ public class QnaServiceImpl implements QnaService {
             qnaMapper.updateAnswerStatus(question);
         }
         return result;
+    }
+
+    @Override
+    public List<Question> searchAll(String keyword) {
+        return qnaMapper.searchAll(keyword);
+    }
+
+    @Override
+    public List<Question> searchByTitle(String keyword) {
+        return qnaMapper.searchByTitle(keyword);
+    }
+
+    @Override
+    public List<Question> searchByContent(String keyword) {
+        return qnaMapper.searchByContent(keyword);
+    }
+
+    @Override
+    public List<Question> searchByAuthor(String keyword) {
+        return qnaMapper.searchByAuthor(keyword);
     }
 }

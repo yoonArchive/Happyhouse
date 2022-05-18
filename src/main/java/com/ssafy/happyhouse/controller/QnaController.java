@@ -18,13 +18,9 @@ public class QnaController {
     @Autowired
     private QnaService qnaService;
 
-    @GetMapping()
+    @GetMapping
     public ResponseEntity<List<Question>> getList() {
-        List<Question> list = qnaService.getList();
-        for (Question question : list) {
-            System.out.println(question);
-        }
-        return new ResponseEntity<>(list, HttpStatus.OK);
+        return new ResponseEntity<>(qnaService.getList(), HttpStatus.OK);
     }
 
     @GetMapping("/{questionId}")
@@ -92,6 +88,46 @@ public class QnaController {
         int result = qnaService.deleteAnswer(answerId);
         if (result == 1) {
             return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<Question>> searchAll(@RequestParam String keyword) {
+        List<Question> questions = qnaService.searchAll(keyword);
+        if (questions != null) {
+            return new ResponseEntity<>(questions, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/search/title")
+    public ResponseEntity<List<Question>> searchByTitle(@RequestParam String keyword) {
+        List<Question> questions = qnaService.searchByTitle(keyword);
+        if (questions != null) {
+            return new ResponseEntity<>(questions, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/search/content")
+    public ResponseEntity<List<Question>> searchByContent(@RequestParam String keyword) {
+        List<Question> questions = qnaService.searchByContent(keyword);
+        if (questions != null) {
+            return new ResponseEntity<>(questions, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/search/author")
+    public ResponseEntity<List<Question>> searchByAuthor(@RequestParam String keyword) {
+        List<Question> questions = qnaService.searchByAuthor(keyword);
+        if (questions != null) {
+            return new ResponseEntity<>(questions, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
