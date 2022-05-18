@@ -16,4 +16,6 @@ public interface QnaMapper {
     int registerAnswer(Answer answer);
 
     int replyAnswer(Question question);
+
+    int updateQuestion(Question question);
 }

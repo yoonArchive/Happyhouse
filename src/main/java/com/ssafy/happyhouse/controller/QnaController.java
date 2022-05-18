@@ -56,4 +56,14 @@ public class QnaController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @PutMapping("/question/{questionId}")
+    public ResponseEntity<Void> updateQuestion(@RequestBody Question question) {
+        int result = qnaService.updateQuestion(question);
+        if (result == 1) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
