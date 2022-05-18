@@ -46,7 +46,7 @@ public class NoticeController {
         }
     }
 
-    @PutMapping(/"{noticeId}")
+    @PutMapping("/{noticeId}")
     public ResponseEntity<Void> update(@RequestBody Notice notice) {
         int result = noticeService.update(notice);
         if (result == 1) {
