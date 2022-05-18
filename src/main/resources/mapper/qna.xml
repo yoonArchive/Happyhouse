@@ -54,6 +54,12 @@
         where questionId = #{questionId};
     </update>
 
+    <update id="updateAnswer" parameterType="answer">
+        update answer
+        set content = #{content}
+        where answerId = #{answerId};
+    </update>
+
     <delete id="deleteQuestion">
         delete
         from question

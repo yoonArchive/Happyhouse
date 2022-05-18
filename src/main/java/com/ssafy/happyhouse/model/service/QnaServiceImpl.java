@@ -50,4 +50,9 @@ public class QnaServiceImpl implements QnaService {
     public int deleteQuestion(int questionId) {
         return qnaMapper.deleteQuestion(questionId);
     }
+
+    @Override
+    public int updateAnswer(Answer answer) {
+        return qnaMapper.updateAnswer(answer);
+    }
 }
