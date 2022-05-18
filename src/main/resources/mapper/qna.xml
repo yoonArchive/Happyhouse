@@ -18,6 +18,13 @@
         </collection>
     </resultMap>
 
+    <select id="getQuestion" resultMap="questions">
+        select *
+        from question
+                 join answer on question.questionId = answer.questionId
+        where answerId = #{answerId};
+    </select>
+
     <select id="getList" resultType="question">
         select *
         from question;
@@ -41,7 +48,7 @@
         values (#{content}, #{author}, now(), #{questionId});
     </insert>
 
-    <update id="replyAnswer" parameterType="question">
+    <update id="updateAnswerStatus" parameterType="question">
         update question
         set status = #{status}
         where questionId = #{questionId};
@@ -65,4 +72,11 @@
         from question
         where questionId = #{questionId};
     </delete>
+
+    <delete id="deleteAnswer">
+        delete
+        from answer
+        where answerId = #{answerId};
+    </delete>
+
 </mapper>

@@ -20,4 +20,6 @@ public interface QnaService {
     int deleteQuestion(int questionId);
 
     int updateAnswer(Answer answer);
+
+    int deleteAnswer(int answerId);
 }

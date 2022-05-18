@@ -15,11 +15,15 @@ public interface QnaMapper {
 
     int registerAnswer(Answer answer);
 
-    int replyAnswer(Question question);
+    int updateAnswerStatus(Question question);
 
     int updateQuestion(Question question);
 
     int deleteQuestion(int questionId);
 
     int updateAnswer(Answer answer);
+
+    int deleteAnswer(int answerId);
+
+    Question getQuestion(int answerId);
 }

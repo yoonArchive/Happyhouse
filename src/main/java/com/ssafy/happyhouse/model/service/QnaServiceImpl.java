@@ -37,7 +37,7 @@ public class QnaServiceImpl implements QnaService {
     public int registerAnswer(Answer answer) {
         Question question = qnaMapper.getDetail(answer.getQuestionId());
         question.setStatus(AnswerStatus.DONE);
-        qnaMapper.replyAnswer(question);
+        qnaMapper.updateAnswerStatus(question);
         return qnaMapper.registerAnswer(answer);
     }
 
@@ -54,5 +54,16 @@ public class QnaServiceImpl implements QnaService {
     @Override
     public int updateAnswer(Answer answer) {
         return qnaMapper.updateAnswer(answer);
+    }
+
+    @Override
+    public int deleteAnswer(int answerId) {
+        Question question = qnaMapper.getQuestion(answerId);
+        int result = qnaMapper.deleteAnswer(answerId);
+        if (question.getAnswers().size() == 1 && result == 1) {
+            question.setStatus(AnswerStatus.NOT_YET);
+            qnaMapper.updateAnswerStatus(question);
+        }
+        return result;
     }
 }
