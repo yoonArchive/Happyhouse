@@ -4,7 +4,9 @@
     <nav id="nav">
       <ul>
         <li class="special">
-          <a href="#menu" class="menuToggle"><span>Menu</span></a>
+          <a href="#menu" class="menuToggle" @click="showMenu"
+            ><span>Menu</span></a
+          >
           <div id="menu">
             <ul>
               <li><a href="#">Home</a></li>
@@ -22,7 +24,13 @@
 </template>
 
 <script>
-export default {};
+export default {
+  methods: {
+    showMenu() {
+      console.log("menu");
+    },
+  },
+};
 </script>
 
 <style></style>

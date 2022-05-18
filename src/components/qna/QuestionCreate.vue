@@ -1,8 +1,8 @@
 <template>
   <article id="main">
     <header>
-      <h2>Notice</h2>
-      <p>공지사항 등록</p>
+      <h2>Q&A</h2>
+      <p>문의 등록</p>
     </header>
     <section class="wrapper style5">
       <div class="inner">
@@ -18,14 +18,6 @@
                 v-model="registForm.title"
                 required
               />
-            </div>
-            <div class="col-12">
-              <select name="demo-category" id="demo-category">
-                <option value="">- Category -</option>
-                <option value="1">업데이트</option>
-                <option value="1">알림</option>
-                <option value="1">버그 개선</option>
-              </select>
             </div>
             <div class="col-12">
               <textarea
@@ -58,14 +50,14 @@
 
 <script>
 export default {
-  name: "NoticeCreate",
+  name: "QuestionCreate",
   data() {
     return {
       registForm: {
         title: "",
-        // category:"",
         content: "",
-        author: "admin", // 나중에 수정
+        author: "ssafy", // 나중에 수정
+        status: "NOT_YET",
       },
     };
   },
@@ -78,16 +70,18 @@ export default {
         !this.registForm.content &&
         ((msg = "내용을 입력해주세요"), (err = false));
       if (!err) alert(msg);
-      else this.registNotice();
+      else this.registQuestion();
     },
-    registNotice() {
-      let noticeInfo = {
+    registQuestion() {
+      let questionInfo = {
         title: this.registForm.title,
         content: this.registForm.content,
         author: this.registForm.author,
+        status: this.registForm.status,
       };
+      console.log(questionInfo);
       this.$axios
-        .post("/notice", noticeInfo)
+        .post("/qnas/question", questionInfo)
         .then(() => {
           alert("등록 성공");
           this.goList();
@@ -97,7 +91,7 @@ export default {
         });
     },
     goList() {
-      this.$router.push("/notice");
+      this.$router.push("/qna");
     },
   },
 };

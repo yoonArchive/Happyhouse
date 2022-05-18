@@ -58,7 +58,6 @@ const routes = [
   {
     path: "/notice",
     name: "Notice",
-    redirect: "NoticeList",
     component: () => import("@/views/NoticeView.vue"),
     children: [
       // 공지사항 목록
@@ -78,6 +77,38 @@ const routes = [
         path: ":noticeId",
         name: "NoticeDetail",
         component: () => import("@/components/notice/NoticeDetail.vue"),
+      },
+      // 공지사항 수정
+      {
+        path: "modify/:noticeId",
+        name: "NoticeModify",
+        component: () => import("@/components/notice/NoticeModify.vue"),
+      },
+    ],
+  },
+  // Q&A
+  {
+    path: "/qna",
+    name: "QnA",
+    component: () => import("@/views/QnAView.vue"),
+    children: [
+      // 질문 목록
+      {
+        path: "",
+        name: "QuestionList",
+        component: () => import("@/components/qna/QuestionList.vue"),
+      },
+      // 질문 등록
+      {
+        path: "create",
+        name: "QuestionCreate",
+        component: () => import("@/components/qna/QuestionCreate.vue"),
+      },
+      // 질문 상세보기
+      {
+        path: ":questionId",
+        name: "QuestionDetail",
+        component: () => import("@/components/qna/QuestionDetail.vue"),
       },
     ],
   },

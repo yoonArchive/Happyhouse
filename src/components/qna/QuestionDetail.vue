@@ -1,18 +1,17 @@
 <template>
   <article id="main">
     <header>
-      <h2>Notice</h2>
-      <p>공지사항 조회</p>
+      <h2>Q&A</h2>
+      <p>문의 조회</p>
     </header>
     <section class="wrapper style5">
       <div class="inner">
         <header>
-          <h2 class="s">[업데이트]</h2>
-          <h2>{{ notice.title }}</h2>
+          <h2>{{ question.title }}</h2>
         </header>
-        <p>{{ notice.author }} | {{ notice.createDate }}</p>
+        <p>{{ question.author }} | {{ question.createDate }}</p>
         <hr />
-        <pre>{{ notice.content }}</pre>
+        <pre>{{ question.content }}</pre>
         <div class="row gtr-uniform aln-center">
           <div></div>
           <div class="col-6">
@@ -22,7 +21,7 @@
                   type="button"
                   class="primary"
                   id="modifyBtn"
-                  @click="goModifyNotice"
+                  @click="goModifyQuestion"
                 >
                   수정
                 </button>
@@ -31,8 +30,8 @@
                 <button
                   type="button"
                   class="button"
-                  id="deleteNoticeBtn"
-                  @click="deleteNotice"
+                  id="deleteQuestionBtn"
+                  @click="deleteQuestion"
                 >
                   삭제
                 </button>
@@ -49,6 +48,8 @@
               </li>
             </ul>
           </div>
+          <div></div>
+          <Comment />
         </div>
       </div>
     </section>
@@ -56,30 +57,34 @@
 </template>
 
 <script>
+import Comment from "@/components/qna/Comment.vue";
 export default {
+  components: {
+    Comment,
+  },
   data() {
     return {
-      notice: {},
+      question: {},
     };
   },
   created() {
     this.$axios
-      .get(`/notice/${this.$route.params.noticeId}`)
+      .get(`/qnas/${this.$route.params.questionId}`)
       .then(({ data }) => {
-        this.notice = data;
+        this.question = data;
       });
   },
   methods: {
-    goModifyNotice() {
+    goModifyQuestion() {
       this.$router.push({
-        name: "NoticeModify",
-        params: this.$route.params.noticeId,
+        name: "QuestionModify",
+        params: this.$route.params.questionId,
       });
     },
-    deleteNotice() {
+    deleteQuestion() {
       if (confirm("정말 삭제하시겠습니까?")) {
         this.$axios
-          .delete(`/notice/${this.$route.params.noticeId}`)
+          .delete(`/qnas/${this.$route.params.questionId}`)
           .then(() => {
             alert("삭제되었습니다.");
             this.goList();
@@ -87,7 +92,7 @@ export default {
       }
     },
     goList() {
-      this.$router.push("/notice");
+      this.$router.push("/qna");
     },
   },
 };

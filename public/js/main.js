@@ -49,7 +49,7 @@
   // Menu.
   $("#menu")
     .append('<a href="#menu" class="close"></a>')
-    .appendTo($body)
+    .appendTo("body")
     .panel({
       delay: 500,
       hideOnClick: true,
@@ -57,7 +57,7 @@
       resetScroll: true,
       resetForms: true,
       side: "right",
-      target: $body,
+      target: "body",
       visibleClass: "is-menu-visible",
     });
 

@@ -1,8 +1,8 @@
 <template>
   <article id="main">
     <header>
-      <h2>Notice</h2>
-      <p>공지사항</p>
+      <h2>Q&A</h2>
+      <p>1:1 문의</p>
     </header>
     <section class="wrapper style5">
       <div class="inner">
@@ -11,25 +11,25 @@
           <table>
             <colgroup>
               <col style="width: 10%" />
-              <col style="width: 10%" />
               <col style="width: 45%" />
               <col style="width: 20%" />
               <col style="width: 15%" />
+              <col style="width: 10%" />
             </colgroup>
             <thead>
               <tr>
                 <th>번호</th>
-                <th>분류</th>
                 <th>제목</th>
                 <th>작성자</th>
                 <th>작성일</th>
+                <th>상태</th>
               </tr>
             </thead>
             <tbody>
-              <notice-list-item
-                v-for="notice in notices"
-                :key="notice.noticeId"
-                v-bind="notice"
+              <question-list-item
+                v-for="question in questions"
+                :key="question.questionId"
+                v-bind="question"
               />
             </tbody>
           </table>
@@ -46,7 +46,7 @@
             <button
               type="button"
               class="button small"
-              id="registNoticeBtn"
+              id="registQuestionBtn"
               @click="moveWrite"
               style="float: right"
             >
@@ -60,25 +60,25 @@
 </template>
 
 <script>
-import NoticeListItem from "@/components/notice/item/NoticeListItem.vue";
+import QuestionListItem from "@/components/qna/item/QuestionListItem.vue";
 export default {
-  name: "NoticeList",
+  name: "QuestionList",
   components: {
-    NoticeListItem,
+    QuestionListItem,
   },
   data() {
     return {
-      notices: [],
+      questions: [],
     };
   },
   created() {
-    this.$axios.get(`/notice/list/1`).then(({ data }) => {
-      this.notices = data;
+    this.$axios.get(`/qnas`).then(({ data }) => {
+      this.questions = data;
     });
   },
   methods: {
     moveWrite() {
-      this.$router.push({ name: "NoticeCreate" });
+      this.$router.push({ name: "QuestionCreate" });
     },
   },
 };
