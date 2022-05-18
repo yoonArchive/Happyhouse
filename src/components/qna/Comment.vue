@@ -1,7 +1,7 @@
 <template>
   <div class="col-12">
     <hr />
-    <div class="row">
+    <div>
       <textarea
         class="ta"
         name="comment"
@@ -9,7 +9,9 @@
         placeholder="Enter comment"
         rows="3"
       ></textarea>
-      <!-- <button type="button" class="button large" @click="goList">등록</button> -->
+    </div>
+    <div class="aln-right">
+      <button type="button" class="button small" @click="goList">등록</button>
     </div>
   </div>
 </template>

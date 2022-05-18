@@ -7,7 +7,7 @@
     <section class="wrapper style5">
       <div class="inner">
         <h4>Form</h4>
-        <form @submit.prevent="checkValue">
+        <form @submit.prevent="checkValue" @reset="reset">
           <div class="row gtr-uniform aln-center">
             <div class="col-12 col-12-xsmall">
               <input
@@ -92,6 +92,10 @@ export default {
     },
     goList() {
       this.$router.push("/qna");
+    },
+    reset() {
+      this.registForm.title = "";
+      this.registForm.content = "";
     },
   },
 };

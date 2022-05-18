@@ -20,7 +20,7 @@
               />
             </div>
             <div class="col-12">
-              <select name="demo-category" id="demo-category">
+              <select name="category" id="category" readonly>
                 <option value="">- Category -</option>
                 <option value="1">업데이트</option>
                 <option value="1">알림</option>
@@ -64,7 +64,7 @@ export default {
       updateForm: {
         noticeId: 0,
         title: "",
-        // category:"",
+        category: "",
         content: "",
         author: "", // 나중에 수정
         createDate: "",
@@ -94,6 +94,7 @@ export default {
       let noticeInfo = {
         noticeId: this.updateForm.noticeId,
         title: this.updateForm.title,
+        category: this.updateForm.category,
         content: this.updateForm.content,
         author: this.updateForm.author,
         createDate: this.updateForm.createDate,

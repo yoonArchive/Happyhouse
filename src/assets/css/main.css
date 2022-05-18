@@ -1963,7 +1963,7 @@ textarea.ta {
   padding: 0 1em;
   text-decoration: none;
   justify-content: center;
-  width: 80%;
+  width: 100%;
 }
 
 input[type="text"]:invalid,

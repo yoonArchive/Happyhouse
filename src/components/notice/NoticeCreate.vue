@@ -7,7 +7,7 @@
     <section class="wrapper style5">
       <div class="inner">
         <h4>Form</h4>
-        <form @submit.prevent="checkValue">
+        <form @submit.prevent="checkValue" @reset="reset">
           <div class="row gtr-uniform aln-center">
             <div class="col-12 col-12-xsmall">
               <input
@@ -20,11 +20,15 @@
               />
             </div>
             <div class="col-12">
-              <select name="demo-category" id="demo-category">
+              <select
+                name="category"
+                id="category"
+                v-model="registForm.category"
+              >
                 <option value="">- Category -</option>
-                <option value="1">업데이트</option>
-                <option value="1">알림</option>
-                <option value="1">버그 개선</option>
+                <option value="UPDATE">업데이트</option>
+                <option value="NOTICE">알림</option>
+                <option value="BUG">버그 개선</option>
               </select>
             </div>
             <div class="col-12">
@@ -63,7 +67,7 @@ export default {
     return {
       registForm: {
         title: "",
-        // category:"",
+        category: "",
         content: "",
         author: "admin", // 나중에 수정
       },
@@ -83,9 +87,11 @@ export default {
     registNotice() {
       let noticeInfo = {
         title: this.registForm.title,
+        category: this.registForm.category,
         content: this.registForm.content,
         author: this.registForm.author,
       };
+      console.log(noticeInfo);
       this.$axios
         .post("/notice", noticeInfo)
         .then(() => {
@@ -98,6 +104,10 @@ export default {
     },
     goList() {
       this.$router.push("/notice");
+    },
+    reset() {
+      this.registForm.title = "";
+      this.registForm.content = "";
     },
   },
 };

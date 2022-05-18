@@ -27,9 +27,10 @@
             </thead>
             <tbody>
               <notice-list-item
-                v-for="notice in notices"
+                v-for="(notice, index) in notices"
                 :key="notice.noticeId"
                 v-bind="notice"
+                :index="notices.length - index"
               />
             </tbody>
           </table>
@@ -73,6 +74,7 @@ export default {
   },
   created() {
     this.$axios.get(`/notice/list/1`).then(({ data }) => {
+      console.log(data[0].category);
       this.notices = data;
     });
   },
