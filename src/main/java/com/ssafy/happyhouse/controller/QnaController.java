@@ -1,5 +1,6 @@
 package com.ssafy.happyhouse.controller;
 
+import com.ssafy.happyhouse.dto.Answer;
 import com.ssafy.happyhouse.dto.Question;
 import com.ssafy.happyhouse.model.service.QnaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,11 +37,21 @@ public class QnaController {
         }
     }
 
-    @PostMapping
-    public ResponseEntity<Void> register(@RequestBody Question question) {
-        int result = qnaService.register(question);
+    @PostMapping("/question")
+    public ResponseEntity<Void> registerQuestion(@RequestBody Question question) {
+        int result = qnaService.registerQuestion(question);
         if (result == 1) {
             return new ResponseEntity<>(HttpStatus.CREATED);
+        } else {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping("/answer")
+    public ResponseEntity<Void> registerAnswer(@RequestBody Answer answer) {
+        int result = qnaService.registerAnswer(answer);
+        if (result == 1) {
+            return new ResponseEntity<>(HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

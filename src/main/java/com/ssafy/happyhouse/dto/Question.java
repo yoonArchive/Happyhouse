@@ -1,5 +1,6 @@
 package com.ssafy.happyhouse.dto;
 
+import com.ssafy.happyhouse.domain.AnswerStatus;
 import lombok.Data;
 
 import java.util.List;
@@ -11,7 +12,7 @@ public class Question {
     private String title;
     private String content;
     private String author;
-    private String status;
     private String createDate;
+    private AnswerStatus status;
     private List<Answer> answers;
 }
