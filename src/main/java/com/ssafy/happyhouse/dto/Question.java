@@ -1,6 +1,6 @@
 package com.ssafy.happyhouse.dto;
 
-import com.ssafy.happyhouse.domain.AnswerStatus;
+import com.ssafy.happyhouse.common.AnswerStatus;
 import lombok.Data;
 
 import java.util.List;
