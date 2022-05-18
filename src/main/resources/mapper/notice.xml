@@ -3,7 +3,7 @@
 
 <mapper namespace="com.ssafy.happyhouse.model.mapper.NoticeMapper">
     <select id="getList" resultType="notice">
-        select * from notice;
+        select * from notice order by createDate desc;
     </select>
 
     <select id="getDetail" resultType="notice">
