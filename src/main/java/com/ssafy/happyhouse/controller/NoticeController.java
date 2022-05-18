@@ -35,4 +35,34 @@ public class NoticeController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping("{noticeId}")
+    public ResponseEntity<Notice> getDetail(@PathVariable String noticeId) {
+        Notice notice = noticeService.getDetail(noticeId);
+        if (notice != null) {
+            return new ResponseEntity<>(notice, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PutMapping("{noticeId}")
+    public ResponseEntity<Void> update(@RequestBody Notice notice) {
+        int result = noticeService.update(notice);
+        if (result == 1) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @DeleteMapping("{noticeId}")
+    public ResponseEntity<Void> delete(@PathVariable String noticeId) {
+        int result = noticeService.delete(noticeId);
+        if (result == 1) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

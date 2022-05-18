@@ -22,4 +22,19 @@ public class NoticeServiceImpl implements NoticeService {
     public List<Notice> getList() {
         return noticeMapper.getList();
     }
+
+    @Override
+    public Notice getDetail(String noticeId) {
+        return noticeMapper.getDetail(noticeId);
+    }
+
+    @Override
+    public int update(Notice notice) {
+        return noticeMapper.update(notice);
+    }
+
+    @Override
+    public int delete(String noticeId) {
+        return noticeMapper.delete(noticeId);
+    }
 }
