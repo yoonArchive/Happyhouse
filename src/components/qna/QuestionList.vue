@@ -44,6 +44,7 @@
             <li><a href="#" class="page">9</a></li>
             <li><a href="#" class="page">10</a></li>
             <li><a href="#" class="button small">Next</a></li>
+
             <button
               type="button"
               class="button small"
@@ -54,6 +55,30 @@
               등록
             </button>
           </ul>
+
+          <div class="row aln-center">
+            <div class="col-7 col-12-xsmall">
+              <input
+                type="text"
+                name="search"
+                id="search"
+                v-model="searchKeyWord"
+                placeholder="작성자, 제목, 내용 검색"
+                style="float: right width: 60%  ;"
+              />
+            </div>
+            <div>
+              <button
+                type="button"
+                class="button small"
+                id="searchBtn"
+                @click="search"
+                style="float: right"
+              >
+                검색
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -69,7 +94,9 @@ export default {
   },
   data() {
     return {
+      searchKeyWord: "",
       questions: [],
+      //  searchedQuestions: [],
     };
   },
   created() {
@@ -80,6 +107,13 @@ export default {
   methods: {
     moveWrite() {
       this.$router.push({ name: "QuestionCreate" });
+    },
+    search() {
+      this.$axios
+        .get(`/qnas/search?keyword=${this.searchKeyWord}`)
+        .then(({ data }) => {
+          this.questions = data;
+        });
     },
   },
 };

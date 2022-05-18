@@ -65,7 +65,6 @@
             </button>
           </div>
         </div>
-
         <br /><br />
         <h4>{{ lengthMsg }}</h4>
         <ul class="alt">
@@ -151,6 +150,7 @@ export default {
         .then(() => {
           alert("등록 성공");
           this.comments.push(commentInfo);
+          location.reload();
         })
         .catch(() => {
           alert("등록 실패");
