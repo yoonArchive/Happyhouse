@@ -27,7 +27,7 @@
         select *
         from question
                  left join answer
-                     on question.questionId = answer.questionId
+                           on question.questionId = answer.questionId
         where question.questionId = #{questionId};
     </select>
 
@@ -43,7 +43,20 @@
 
     <update id="replyAnswer" parameterType="question">
         update question
-        set status=#{status}
+        set status = #{status}
         where questionId = #{questionId};
     </update>
+
+    <update id="updateQuestion" parameterType="question">
+        update question
+        set title = #{title},
+            content = #{content}
+        where questionId = #{questionId};
+    </update>
+
+    <delete id="deleteQuestion">
+        delete
+        from question
+        where questionId = #{questionId};
+    </delete>
 </mapper>

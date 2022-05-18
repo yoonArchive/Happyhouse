@@ -16,4 +16,6 @@ public interface QnaService {
     int registerAnswer(Answer answer);
 
     int updateQuestion(Question question);
+
+    int deleteQuestion(int questionId);
 }

@@ -66,4 +66,14 @@ public class QnaController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @DeleteMapping("/question/{questionId}")
+    public ResponseEntity<Void> deleteQuestion(@PathVariable int questionId) {
+        int result = qnaService.deleteQuestion(questionId);
+        if (result == 1) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

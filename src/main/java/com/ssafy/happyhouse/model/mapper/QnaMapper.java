@@ -18,4 +18,6 @@ public interface QnaMapper {
     int replyAnswer(Question question);
 
     int updateQuestion(Question question);
+
+    int deleteQuestion(int questionId);
 }
