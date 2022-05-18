@@ -27,9 +27,10 @@
             </thead>
             <tbody>
               <question-list-item
-                v-for="question in questions"
+                v-for="(question, index) in questions"
                 :key="question.questionId"
                 v-bind="question"
+                :index="questions.length - index"
               />
             </tbody>
           </table>

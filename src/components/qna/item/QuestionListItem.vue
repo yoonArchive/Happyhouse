@@ -1,6 +1,6 @@
 <template>
   <tr>
-    <td>{{ questionId }}</td>
+    <td>{{ index }}</td>
     <td>
       <router-link
         :to="{ name: 'QuestionDetail', params: { questionId: questionId } }"
@@ -19,6 +19,7 @@ import moment from "moment";
 export default {
   name: "QuestionListItem",
   props: {
+    index: Number,
     questionId: Number,
     author: String,
     title: String,

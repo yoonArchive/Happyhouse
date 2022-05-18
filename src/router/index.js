@@ -110,6 +110,12 @@ const routes = [
         name: "QuestionDetail",
         component: () => import("@/components/qna/QuestionDetail.vue"),
       },
+      // 공지사항 수정
+      {
+        path: "modify/:questionId",
+        name: "QuestionModify",
+        component: () => import("@/components/qna/QuestionModify.vue"),
+      },
     ],
   },
 ];

@@ -84,7 +84,7 @@ export default {
     deleteQuestion() {
       if (confirm("정말 삭제하시겠습니까?")) {
         this.$axios
-          .delete(`/qnas/${this.$route.params.questionId}`)
+          .delete(`/qnas/question/${this.$route.params.questionId}`)
           .then(() => {
             alert("삭제되었습니다.");
             this.goList();

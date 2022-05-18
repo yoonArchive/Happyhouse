@@ -7,7 +7,7 @@
     <section class="wrapper style5">
       <div class="inner">
         <header>
-          <h2 class="s">[업데이트]</h2>
+          <h2 class="s">{{ notice.category }}</h2>
           <h2>{{ notice.title }}</h2>
         </header>
         <p>{{ notice.author }} | {{ notice.createDate }}</p>

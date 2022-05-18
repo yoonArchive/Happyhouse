@@ -1,13 +1,13 @@
 <template>
   <article id="main">
     <header>
-      <h2>Notice</h2>
-      <p>공지사항 수정</p>
+      <h2>Q&A</h2>
+      <p>문의 수정</p>
     </header>
     <section class="wrapper style5">
       <div class="inner">
         <h4>Form</h4>
-        <form @submit.prevent="checkValue">
+        <form @submit.prevent="checkValue" @reset="reset">
           <div class="row gtr-uniform aln-center">
             <div class="col-12 col-12-xsmall">
               <input
@@ -17,21 +17,6 @@
                 placeholder="Enter Title"
                 v-model="updateForm.title"
                 required
-              />
-            </div>
-            <div class="col-12">
-              <!--<select name="category" id="category" disabled>
-                <option value="">- Category -</option>
-                <option value="1">업데이트</option>
-                <option value="1">알림</option>
-                <option value="1">버그 개선</option>
-              </select>-->
-              <input
-                type="text"
-                name="category"
-                id="category"
-                v-model="updateForm.category"
-                readonly
               />
             </div>
             <div class="col-12">
@@ -65,24 +50,25 @@
 
 <script>
 export default {
-  name: "NoticeModify",
+  name: "QnaModify",
   data() {
     return {
       updateForm: {
-        noticeId: 0,
+        questionId: 0,
         title: "",
-        category: "",
         content: "",
         author: "", // 나중에 수정
         createDate: "",
+        status: "",
       },
     };
   },
   created() {
     this.$axios
-      .get(`/notice/${this.$route.params.noticeId}`)
+      .get(`/qnas/${this.$route.params.questionId}`)
       .then(({ data }) => {
         this.updateForm = data;
+        console.log(this.updateForm);
       });
   },
   methods: {
@@ -94,19 +80,20 @@ export default {
         !this.updateForm.content &&
         ((msg = "내용을 입력해주세요"), (err = false));
       if (!err) alert(msg);
-      else this.updateNotice();
+      else this.updateQuestion();
     },
-    updateNotice() {
-      let noticeInfo = {
-        noticeId: this.updateForm.noticeId,
+    updateQuestion() {
+      let questionInfo = {
+        questionId: this.updateForm.questionId,
         title: this.updateForm.title,
-        category: this.updateForm.category,
         content: this.updateForm.content,
         author: this.updateForm.author,
         createDate: this.updateForm.createDate,
+        status: this.updateForm.status,
       };
+      console.log(questionInfo);
       this.$axios
-        .put(`/notice/${this.updateForm.noticeId}`, noticeInfo)
+        .put(`/qnas/qusetion/${this.updateForm.questionId}`, questionInfo)
         .then(() => {
           alert("수정 성공");
           this.goDetail();
@@ -117,9 +104,13 @@ export default {
     },
     goDetail() {
       this.$router.push({
-        name: "NoticeDetail",
-        params: this.updateForm.noticeId,
+        name: "QuestionDetail",
+        params: this.updateForm.questionId,
       });
+    },
+    reset() {
+      this.updateForm.title = "";
+      this.updateForm.content = "";
     },
   },
 };
