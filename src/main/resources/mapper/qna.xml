@@ -12,14 +12,25 @@
 
         <collection property="answers" javaType="list" ofType="answer">
             <id column="answerId" property="answerId"/>
-            <result column="content" property="content"/>
-            <result column="author" property="author"/>
-            <result column="createDate" property="createDate"/>
+            <result column="answer_content" property="content"/>
+            <result column="answer_author" property="author"/>
+            <result column="answer_createDate" property="createDate"/>
+            <result column="answer_questionId" property="questionId"/>
         </collection>
     </resultMap>
 
     <select id="getQuestion" resultMap="questions">
-        select *
+        select question.questionId,
+               question.title,
+               question.content,
+               question.author,
+               question.createDate,
+               question.status,
+               answer.answerId,
+               answer.content   answer_content,
+               answer.author   answer_author,
+               answer.createDate   answer_createDate,
+               answer.questionId   answer_questionId
         from question
                  join answer on question.questionId = answer.questionId
         where answerId = #{answerId};
@@ -32,9 +43,19 @@
     </select>
 
     <select id="getDetail" resultMap="questions">
-        select *
+        select question.questionId,
+               question.title,
+               question.content,
+               question.author,
+               question.createDate,
+               question.status,
+               answer.answerId,
+               answer.content   answer_content,
+               answer.author   answer_author,
+               answer.createDate   answer_createDate,
+               answer.questionId   answer_questionId
         from question
-                 left join answer
+                 join answer
                            on question.questionId = answer.questionId
         where question.questionId = #{questionId};
     </select>
