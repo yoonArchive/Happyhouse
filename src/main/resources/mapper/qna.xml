@@ -27,7 +27,8 @@
 
     <select id="getList" resultType="question">
         select *
-        from question;
+        from question
+        order by createDate;
     </select>
 
     <select id="getDetail" resultMap="questions">
