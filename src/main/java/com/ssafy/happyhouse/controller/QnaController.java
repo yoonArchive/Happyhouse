@@ -13,6 +13,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/qnas")
+@CrossOrigin("*")
 public class QnaController {
 
     @Autowired

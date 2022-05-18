@@ -11,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/notice")
+@CrossOrigin("*")
 public class NoticeController {
 
     @Autowired
