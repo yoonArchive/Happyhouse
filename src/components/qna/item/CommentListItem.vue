@@ -1,6 +1,10 @@
 <template>
-  <div class="col-12">
-    <hr />
+  <li>
+    {{ author }} | {{ createDate }}<br /><br />
+
+    {{ content }}
+  </li>
+  <!--<hr />
     <div>
       <textarea
         class="ta"
@@ -25,24 +29,31 @@
             <ul class="alt">
               <li v-for="comment in comments" :key="comment.answerId">
                 <hr />
-                {{ comment.author }}
+                {{ comment.author }} | {{ comment.createDate }}
                 {{ comment.content }}
                 <hr />
               </li>
-              <!-- <li>Dolor pulvinar etiam.</li>
+              <li>Dolor pulvinar etiam.</li>
               <li>Sagittis adipiscing.</li>
-              <li>Felis enim feugiat.</li> -->
+              <li>Felis enim feugiat.</li> 
             </ul>
           </div>
         </div>
       </section>
-    </div>
-  </div>
+    </div>-->
 </template>
 
 <script>
 export default {
-  data() {
+  name: "CommentListItem",
+  props: {
+    answerId: Number,
+    author: String,
+    content: String,
+    createDate: String,
+    questionId: Number,
+  },
+  /*data() {
     return {
       comments: [],
       commentForm: {
@@ -51,6 +62,11 @@ export default {
         content: "",
       },
     };
+  },
+  created() {
+    this.$axios.get(`/qnas`).then(({ data }) => {
+      this.questions = data;
+    });
   },
   methods: {
     addComment() {
@@ -70,7 +86,7 @@ export default {
           alert("등록 실패");
         });
     },
-  },
+  },*/
 };
 </script>
 

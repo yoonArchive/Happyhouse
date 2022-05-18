@@ -7,11 +7,11 @@
     <section class="wrapper style5">
       <div class="inner">
         <header>
-          <h2>{{ question.title }}</h2>
+          <h2>{{ questionForm.title }}</h2>
         </header>
-        <p>{{ question.author }} | {{ question.createDate }}</p>
+        <p>{{ questionForm.author }} | {{ questionForm.createDate }}</p>
         <hr />
-        <pre>{{ question.content }}</pre>
+        <pre>{{ questionForm.content }}</pre>
         <div class="row gtr-uniform aln-center">
           <div></div>
           <div class="col-6">
@@ -48,30 +48,75 @@
               </li>
             </ul>
           </div>
-          <div></div>
-          <Comment />
         </div>
+        <div>
+          <textarea
+            class="ta"
+            name="comment"
+            id="comment"
+            placeholder="Enter comment"
+            rows="3"
+            required
+            v-model="commentForm.content"
+          ></textarea>
+          <div style="float: right">
+            <button type="button" class="button small" @click="addComment">
+              등록
+            </button>
+          </div>
+        </div>
+
+        <br /><br />
+        <h4>{{ lengthMsg }}</h4>
+        <ul class="alt">
+          <comment-list-item
+            v-for="comment in comments"
+            :key="comment.answerId"
+            v-bind="comment"
+          />
+        </ul>
       </div>
     </section>
   </article>
 </template>
 
 <script>
-import Comment from "@/components/qna/Comment.vue";
+import CommentListItem from "@/components/qna/item/CommentListItem.vue";
 export default {
   components: {
-    Comment,
+    CommentListItem,
   },
   data() {
     return {
-      question: {},
+      questionForm: {
+        questionId: "",
+        title: "",
+        content: "",
+        author: "ssafy", // 나중에 수정
+        createDate: "",
+      },
+      commentForm: {
+        questionId: 0,
+        author: "ssafy", // 나중에 수정
+        content: "",
+        createDate: "",
+      },
+      comments: {},
+      lengthMsg: "총 0개의 댓글이 있습니다.",
     };
   },
   created() {
     this.$axios
       .get(`/qnas/${this.$route.params.questionId}`)
       .then(({ data }) => {
-        this.question = data;
+        console.log(data);
+        this.questionForm.questionId = data.questionId;
+        this.questionForm.title = data.title;
+        this.questionForm.content = data.content;
+        this.questionForm.author = data.author;
+        this.questionForm.createDate = data.createDate;
+        this.comments = data.answers;
+        this.lengthMsg = `총 ${this.comments.length}개의 댓글이 있습니다.`;
       });
   },
   methods: {
@@ -84,7 +129,7 @@ export default {
     deleteQuestion() {
       if (confirm("정말 삭제하시겠습니까?")) {
         this.$axios
-          .delete(`/qnas/question/${this.$route.params.questionId}`)
+          .delete(`/qnas/${this.$route.params.questionId}`)
           .then(() => {
             alert("삭제되었습니다.");
             this.goList();
@@ -93,6 +138,23 @@ export default {
     },
     goList() {
       this.$router.push("/qna");
+    },
+    addComment() {
+      let commentInfo = {
+        questionId: this.questionForm.questionId,
+        author: this.commentForm.author,
+        content: this.commentForm.content,
+      };
+      console.log(commentInfo);
+      this.$axios
+        .post("/qnas/answer", commentInfo)
+        .then(() => {
+          alert("등록 성공");
+          this.comments.push(commentInfo);
+        })
+        .catch(() => {
+          alert("등록 실패");
+        });
     },
   },
 };

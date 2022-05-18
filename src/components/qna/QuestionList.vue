@@ -6,7 +6,7 @@
     </header>
     <section class="wrapper style5">
       <div class="inner">
-        <h4>NOTICE</h4>
+        <h4>Q&A</h4>
         <div class="table-wrapper">
           <table>
             <colgroup>

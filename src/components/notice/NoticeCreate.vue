@@ -108,6 +108,7 @@ export default {
     reset() {
       this.registForm.title = "";
       this.registForm.content = "";
+      this.registForm.category = "";
     },
   },
 };
