@@ -7,7 +7,7 @@
     <section class="wrapper style5">
       <div class="inner">
         <h4>Form</h4>
-        <form @submit.prevent="checkValue">
+        <form @submit.prevent="updateNotice">
           <div class="row gtr-uniform aln-center">
             <div class="col-12 col-12-xsmall">
               <input
@@ -20,12 +20,6 @@
               />
             </div>
             <div class="col-12">
-              <!--<select name="category" id="category" disabled>
-                <option value="">- Category -</option>
-                <option value="1">업데이트</option>
-                <option value="1">알림</option>
-                <option value="1">버그 개선</option>
-              </select>-->
               <input
                 type="text"
                 name="category"
@@ -50,7 +44,7 @@
                 <li>
                   <button class="primary" type="submit">수정</button>
                 </li>
-                <li><input type="reset" value="초기화" /></li>
+                <li><button type="button" @click="reset">초기화</button></li>
                 <li>
                   <button type="button" @click="goDetail">취소</button>
                 </li>
@@ -86,16 +80,6 @@ export default {
       });
   },
   methods: {
-    checkValue() {
-      let err = true;
-      let msg = "";
-      !this.updateForm.title && ((msg = "제목을 입력해주세요"), (err = false));
-      err &&
-        !this.updateForm.content &&
-        ((msg = "내용을 입력해주세요"), (err = false));
-      if (!err) alert(msg);
-      else this.updateNotice();
-    },
     updateNotice() {
       let noticeInfo = {
         noticeId: this.updateForm.noticeId,
@@ -108,11 +92,11 @@ export default {
       this.$axios
         .put(`/notice/${this.updateForm.noticeId}`, noticeInfo)
         .then(() => {
-          alert("수정 성공");
+          this.sweetAlert("success");
           this.goDetail();
         })
         .catch(() => {
-          alert("수정 실패");
+          this.sweetAlert("fail");
         });
     },
     goDetail() {
@@ -120,6 +104,15 @@ export default {
         name: "NoticeDetail",
         params: this.updateForm.noticeId,
       });
+    },
+    reset() {
+      this.updateForm.title = "";
+      this.updateForm.content = "";
+    },
+    sweetAlert(type) {
+      if (type === "success")
+        this.$swal(type, "수정이 완료되었습니다.", "success");
+      else this.$swal(type, "수정 중 문제가 발생하였습니다.", "error");
     },
   },
 };

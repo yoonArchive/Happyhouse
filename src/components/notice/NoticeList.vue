@@ -74,7 +74,6 @@ export default {
   },
   created() {
     this.$axios.get(`/notice/list/1`).then(({ data }) => {
-      console.log(data[0].category);
       this.notices = data;
     });
   },

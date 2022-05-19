@@ -77,17 +77,37 @@ export default {
       });
     },
     deleteNotice() {
-      if (confirm("정말 삭제하시겠습니까?")) {
-        this.$axios
-          .delete(`/notice/${this.$route.params.noticeId}`)
-          .then(() => {
-            alert("삭제되었습니다.");
-            this.goList();
-          });
-      }
+      this.$swal
+        .fire({
+          title: "정말 삭제하시겠습니까?",
+          text: "삭제를 원하시면 OK를 클릭해주세요.",
+          icon: "warning",
+          closeOnClickOutSide: false,
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "OK",
+          cancelButtonText: "취소",
+        })
+        .then((result) => {
+          if (result.isConfirmed) {
+            this.$axios
+              .delete(`/notice/${this.$route.params.noticeId}`)
+              .then(() => {
+                this.sweetAlert("success");
+                this.goList();
+              })
+              .catch(() => this.sweetAlert("fail"));
+          }
+        });
     },
     goList() {
       this.$router.push("/notice");
+    },
+    sweetAlert(type) {
+      if (type === "success")
+        this.$swal(type, "공지사항이 삭제되었습니다.", "success");
+      else this.$swal(type, "삭제 중 문제가 발생하였습니다.", "error");
     },
   },
 };

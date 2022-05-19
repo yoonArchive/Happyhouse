@@ -108,7 +108,6 @@ export default {
     this.$axios
       .get(`/qnas/${this.$route.params.questionId}`)
       .then(({ data }) => {
-        console.log(data);
         this.questionForm.questionId = data.questionId;
         this.questionForm.title = data.title;
         this.questionForm.content = data.content;
@@ -126,14 +125,29 @@ export default {
       });
     },
     deleteQuestion() {
-      if (confirm("정말 삭제하시겠습니까?")) {
-        this.$axios
-          .delete(`/qnas/question/${this.questionForm.questionId}`)
-          .then(() => {
-            alert("삭제되었습니다.");
-            this.goList();
-          });
-      }
+      this.$swal
+        .fire({
+          title: "정말 삭제하시겠습니까?",
+          text: "삭제를 원하시면 OK를 클릭해주세요.",
+          icon: "warning",
+          closeOnClickOutSide: false,
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "OK",
+          cancelButtonText: "취소",
+        })
+        .then((result) => {
+          if (result.isConfirmed) {
+            this.$axios
+              .delete(`/qnas/question/${this.questionForm.questionId}`)
+              .then(() => {
+                this.sweetAlert("success", true);
+                this.goList();
+              })
+              .catch(() => this.sweetAlert("fail", true));
+          }
+        });
     },
     goList() {
       this.$router.push("/qna");
@@ -147,13 +161,21 @@ export default {
       this.$axios
         .post("/qnas/answer", commentInfo)
         .then(() => {
-          alert("등록 성공");
           this.comments.push(commentInfo);
           location.reload();
         })
         .catch(() => {
-          alert("등록 실패");
+          this.sweetAlert("fail", false);
         });
+    },
+    sweetAlert(type, isQuestion) {
+      if (isQuestion) {
+        if (type === "success")
+          this.$swal(type, "문의가 삭제되었습니다.", "success");
+        else this.$swal(type, "삭제 중 문제가 발생하였습니다.", "error");
+      } else {
+        this.$swal(type, "댓글 등록 중 문제가 발생하였습니다.", "error");
+      }
     },
   },
 };

@@ -6,7 +6,11 @@
         <h2>Happy House</h2>
         <p>Welcome to the HappyHouse</p>
         <ul class="actions special">
-          <li><a href="#" class="button primary">Activate</a></li>
+          <li>
+            <router-link to="/trade" class="button primary"
+              >실거래가 조회</router-link
+            >
+          </li>
         </ul>
       </div>
       <a href="#one" class="more scrolly">Learn More</a>

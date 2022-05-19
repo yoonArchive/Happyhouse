@@ -7,7 +7,7 @@
     <section class="wrapper style5">
       <div class="inner">
         <h4>Form</h4>
-        <form @submit.prevent="checkValue" @reset="reset">
+        <form @submit.prevent="registNotice" @reset="reset">
           <div class="row gtr-uniform aln-center">
             <div class="col-12 col-12-xsmall">
               <input
@@ -74,16 +74,6 @@ export default {
     };
   },
   methods: {
-    checkValue() {
-      let err = true;
-      let msg = "";
-      !this.registForm.title && ((msg = "제목을 입력해주세요"), (err = false));
-      err &&
-        !this.registForm.content &&
-        ((msg = "내용을 입력해주세요"), (err = false));
-      if (!err) alert(msg);
-      else this.registNotice();
-    },
     registNotice() {
       let noticeInfo = {
         title: this.registForm.title,
@@ -91,15 +81,14 @@ export default {
         content: this.registForm.content,
         author: this.registForm.author,
       };
-      console.log(noticeInfo);
       this.$axios
         .post("/notice", noticeInfo)
         .then(() => {
-          alert("등록 성공");
+          this.sweetAlert("success");
           this.goList();
         })
         .catch(() => {
-          alert("등록 실패");
+          this.sweetAlert("fail");
         });
     },
     goList() {
@@ -109,6 +98,11 @@ export default {
       this.registForm.title = "";
       this.registForm.content = "";
       this.registForm.category = "";
+    },
+    sweetAlert(type) {
+      if (type === "success")
+        this.$swal(type, "공지사항이 등록되었습니다.", "success");
+      else this.$swal(type, "등록 중 문제가 발생하였습니다.", "error");
     },
   },
 };

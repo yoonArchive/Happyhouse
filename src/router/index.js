@@ -54,6 +54,20 @@ const routes = [
       },
     ],
   },
+  // 실거래가
+  {
+    path: "/trade",
+    name: "Trade",
+    component: () => import("@/views/TradeView.vue"),
+    children: [
+      // 조회
+      {
+        path: "",
+        name: "View",
+        component: () => import("@/components/trade/TradeSearch.vue"),
+      },
+    ],
+  },
   // 공지사항
   {
     path: "/notice",

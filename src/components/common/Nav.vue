@@ -4,6 +4,9 @@
     <nav class="navbar navbar-expand-sm bg-dark">
       <ul class="navbar-nav">
         <li class="nav-item active mr-2">
+          <router-link to="/trade">실거래가 조회</router-link>
+        </li>
+        <li class="nav-item active mr-2">
           <router-link to="/notice">공지사항</router-link>
         </li>
         <li class="nav-item mr-2">
