@@ -56,24 +56,31 @@
             </button>
           </ul>
 
-          <div class="row aln-center">
-            <div class="col-7 col-12-xsmall">
+          <div id="searchBar" class="row aln-center">
+            <div class="col-2 col-12-xsmall">
+              <select v-model="searchCategory">
+                <option value="">전체</option>
+                <option value="title">제목</option>
+                <option value="content">내용</option>
+                <option value="author">작성자</option>
+              </select>
+            </div>
+            <div class="col-6 col-12-xsmall">
               <input
                 type="text"
                 name="search"
                 id="search"
-                v-model="searchKeyWord"
+                v-model="searchKeyword"
                 placeholder="작성자, 제목, 내용 검색"
                 style="float: right width: 60%  ;"
               />
             </div>
-            <div>
+            <div id="searchBtnFrom" class="col-2 col-12-xsmall">
               <button
                 type="button"
                 class="button small"
                 id="searchBtn"
                 @click="search"
-                style="float: right"
               >
                 검색
               </button>
@@ -87,6 +94,7 @@
 
 <script>
 import QuestionListItem from "@/components/qna/item/QuestionListItem.vue";
+
 export default {
   name: "QuestionList",
   components: {
@@ -94,7 +102,8 @@ export default {
   },
   data() {
     return {
-      searchKeyWord: "",
+      searchCategory: "",
+      searchKeyword: "",
       questions: [],
       //  searchedQuestions: [],
     };
@@ -109,14 +118,34 @@ export default {
       this.$router.push({ name: "QuestionCreate" });
     },
     search() {
+      console.log(this.searchCategory);
+      let url = '/qnas/search';
+      if (this.searchCategory !== '') {
+        url += '/' + this.searchCategory;
+      }
       this.$axios
-        .get(`/qnas/search?keyword=${this.searchKeyWord}`)
+        .get(url + '?keyword=' + this.searchKeyword)
         .then(({ data }) => {
           this.questions = data;
         });
-    },
+    }
   },
 };
 </script>
 
-<style></style>
+<style>
+#searchBar {
+  height: 65px;
+}
+
+select {
+  width: 150px;
+  float: right;
+  margin-right: -20px;
+}
+
+#searchBtnFrom {
+  margin-left: -20px;
+  margin-top: 2px;
+}
+</style>
