@@ -1920,6 +1920,7 @@ form {
 }
 
 label {
+  font-family: "Open Sans", Helvetica, sans-serif;
   color: #fff;
   display: block;
   font-size: 0.9em;

@@ -58,6 +58,11 @@
           </ul>
         </div>
       </div>
+      <br />
+      <h5 style="text-align: center">
+        happyhouse 회원이 아니신가요?
+        <a @click="goSignUp" style="color: gray">지금 가입하세요.</a>
+      </h5>
     </form>
   </section>
 </template>
@@ -98,6 +103,9 @@ export default {
     },
     goFindPw() {
       this.$router.push("/user/findpw");
+    },
+    goSignUp() {
+      this.$router.push("/user/signup");
     },
     moveHome() {
       this.$router.push("/");

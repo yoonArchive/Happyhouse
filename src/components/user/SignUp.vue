@@ -68,13 +68,13 @@
           <ul class="actions">
             <li></li>
             <li>
-              <button type="button" class="primary" @click="checkValue">
-                sign up
-              </button>
+              <button type="button" class="primary">sign up</button>
             </li>
             <li><input type="reset" class="button" value="Reset" /></li>
             <li>
-              <button type="button" class="button" @click="goHome">Home</button>
+              <button type="button" class="button" @click="moveHome">
+                Home
+              </button>
             </li>
           </ul>
         </div>
@@ -96,6 +96,11 @@ export default {
       isAvailable: false,
       msg: "",
     };
+  },
+  methods: {
+    moveHome() {
+      this.$router.push("/");
+    },
   },
 };
 </script>
