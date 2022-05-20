@@ -4,118 +4,10 @@
       <div id="map"></div>
       <div id="searchBox" class="card">
         <div>
-          <div>
-            <div class="row">
-              <i class="fa fa-search" style="color: black"></i>
-              <h5>검색 방법을 선택하세요</h5>
-            </div>
-            <div class="row">
-              <div class="form-check">
-                <input
-                  value="dong"
-                  v-model="searchType"
-                  class="form-check-input"
-                  type="radio"
-                  id="searchByDong"
-                  name="demo-priority"
-                />
-                <label class="form-check-label" for="searchByDong"
-                  >동 검색</label
-                >
-              </div>
-              <div class="form-check">
-                <input
-                  value="keyword"
-                  v-model="searchType"
-                  class="form-check-input"
-                  type="radio"
-                  id="searchByKeyword"
-                  name="demo-priority"
-                />
-                <label class="form-check-label" for="searchByKeyword"
-                  >키워드 검색</label
-                >
-              </div>
-            </div>
-          </div>
-          <div
-            v-if="searchType == 'dong'"
-            class="pb-2 d-flex justify-content-evenly"
-          >
-            <div class="row">
-              <button
-                type="button"
-                class="button"
-                style="margin: 0 3% 0 8%; color: black; padding: 0 1.6em"
-              >
-                서울특별시
-              </button>
-
-              <select
-                v-model="selectedGuName"
-                @change="guChange"
-                class="array-select form-control form-select"
-                aria-label="example"
-              >
-                <option value="default" selected>구 선택</option>
-                <option
-                  v-for="(item, index) in gu"
-                  :key="index"
-                  :value="item.guCode"
-                >
-                  {{ item.guName }}
-                </option>
-              </select>
-              <select
-                v-model="selectedDongName"
-                @change="dongChange"
-                class="array-select form-control form-select"
-                aria-label="example"
-              >
-                <option value="default" selected>동 선택</option>
-                <option
-                  v-for="(item, index) in dong"
-                  :key="index"
-                  :value="item.dongName"
-                >
-                  {{ item.dongName }}
-                </option>
-              </select>
-            </div>
-          </div>
-          <div v-if="searchType == 'keyword'" class="input-group row">
-            <input
-              @keyup.enter="keywordSearch"
-              type="text"
-              v-model="inputKeyword"
-              class="form-control d-inline-block"
-              placeholder="아파트명 / 주택명 / 법정동 입력"
-              style="
-                color: gray;
-                width: 70%;
-                font-size: 0.8em;
-                margin: 0 10px 0 20px;
-              "
-            />
-            <button
-              @click="keywordSearch"
-              class="button"
-              type="button"
-              style="
-                color: black;
-                width: 70px;
-                padding: 0 1em;
-                margin: 0 0 0 0;
-                font-size: 0.7em;
-                height: 3.125em;
-              "
-            >
-              검색
-            </button>
-          </div>
+          <house-search-bar></house-search-bar>
         </div>
       </div>
-      <div v-if="listVisible" id="showList" class="card p-0 bg-secondary">
+      <!--<div v-if="listVisible" id="showList" class="card p-0 bg-secondary">
         <div
           @click="moveOngoingList"
           v-if="ongoingCount == 0"
@@ -132,7 +24,7 @@
         >
           <h6>매물 보기 ({{ ongoingCount }}개)</h6>
         </div>
-        <!-- 아파트 정보 요약 -->
+         아파트 정보 요약 
         <div class="bg-white mb-2">
           <div
             class="p-3 border-bottom d-flex justify-content-between align-items-center"
@@ -144,7 +36,7 @@
               @changeHeartBtn="onBookmarkHouse"
             />
           </div>
-          <!-- contents -->
+           contents
           <div class="px-3">
             <div class="border-bottom d-flex py-2">
               <div class="text-secondary w-25">주소</div>
@@ -159,7 +51,7 @@
             </div>
           </div>
         </div>
-        <!-- 실거래가 -->
+         실거래가
         <div class="bg-white mb-2">
           <div class="border-bottom"><h5 class="p-3 m-0">실거래가</h5></div>
           <div>
@@ -187,7 +79,7 @@
             </table>
           </div>
         </div>
-      </div>
+      </div>-->
       <div class="button-group">
         <button @click="displayMarker(markerPositions2)">marker set 2</button>
       </div>
@@ -196,11 +88,17 @@
 </template>
 
 <script>
+import HouseSearchBar from "@/components/trade/HouseSearchBar.vue";
+import { mapState, mapActions, mapMutations } from "vuex";
+const storeName = "houseStore";
 export default {
-  name: "KakaoMap",
+  name: "HouseSearch",
+  components: {
+    HouseSearchBar,
+  },
   data() {
     return {
-      searchType: "dong",
+      markers: [],
       markerPositions2: [
         [37.499590490909185, 127.0263723554437],
         [37.499427948430814, 127.02794423197847],
@@ -210,11 +108,8 @@ export default {
         [37.49754540521486, 127.02546694890695],
         [37.49646391248451, 127.02675574250912],
       ],
-      markers: [],
       infowindow: null,
       listVisible: false,
-      selectedGuName: "default",
-      selectedDongName: "default",
     };
   },
   created() {
@@ -241,9 +136,15 @@ export default {
         alert(err.message);
       }
     );
-    this.initSearchByDongBox();
   },
   methods: {
+    ...mapActions(storeName, [
+      "getGu",
+      "getDong",
+      "getHouseListByDong",
+      "getHouseListByKeyword",
+    ]),
+    ...mapMutations(storeName, ["CLEAR_KEYWORD"]),
     initMap() {
       const container = document.getElementById("map");
       const options = {
@@ -284,28 +185,9 @@ export default {
         this.map.setBounds(bounds);
       }
     },
-    guChange() {
-      if (this.selectedGuName !== "default") {
-        this.selectedDongName = "default";
-        this.getDong(this.selectedGuName);
-      }
-    },
-    dongChange() {},
-    initSearchByDongBox() {
-      this.getGu(11);
-    },
   },
-  watch: {
-    searchType: function (val) {
-      this.listVisible = false;
-      if (val === "dong") {
-        console.log("watch dong");
-        this.initSearchByDongBox();
-      } else if (val === "keyword") {
-        if (this.listVisible) this.listVisible = false;
-        console.log("watch keyword");
-      }
-    },
+  computed: {
+    ...mapState(storeName, ["gu", "dong", "houseList", "fromMainKeyword"]),
   },
 };
 </script>
@@ -313,10 +195,8 @@ export default {
 <style scoped>
 #map {
   width: 100%;
-  height: 720px;
-}
-#wrapper {
-  position: relative;
+  min-height: 100%;
+  position: absolute;
 }
 #searchBox {
   position: absolute;

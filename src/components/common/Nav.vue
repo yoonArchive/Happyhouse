@@ -13,10 +13,7 @@
           <router-link to="/qna">Q&A</router-link>
         </li>
         <li class="nav-item mr-2">
-          <router-link to="/user/login">Login</router-link>
-        </li>
-        <li class="nav-item mr-2">
-          <router-link to="/user/signup">SignUp</router-link>
+          <router-link to="/user/login">Login | SignUp</router-link>
         </li>
       </ul>
     </nav>

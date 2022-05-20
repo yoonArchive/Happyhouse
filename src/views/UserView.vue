@@ -12,4 +12,8 @@
 export default {};
 </script>
 
-<style></style>
+<style scoped>
+section {
+  min-height: 550px;
+}
+</style>

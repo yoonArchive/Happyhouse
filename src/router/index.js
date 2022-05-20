@@ -64,7 +64,7 @@ const routes = [
       {
         path: "",
         name: "View",
-        component: () => import("@/components/trade/TradeSearch.vue"),
+        component: () => import("@/components/trade/HouseSearch.vue"),
       },
     ],
   },
