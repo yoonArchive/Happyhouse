@@ -70,8 +70,10 @@
         <ul class="alt">
           <comment-list-item
             v-for="comment in comments"
+
             :key="comment.answerId"
             v-bind="comment"
+            @refresh="initialize"
           />
         </ul>
       </div>
@@ -101,23 +103,29 @@ export default {
         createDate: "",
       },
       comments: {},
-      lengthMsg: "총 0개의 댓글이 있습니다.",
     };
   },
   created() {
-    this.$axios
-      .get(`/qnas/${this.$route.params.questionId}`)
-      .then(({ data }) => {
-        this.questionForm.questionId = data.questionId;
-        this.questionForm.title = data.title;
-        this.questionForm.content = data.content;
-        this.questionForm.author = data.author;
-        this.questionForm.createDate = data.createDate;
-        this.comments = data.answers;
-        this.lengthMsg = `총 ${this.comments.length}개의 댓글이 있습니다.`;
-      });
+    this.initialize();
+  },
+  computed: {
+    lengthMsg() {
+      return `총 ${this.comments.length}개의 댓글이 있습니다.`;
+    }
   },
   methods: {
+    initialize(){
+      this.$axios
+          .get(`/qnas/${this.$route.params.questionId}`)
+          .then(({ data }) => {
+            this.questionForm.questionId = data.questionId;
+            this.questionForm.title = data.title;
+            this.questionForm.content = data.content;
+            this.questionForm.author = data.author;
+            this.questionForm.createDate = data.createDate;
+            this.comments = data.answers;
+          });
+    },
     goModifyQuestion() {
       this.$router.push({
         name: "QuestionModify",
@@ -132,8 +140,8 @@ export default {
           icon: "warning",
           closeOnClickOutSide: false,
           showCancelButton: true,
-          confirmButtonColor: "#3085d6",
-          cancelButtonColor: "#d33",
+          confirmButtonColor: "#408fff",
+          cancelButtonColor: "#ed4933",
           confirmButtonText: "OK",
           cancelButtonText: "취소",
         })
@@ -161,8 +169,8 @@ export default {
       this.$axios
         .post("/qnas/answer", commentInfo)
         .then(() => {
-          this.comments.push(commentInfo);
-          location.reload();
+          this.initialize()
+          this.commentForm.content = "";
         })
         .catch(() => {
           this.sweetAlert("fail", false);
