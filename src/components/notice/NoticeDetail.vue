@@ -84,8 +84,8 @@ export default {
           icon: "warning",
           closeOnClickOutSide: false,
           showCancelButton: true,
-          confirmButtonColor: "#3085d6",
-          cancelButtonColor: "#d33",
+          confirmButtonColor: "#408fff",
+          cancelButtonColor: "#ed4933",
           confirmButtonText: "OK",
           cancelButtonText: "취소",
         })
