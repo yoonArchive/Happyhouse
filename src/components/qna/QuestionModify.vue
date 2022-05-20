@@ -91,15 +91,16 @@ export default {
         createDate: this.updateForm.createDate,
         status: this.updateForm.status,
       };
-      console.log(questionInfo);
       this.$axios
         .put(`/qnas/question/${this.updateForm.questionId}`, questionInfo)
         .then(() => {
-          alert("수정 성공");
-          this.goDetail();
+          this.$swal("success", "답변이 수정되었습니다.", "success")
+            .then(() => {
+              this.goDetail();
+            });
         })
         .catch(() => {
-          alert("수정 실패");
+          this.$swal("fail", "수정 중 문제가 발생하였습니다.", "error");
         });
     },
     goDetail() {
