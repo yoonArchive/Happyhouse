@@ -8,7 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.function.Function;
 
 @Service
 public class QnaServiceImpl implements QnaService {
@@ -23,7 +26,9 @@ public class QnaServiceImpl implements QnaService {
 
     @Override
     public Question getDetail(int questionId) {
-        return qnaMapper.getDetail(questionId);
+        Question question = qnaMapper.getDetail(questionId);
+        question.getAnswers().sort(Comparator.comparing((Function<Answer, Object>) Answer::getCreateDate, Collections.reverseOrder()));
+        return question;
     }
 
     @Override
