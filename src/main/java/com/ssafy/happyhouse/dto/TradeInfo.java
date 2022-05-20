@@ -12,4 +12,6 @@ public class TradeInfo {
     private String floor;
     private String dealAmount;
     private String type;
+    private String lat;
+    private String lng;
 }
