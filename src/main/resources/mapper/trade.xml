@@ -20,7 +20,7 @@
     </select>
 
     <select id="getList" parameterType="map" resultType="tradeInfo">
-        select hi.aptName, hi.dongName, hi.buildYear, hd.area, hd.floor, hd.dealAmount, hd.type
+        select hi.aptName, hi.dongName, hi.buildYear, hd.area, hd.floor, hd.dealAmount, hd.type, hi.lat, hi.lng
         from houseinfo hi
                  join housedeal hd
                       on hi.aptCode = hd.aptCode
