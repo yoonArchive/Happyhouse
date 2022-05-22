@@ -5,7 +5,7 @@ import lombok.Data;
 import java.math.BigDecimal;
 
 @Data
-public class AptListRequest {
+public class HouseListRequest {
 
     private BigDecimal aptCode;
     private String apartmentName;
