@@ -61,7 +61,7 @@
         </select>
         <select
           v-model="dongName"
-          @change="searchApt"
+          @change="searchHouseLisByDong"
           class="array-select form-control form-select"
           aria-label="example"
         >
@@ -130,7 +130,7 @@ export default {
       "getSido",
       "getGugun",
       "getDong",
-      "getHouseList",
+      "getHouseListByDong",
     ]),
     ...mapMutations(houseStore, [
       "CLEAR_SIDO_LIST",
@@ -143,6 +143,7 @@ export default {
       this.CLEAR_GUGUN_LIST();
       this.CLEAR_DONG_LIST();
       this.gugunName = null;
+      this.dongName = null;
       if (this.sidoName) this.getGugun(this.sidoName);
     },
     dongList() {
@@ -154,7 +155,7 @@ export default {
       }
       if (this.gugunName) this.getDong(sigu);
     },
-    async searchApt() {
+    async searchHouseLisByDong() {
       if (this.dongName) {
         this.CLEAR_MARKER_POSITIONS();
         this.CLEAR_HOUSE_LIST();
@@ -163,7 +164,7 @@ export default {
           gu: this.gugunName,
           dong: this.dongName,
         };
-        await this.getHouseList(aptInfo);
+        await this.getHouseListByDong(aptInfo);
         if (this.houseCnt === 0) {
           this.$swal("fail", "거래된 아파트가 없습니다.", "error");
           return;

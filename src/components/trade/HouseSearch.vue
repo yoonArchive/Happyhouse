@@ -63,7 +63,7 @@ export default {
     );
   },
   methods: {
-    ...mapActions(houseStore, ["getHouseList", "detailHouse"]),
+    ...mapActions(houseStore, ["getHouseListByDong", "detailHouse"]),
     ...mapMutations(houseStore, [
       "SET_HOUSE_COUNT",
       "SET_DETAIL_HOUSE",

@@ -1,4 +1,4 @@
-import { sidoList, gugunList, dongList, houseList } from "@/api/house.js";
+import { sidoList, gugunList, dongList, houseListByDong } from "@/api/house.js";
 
 const houseStore = {
   namespaced: true,
@@ -48,7 +48,7 @@ const houseStore = {
     CLEAR_MARKER_POSITIONS: (state) => {
       state.markerPositions = [];
     },
-    SET_HOUSE_LIST: (state, houses) => {
+    SET_HOUSE_LIST_BY_DONG: (state, houses) => {
       state.houses = houses;
     },
     SET_DETAIL_HOUSE: (state, house) => {
@@ -105,16 +105,16 @@ const houseStore = {
         }
       );
     },
-    getHouseList: async ({ commit }, aptInfo) => {
+    getHouseListByDong: async ({ commit }, aptInfo) => {
       const params = {
         si: aptInfo.si,
         gu: aptInfo.gu,
         dong: aptInfo.dong,
       };
-      await houseList(
+      await houseListByDong(
         params,
         ({ data }) => {
-          commit("SET_HOUSE_LIST", data);
+          commit("SET_HOUSE_LIST_BY_DONG", data);
           commit("SET_HOUSE_COUNT", data.length);
           commit("SET_MARKER_POSITIONS", data);
         },

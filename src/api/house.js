@@ -14,8 +14,8 @@ function dongList(params, success, fail) {
   api.get(`/trade/dong`, { params: params }).then(success).catch(fail);
 }
 
-async function houseList(params, success, fail) {
-  await api.get(`/trade/list`, { params: params }).then(success).catch(fail);
+async function houseListByDong(params, success, fail) {
+  await api.get(`/trade/search/dong`, { params: params }).then(success).catch(fail);
 }
 
-export { sidoList, gugunList, dongList, houseList };
+export { sidoList, gugunList, dongList, houseListByDong };
