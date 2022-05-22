@@ -20,16 +20,14 @@
           and gugunName = #{gu}
     </select>
 
-    <select id="searchByDong" parameterType="map" resultType="houseListRequest">
-        select hi.aptCode, hi.apartmentName, hi.lat, hi.lng, ba.lat dongLat, ba.lng dongLng
+    <select id="searchByDong" parameterType="map" resultType="houseListResponse">
+        select hi.aptCode, hi.apartmentName, hi.lat, hi.lng
         from houseinfo hi
-                 join baseaddress ba
-                      on hi.dongcode = ba.dongcode
         where hi.dongCode in
               (select dongCode from baseaddress where sidoName = #{si} and gugunName = #{gu} and dongName = #{dong})
     </select>
 
-    <select id="searchByApt" parameterType="string" resultType="houseListRequest">
+    <select id="searchByApt" parameterType="string" resultType="houseListResponse">
         select aptCode, apartmentName, lat, lng
         from houseinfo
         where apartmentName like concat('%', #{apartmentName}, '%')

@@ -1,6 +1,6 @@
 package com.ssafy.happyhouse.model.service;
 
-import com.ssafy.happyhouse.dto.HouseListRequest;
+import com.ssafy.happyhouse.dto.HouseListResponse;
 import com.ssafy.happyhouse.model.mapper.TradeMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,12 +27,12 @@ public class TradeServiceImpl implements TradeService{
     }
 
     @Override
-    public List<HouseListRequest> searchByDong(Map<String, String> address) {
+    public List<HouseListResponse> searchByDong(Map<String, String> address) {
         return tradeMapper.searchByDong(address);
     }
 
     @Override
-    public List<HouseListRequest> searchByApt(String aptName) {
+    public List<HouseListResponse> searchByApt(String aptName) {
         return tradeMapper.searchByApt(aptName);
     }
 }
