@@ -46,11 +46,19 @@ const routes = [
         name: "FindPw",
         component: () => import("@/components/user/PasswordFind.vue"),
       },
+    ],
+  },
+  //마이페이지
+  {
+    path: "/myPage",
+    name: "MyPage",
+    component: () => import("@/views/MyPage.vue"),
+    children: [
       // 회원정보 수정
       {
-        path: "modify/:userId",
+        path: ":userId",
         name: "UserModify",
-        component: () => import("@/components/user/infoUpdate.vue"),
+        component: () => import("@/components/user/item/UserUpdate.vue"),
       },
     ],
   },

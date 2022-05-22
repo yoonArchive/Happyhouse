@@ -3,11 +3,13 @@ import { sidoList, gugunList, dongList, houseList } from "@/api/house.js";
 const houseStore = {
   namespaced: true,
   state: {
-    sidos: [{ value: null, text: "선택하세요" }],
-    guguns: [{ value: null, text: "선택하세요" }],
-    dongs: [{ value: null, text: "선택하세요" }],
+    sidos: [{ value: null, text: "시 선택" }],
+    guguns: [{ value: null, text: "구 선택" }],
+    dongs: [{ value: null, text: "동 선택" }],
     houses: [],
     house: null,
+    houseCnt: 0,
+    markerPositions: [],
   },
 
   getters: {},
@@ -15,35 +17,51 @@ const houseStore = {
   mutations: {
     SET_SIDO_LIST: (state, sidos) => {
       sidos.forEach((sido) => {
-        state.sidos.push({ value: sido.sidoCode, text: sido.sidoName });
-        console.log(sido);
+        state.sidos.push({ value: sido, text: sido });
       });
     },
     SET_GUGUN_LIST: (state, guguns) => {
       guguns.forEach((gugun) => {
-        state.guguns.push({ value: gugun.gugunCode, text: gugun.gugunName });
+        state.guguns.push({ value: gugun, text: gugun });
       });
     },
     SET_DONG_LIST: (state, dongs) => {
       dongs.forEach((dong) => {
-        state.dongs.push({ value: dong.dongCode, text: dong.dongName });
+        state.dongs.push({ value: dong, text: dong });
       });
     },
     CLEAR_SIDO_LIST: (state) => {
-      state.sidos = [{ value: null, text: "선택하세요" }];
+      state.sidos = [{ value: null, text: "시 선택" }];
     },
     CLEAR_GUGUN_LIST: (state) => {
-      state.guguns = [{ value: null, text: "선택하세요" }];
+      state.guguns = [{ value: null, text: "구 선택" }];
     },
     CLEAR_DONG_LIST: (state) => {
-      state.dongs = [{ value: null, text: "선택하세요" }];
+      state.dongs = [{ value: null, text: "동 선택" }];
+    },
+    CLEAR_HOUSE_LIST: (state) => {
+      state.houses = [];
+    },
+    CLEAR_DETAIL_HOUSE: (state) => {
+      state.house = null;
+    },
+    CLEAR_MARKER_POSITIONS: (state) => {
+      state.markerPositions = [];
     },
     SET_HOUSE_LIST: (state, houses) => {
-      console.log(houses);
       state.houses = houses;
     },
     SET_DETAIL_HOUSE: (state, house) => {
       state.house = house;
+    },
+    SET_HOUSE_COUNT: (state, length) => {
+      state.houseCnt = length;
+    },
+    SET_MARKER_POSITIONS: (state, aptsData) => {
+      state.markerPositions = aptsData.map((aptData) => [
+        aptData.lat,
+        aptData.lng,
+      ]);
     },
   },
 
@@ -51,7 +69,6 @@ const houseStore = {
     getSido: ({ commit }) => {
       sidoList(
         ({ data }) => {
-          console.log(data);
           commit("SET_SIDO_LIST", data);
         },
         (error) => {
@@ -59,14 +76,13 @@ const houseStore = {
         }
       );
     },
-    getGugun: ({ commit }, sidoCode) => {
+    getGugun: ({ commit }, sido) => {
       const params = {
-        sido: sidoCode,
+        si: sido,
       };
       gugunList(
         params,
         ({ data }) => {
-          //  console.log(commit, data);
           commit("SET_GUGUN_LIST", data);
         },
         (error) => {
@@ -74,14 +90,13 @@ const houseStore = {
         }
       );
     },
-    getDong: ({ commit }, gugunCode) => {
+    getDong: ({ commit }, gugun) => {
       const params = {
-        gugun: gugunCode,
+        gu: gugun,
       };
       dongList(
         params,
         ({ data }) => {
-          //  console.log(commit, data);
           commit("SET_DONG_LIST", data);
         },
         (error) => {
@@ -89,23 +104,18 @@ const houseStore = {
         }
       );
     },
-    getHouseList: ({ commit }, gugunCode) => {
-      // vue cli enviroment variables 검색
-      //.env.local file 생성.
-      // 반드시 VUE_APP으로 시작해야 한다.
-      const SERVICE_KEY = process.env.VUE_APP_APT_DEAL_API_KEY;
-      //   const SERVICE_KEY =
-      //     "9Xo0vlglWcOBGUDxH8PPbuKnlBwbWU6aO7%2Bk3FV4baF9GXok1yxIEF%2BIwr2%2B%2F%2F4oVLT8bekKU%2Bk9ztkJO0wsBw%3D%3D";
+    getHouseList: async ({ commit }, aptInfo) => {
       const params = {
-        LAWD_CD: gugunCode,
-        DEAL_YMD: "202203",
-        serviceKey: decodeURIComponent(SERVICE_KEY),
+        si: aptInfo.si,
+        gu: aptInfo.gu,
+        dong: aptInfo.dong,
       };
-      houseList(
+      await houseList(
         params,
-        (response) => {
-          console.log(response.data);
-          commit("SET_HOUSE_LIST", response.data.response.body.items.item);
+        ({ data }) => {
+          commit("SET_HOUSE_LIST", data);
+          commit("SET_HOUSE_COUNT", data.length);
+          commit("SET_MARKER_POSITIONS", data);
         },
         (error) => {
           console.log(error);

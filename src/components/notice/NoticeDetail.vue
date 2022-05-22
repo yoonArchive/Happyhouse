@@ -113,4 +113,10 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+@import url(//fonts.googleapis.com/earlyaccess/nanumgothic.css);
+pre,
+button {
+  font-family: "Nanum Gothic", serif;
+}
+</style>

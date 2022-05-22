@@ -33,47 +33,44 @@
     <div v-if="searchType == 'dong'" class="pb-2 d-flex justify-content-evenly">
       <div class="row">
         <select
-          v-model="sidoCode"
+          v-model="sidoName"
           @change="gugunList"
           class="array-select form-control form-select"
-          style="margin-left: 25px"
+          style="margin-left: 25px; width: 30%"
         >
-          <option value="default" selected>시 선택</option>
           <option
             v-for="(item, index) in sidos"
             :key="index"
-            :value="item.sidoCode"
+            :value="item.value"
           >
-            {{ item.sidoName }}
+            {{ item.text }}
           </option>
         </select>
         <select
-          v-model="gugunCode"
+          v-model="gugunName"
           @change="dongList"
           class="array-select form-control form-select"
         >
-          <option value="default" selected>구 선택</option>
           <option
             v-for="(item, index) in guguns"
             :key="index"
-            :value="item.guCode"
+            :value="item.value"
           >
-            {{ item.guName }}
+            {{ item.text }}
           </option>
         </select>
         <select
-          v-model="dongCode"
+          v-model="dongName"
           @change="searchApt"
           class="array-select form-control form-select"
           aria-label="example"
         >
-          <option value="default" selected>동 선택</option>
           <option
             v-for="(item, index) in dongs"
             :key="index"
-            :value="item.dongName"
+            :value="item.value"
           >
-            {{ item.dongName }}
+            {{ item.text }}
           </option>
         </select>
       </div>
@@ -116,13 +113,13 @@ export default {
   data() {
     return {
       searchType: "dong",
-      sidoCode: null,
-      gugunCode: null,
-      dongCode: null,
+      sidoName: null,
+      gugunName: null,
+      dongName: null,
     };
   },
   computed: {
-    ...mapState(houseStore, ["sidos", "guguns", "dongs", "houses"]),
+    ...mapState(houseStore, ["sidos", "guguns", "dongs", "houses", "houseCnt"]),
   },
   created() {
     this.CLEAR_SIDO_LIST();
@@ -139,21 +136,35 @@ export default {
       "CLEAR_SIDO_LIST",
       "CLEAR_GUGUN_LIST",
       "CLEAR_DONG_LIST",
+      "CLEAR_HOUSE_LIST",
+      "CLEAR_MARKER_POSITIONS",
     ]),
     gugunList() {
-      //console.log(this.sidoCode);
       this.CLEAR_GUGUN_LIST();
-      this.gugunCode = null;
-      if (this.sidoCode) this.getGugun(this.sidoCode);
+      this.gugunName = null;
+      if (this.sidoName) this.getGugun(this.sidoName);
     },
     dongList() {
-      // console.log(this.gugunCode);
       this.CLEAR_DONG_LIST();
-      this.dongCode = null;
-      if (this.gugunCode) this.getDong(this.gugunCode);
+      this.dongName = null;
+      if (this.gugunName) this.getDong(this.gugunName);
     },
-    searchApt() {
-      if (this.dongCode) this.getHouseList(this.dongCode);
+    async searchApt() {
+      if (this.dongName) {
+        this.CLEAR_MARKER_POSITIONS();
+        this.CLEAR_HOUSE_LIST();
+        const aptInfo = {
+          si: this.sidoName,
+          gu: this.gugunName,
+          dong: this.dongName,
+        };
+        await this.getHouseList(aptInfo);
+        if (this.houseCnt === 0) {
+          this.$swal("fail", "거래된 아파트가 없습니다.", "error");
+          return;
+        }
+        this.$emit("setMarker");
+      }
     },
   },
   watch: {

@@ -15,6 +15,9 @@
         <li class="nav-item mr-2">
           <router-link to="/user/login">Login | SignUp</router-link>
         </li>
+        <li class="nav-item mr-2">
+          <router-link to="/myPage">myPage</router-link>
+        </li>
       </ul>
     </nav>
     <!--<nav id="nav">

@@ -70,7 +70,6 @@
         <ul class="alt">
           <comment-list-item
             v-for="comment in comments"
-
             :key="comment.answerId"
             v-bind="comment"
             @refresh="initialize"
@@ -111,20 +110,20 @@ export default {
   computed: {
     lengthMsg() {
       return `총 ${this.comments.length}개의 댓글이 있습니다.`;
-    }
+    },
   },
   methods: {
-    initialize(){
+    initialize() {
       this.$axios
-          .get(`/qnas/${this.$route.params.questionId}`)
-          .then(({ data }) => {
-            this.questionForm.questionId = data.questionId;
-            this.questionForm.title = data.title;
-            this.questionForm.content = data.content;
-            this.questionForm.author = data.author;
-            this.questionForm.createDate = data.createDate;
-            this.comments = data.answers;
-          });
+        .get(`/qnas/${this.$route.params.questionId}`)
+        .then(({ data }) => {
+          this.questionForm.questionId = data.questionId;
+          this.questionForm.title = data.title;
+          this.questionForm.content = data.content;
+          this.questionForm.author = data.author;
+          this.questionForm.createDate = data.createDate;
+          this.comments = data.answers;
+        });
     },
     goModifyQuestion() {
       this.$router.push({
@@ -169,7 +168,7 @@ export default {
       this.$axios
         .post("/qnas/answer", commentInfo)
         .then(() => {
-          this.initialize()
+          this.initialize();
           this.commentForm.content = "";
         })
         .catch(() => {

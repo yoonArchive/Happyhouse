@@ -2,7 +2,7 @@
   <tr>
     <td>{{ index }}</td>
     <td>{{ category }}</td>
-    <td>
+    <td id="title">
       <router-link
         :to="{ name: 'NoticeDetail', params: { noticeId: noticeId } }"
         >{{ title }}</router-link
