@@ -141,13 +141,18 @@ export default {
     ]),
     gugunList() {
       this.CLEAR_GUGUN_LIST();
+      this.CLEAR_DONG_LIST();
       this.gugunName = null;
       if (this.sidoName) this.getGugun(this.sidoName);
     },
     dongList() {
       this.CLEAR_DONG_LIST();
       this.dongName = null;
-      if (this.gugunName) this.getDong(this.gugunName);
+      let sigu = {
+        sido: this.sidoName,
+        gugun: this.gugunName
+      }
+      if (this.gugunName) this.getDong(sigu);
     },
     async searchApt() {
       if (this.dongName) {

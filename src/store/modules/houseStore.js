@@ -90,9 +90,10 @@ const houseStore = {
         }
       );
     },
-    getDong: ({ commit }, gugun) => {
+    getDong: ({ commit }, sigu) => {
       const params = {
-        gu: gugun,
+        si: sigu.sido,
+        gu: sigu.gugun,
       };
       dongList(
         params,
