@@ -2,10 +2,13 @@ package com.ssafy.happyhouse.dto;
 
 import lombok.Data;
 
+import java.math.BigDecimal;
+
 @Data
 public class TradeInfo {
 
-    private String aptName;
+    private BigDecimal aptCode;
+    private String apartmentName;
     private String dongName;
     private String buildYear;
     private String area;
