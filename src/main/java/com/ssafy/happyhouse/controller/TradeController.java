@@ -31,8 +31,8 @@ public class TradeController {
     }
 
     @GetMapping("/dong")
-    public ResponseEntity<List<String>> getDongList(@RequestParam String gu) {
-        return new ResponseEntity<>(tradeService.getDongList(gu), HttpStatus.OK);
+    public ResponseEntity<List<String>> getDongList(@RequestParam Map<String, String> siAndGu) {
+        return new ResponseEntity<>(tradeService.getDongList(siAndGu), HttpStatus.OK);
     }
 
     @GetMapping("/list")

@@ -13,10 +13,10 @@
         where sidoName = #{si}
     </select>
 
-    <select id="getDongList" parameterType="string" resultType="string">
+    <select id="getDongList" parameterType="map" resultType="string">
         select distinct dongName
         from baseaddress
-        where gugunName = #{gu}
+        where sidoName = #{si} and gugunName = #{gu}
     </select>
 
     <select id="getList" parameterType="map" resultType="tradeInfo">

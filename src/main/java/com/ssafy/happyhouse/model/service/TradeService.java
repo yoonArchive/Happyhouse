@@ -11,7 +11,7 @@ public interface TradeService {
 
     List<String> getGuList(String si);
 
-    List<String> getDongList(String gu);
+    List<String> getDongList(Map<String, String> siAndGu);
 
     List<TradeInfo> getList(Map<String, String> address);
 

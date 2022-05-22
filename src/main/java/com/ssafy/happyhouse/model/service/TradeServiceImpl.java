@@ -22,8 +22,8 @@ public class TradeServiceImpl implements TradeService{
         return tradeMapper.getGuList(si);
     }
 
-    public List<String> getDongList(String gu) {
-        return tradeMapper.getDongList(gu);
+    public List<String> getDongList(Map<String, String> siAndGu) {
+        return tradeMapper.getDongList(siAndGu);
     }
 
     @Override
