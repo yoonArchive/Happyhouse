@@ -11,4 +11,6 @@ public class AptListRequest {
     private String apartmentName;
     private String lat;
     private String lng;
+    private String dongLat;
+    private String dongLng;
 }
