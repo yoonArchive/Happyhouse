@@ -1,6 +1,8 @@
 package com.ssafy.happyhouse.controller;
 
-import com.ssafy.happyhouse.dto.TradeInfo;
+import com.ssafy.happyhouse.domain.HouseInfo;
+import com.ssafy.happyhouse.domain.RoadBasedAddress;
+import com.ssafy.happyhouse.dto.AptListRequest;
 import com.ssafy.happyhouse.model.service.TradeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -35,18 +37,13 @@ public class TradeController {
         return new ResponseEntity<>(tradeService.getDongList(siAndGu), HttpStatus.OK);
     }
 
-    @GetMapping("/list")
-    public ResponseEntity<List<TradeInfo>> getList(@RequestParam Map<String, String> address) {
-        return new ResponseEntity<>(tradeService.getList(address), HttpStatus.OK);
+    @GetMapping("/search/dong")
+    public ResponseEntity<List<AptListRequest>> searchByDong(@RequestParam Map<String, String> address) {
+        return new ResponseEntity<>(tradeService.searchByDong(address), HttpStatus.OK);
     }
 
     @GetMapping("/search/apt")
-    public ResponseEntity<List<TradeInfo>> searchByApt(@RequestParam String aptName) {
+    public ResponseEntity<List<AptListRequest>> searchByApt(@RequestParam String aptName) {
         return new ResponseEntity<>(tradeService.searchByApt(aptName), HttpStatus.OK);
-    }
-
-    @GetMapping("/search/dong")
-    public ResponseEntity<List<TradeInfo>> searchByDong(@RequestParam String dongName) {
-        return new ResponseEntity<>(tradeService.searchByDong(dongName), HttpStatus.OK);
     }
 }

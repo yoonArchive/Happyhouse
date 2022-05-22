@@ -1,6 +1,6 @@
 package com.ssafy.happyhouse.model.service;
 
-import com.ssafy.happyhouse.dto.TradeInfo;
+import com.ssafy.happyhouse.dto.AptListRequest;
 
 import java.util.List;
 import java.util.Map;
@@ -13,9 +13,7 @@ public interface TradeService {
 
     List<String> getDongList(Map<String, String> siAndGu);
 
-    List<TradeInfo> getList(Map<String, String> address);
+    List<AptListRequest> searchByDong(Map<String, String> address);
 
-    List<TradeInfo> searchByApt(String aptName);
-
-    List<TradeInfo> searchByDong(String dongName);
+    List<AptListRequest> searchByApt(String aptName);
 }

@@ -19,29 +19,16 @@
         where sidoName = #{si} and gugunName = #{gu}
     </select>
 
-    <select id="getList" parameterType="map" resultType="tradeInfo">
-        select hi.aptName, hi.dongName, hi.buildYear, hd.area, hd.floor, hd.dealAmount, hd.type, hi.lat, hi.lng
+    <select id="searchByDong" parameterType="map" resultType="aptListRequest">
+        select hi.aptCode, hi.apartmentName, hi.lat, hi.lng
         from houseinfo hi
-                 join housedeal hd
-                      on hi.aptCode = hd.aptCode
         where hi.dongCode in
               (select dongCode from baseaddress where sidoName = #{si} and gugunName = #{gu} and dongName = #{dong})
     </select>
 
-    <select id="searchByApt" parameterType="string" resultType="tradeInfo">
-        select hi.aptName, hi.dongName, hi.buildYear, hd.area, hd.floor, hd.dealAmount, hd.type
-        from houseinfo hi
-                 join housedeal hd
-                      on hi.aptCode = hd.aptCode
-        where hi.aptName like concat('%', #{aptName}, '%')
-    </select>
-
-    <select id="searchByDong" parameterType="string" resultType="tradeInfo">
-        select hi.aptName, hi.dongName, hi.buildYear, hd.area, hd.floor, hd.dealAmount, hd.type
-        from houseinfo hi
-                 join housedeal hd
-                      on hi.aptCode = hd.aptCode
-        where hi.dongCode in
-              (select dongCode from baseaddress where dongName like concat('%', #{dongName}, '%'))
+    <select id="searchByApt" parameterType="string" resultType="aptListRequest">
+        select aptCode, apartmentName, lat, lng
+        from houseinfo
+        where apartmentName like concat('%', #{apartmentName}, '%')
     </select>
 </mapper>

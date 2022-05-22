@@ -1,6 +1,6 @@
 package com.ssafy.happyhouse.model.mapper;
 
-import com.ssafy.happyhouse.dto.TradeInfo;
+import com.ssafy.happyhouse.dto.AptListRequest;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -15,9 +15,7 @@ public interface TradeMapper {
 
     List<String> getDongList(Map<String, String> siAndGu);
 
-    List<TradeInfo> getList(Map<String, String> address);
+    List<AptListRequest> searchByDong(Map<String, String> address);
 
-    List<TradeInfo> searchByApt(String aptName);
-
-    List<TradeInfo> searchByDong(String dongName);
+    List<AptListRequest> searchByApt(String aptName);
 }
