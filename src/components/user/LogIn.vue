@@ -9,8 +9,9 @@
             type="text"
             name="userId"
             id="userId"
-            v-model="userId"
+            v-model="user.userId"
             placeholder="Id"
+            @keyup.enter="confirm"
           />
         </div>
         <div></div>
@@ -19,8 +20,9 @@
             type="password"
             name="userPwd"
             id="userPwd"
-            v-model="userPwd"
+            v-model="user.userPwd"
             placeholder="password"
+            @keyup.enter="confirm"
           />
         </div>
         <div></div>
@@ -69,34 +71,68 @@
 </template>
 
 <script>
+import { mapState, mapActions } from "vuex";
+
+const userStore = "userStore";
+
 export default {
+  name: "userLogin",
   data() {
     return {
-      userId: null,
-      userPwd: null,
+      user: {
+        userId: null,
+        userPwd: null,
+      },
     };
   },
+  computed: {
+    ...mapState(userStore, ["isLogin", "isLoginError"]),
+  },
   methods: {
+    ...mapActions(userStore, ["userConfirm", "getUserInfo"]),
+    async confirm() {
+      await this.userConfirm(this.user);
+      let token = sessionStorage.getItem("access-token");
+      if (this.isLogin) {
+        await this.getUserInfo(token);
+        this.$router.push({ name: "home" });
+      }
+    },
     checkValue() {
-      if (!this.userId) {
-        alert("아이디를 입력해주세요.");
+      if (!this.user.userId) {
+        this.$swal({
+          className: "swal",
+          text: "아이디를 입력해주세요.",
+        });
         return;
-      } else if (!this.userPwd) {
-        alert("비밀번호를 입력해주세요.");
+      } else if (!this.user.userPwd) {
+        this.$swal({
+          className: "swal",
+          text: "비밀번호를 입력해주세요.",
+        });
         return;
       }
       let loginInfo = {
-        userId: this.userId,
-        userPwd: this.userPwd,
+        userId: this.user.userId,
+        userPwd: this.user.userPwd,
       };
       this.$axios
         .post("/user/login", loginInfo)
         .then(() => {
-          alert("로그인 성공");
-          this.moveHome();
+          this.$swal({
+            className: "swal",
+            icon: "success",
+            text: `${this.user.userId} 님 반갑습니다.`,
+          }).then(() => {
+            this.moveHome();
+          });
         })
         .catch(() => {
-          alert("아이디 혹은 비밀번호를 다시 확인해주세요.");
+          this.$swal({
+            className: "swal",
+            icon: "warning",
+            text: "아이디 혹은 비밀번호를 다시 확인해주세요.",
+          });
         });
     },
     goFindId() {

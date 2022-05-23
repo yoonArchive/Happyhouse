@@ -3,10 +3,10 @@
     <section class="wrapper style5">
       <div class="inner">
         <div class="row">
-          <div style="width: 30%">
+          <div style="width: 20%">
             <my-page-menu />
           </div>
-          <div style="width: 60%"><user-update /></div>
+          <div style="width: 80%"><user-update /></div>
         </div>
       </div>
     </section>

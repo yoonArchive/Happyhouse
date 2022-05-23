@@ -6,10 +6,12 @@ Vue.use(Vuex);
 Vue.use(vueClapButton);
 
 import houseStore from "./modules/houseStore";
+import userStore from "./modules/userStore";
 
 export default new Vuex.Store({
   modules: {
     houseStore,
+    userStore,
   },
 
   plugins: [

@@ -52,7 +52,7 @@ const routes = [
   {
     path: "/myPage",
     name: "MyPage",
-    component: () => import("@/views/MyPage.vue"),
+    component: () => import("@/views/MyPageView.vue"),
     children: [
       // 회원정보 수정
       {

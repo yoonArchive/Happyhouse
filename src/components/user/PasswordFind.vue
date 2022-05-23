@@ -1,6 +1,8 @@
 <template>
   <section>
-    <h2 style="text-align: center">Find Password</h2>
+    <br /><br /><br /><br />
+    <h2 style="text-align: center">비밀번호 찾기</h2>
+    <h5 style="text-align: center">회원가입시 입력한 정보를 넣어 주세요.</h5>
     <form>
       <div class="row gtr-uniform aln-center">
         <div class="col-6 col-12-xsmall">
@@ -12,12 +14,7 @@
         </div>
         <div></div>
         <div class="col-6 col-12-xsmall">
-          <input
-            type="tel"
-            name="phone"
-            id="phone"
-            placeholder="010-0000-0000"
-          />
+          <input type="tel" name="phone" id="phone" placeholder="PHONE" />
         </div>
         <div></div>
         <div class="col-6">

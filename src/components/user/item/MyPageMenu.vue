@@ -1,18 +1,21 @@
 <template>
   <section>
-    <div class="table-wrapper" style="width: 70%">
+    <div
+      class="table-wrapper"
+      style="width: 130%; margin-top: 70px; margin-left: -140px"
+    >
       <table class="alt">
-        <tbody style="font-size: 0.8em; text-align: center">
+        <tbody>
           <tr>
-            <td>나의 관심 지역</td>
+            <td><a>나의 관심 지역</a></td>
           </tr>
           <tr>
             <td>
-              <router-link to="/user/modify/1">회원 정보 수정</router-link>
+              <div @click="modify"><a>회원 정보 수정</a></div>
             </td>
           </tr>
           <tr>
-            <td>회원 탈퇴</td>
+            <td><a>회원 탈퇴</a></td>
           </tr>
         </tbody>
       </table>
@@ -21,7 +24,24 @@
 </template>
 
 <script>
-export default {};
+export default {
+  methods: {
+    modify() {
+      console.log("modify");
+    },
+  },
+};
 </script>
 
-<style></style>
+<style scoped>
+@import url(//fonts.googleapis.com/earlyaccess/nanumgothic.css);
+section {
+  font-family: "Nanum Gothic", serif;
+}
+tr {
+  background-color: white;
+  font-weight: 600;
+  font-size: 0.7em;
+  text-align: center;
+}
+</style>

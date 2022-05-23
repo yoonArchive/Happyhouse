@@ -39,7 +39,7 @@
             type="password"
             name="userPwd-check"
             id="userPwd-check"
-            v-model="userPwdCheck"
+            v-model="newPwdCheck"
             placeholder="새로운 비밀번호 (확인)"
           />
         </div>
@@ -93,7 +93,8 @@ export default {
     return {
       userId: null,
       userPwd: null,
-      userPwdCheck: null,
+      newPwd: null,
+      newPwdCheck: null,
       userName: null,
       email: null,
       phone: null,
@@ -101,12 +102,11 @@ export default {
       msg: "",
     };
   },
-  methods: {
-    moveHome() {
-      this.$router.push("/");
-    },
-  },
 };
 </script>
 
-<style></style>
+<style scoped>
+input {
+  font-size: 0.9em;
+}
+</style>
