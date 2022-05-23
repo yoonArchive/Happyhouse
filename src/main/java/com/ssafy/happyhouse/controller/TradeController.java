@@ -40,7 +40,7 @@ public class TradeController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<HouseListResponse>> search(@RequestParam String keyword) {
+    public ResponseEntity<List<HouseListResponse>> search(@RequestParam String keyword) throws Exception {
         return new ResponseEntity<>(tradeService.search(keyword), HttpStatus.OK);
     }
 

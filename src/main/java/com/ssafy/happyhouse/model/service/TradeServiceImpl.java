@@ -36,15 +36,19 @@ public class TradeServiceImpl implements TradeService {
 
     @Override
     public List<HouseListResponse> searchByDong(Map<String, String> address) {
-        List<HouseListResponse> houseListResponses = tradeMapper.searchByDong(address)
-                .orElseGet(() -> tradeMapper.getDongLocation(address));
+        List<HouseListResponse> houseListResponses = tradeMapper.searchByDong(address);
+        if (houseListResponses == null) {
+            return tradeMapper.getDongLocation(address);
+        }
         return houseListResponses;
     }
 
     @Override
     public List<HouseListResponse> search(String keyword) throws Exception {
-        List<HouseListResponse> houseListResponses = tradeMapper.search(keyword)
-                .orElseThrow(() -> new Exception(KEYWORD_NOT_FOUND));
+        List<HouseListResponse> houseListResponses = tradeMapper.search(keyword);
+        if (houseListResponses == null) {
+            throw new Exception(KEYWORD_NOT_FOUND);
+        }
         return houseListResponses;
     }
 
