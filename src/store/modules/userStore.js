@@ -8,6 +8,9 @@ const userStore = {
     isLogin: false,
     isLoginError: false,
     userInfo: null,
+    clickMyArea: false,
+    clickUserModify: false,
+    clickUserDelete: false,
   },
   getters: {
     checkUserInfo: function (state) {
@@ -24,6 +27,26 @@ const userStore = {
     SET_USER_INFO: (state, userInfo) => {
       state.isLogin = true;
       state.userInfo = userInfo;
+    },
+    SET_CLICK_MY_AREA: (state) => {
+      state.clickMyArea = true;
+      state.clickUserModify = false;
+      state.clickUserDelete = false;
+    },
+    SET_CLICK_USER_MODIFY: (state) => {
+      state.clickUserModify = true;
+      state.clickMyArea = false;
+      state.clickUserDelete = false;
+    },
+    SET_CLICK_USER_DELETE: (state) => {
+      state.clickUserDelete = true;
+      state.clickMyArea = false;
+      state.clickUserModify = false;
+    },
+    CLEAR_CLICK_MENU: (state) => {
+      state.clickUserDelete = false;
+      state.clickMyArea = false;
+      state.clickUserModify = false;
     },
   },
   actions: {
@@ -59,6 +82,15 @@ const userStore = {
           console.log(error);
         }
       );
+    },
+    showUserArea({ commit }) {
+      commit("SET_CLICK_MY_AREA");
+    },
+    showUserModify({ commit }) {
+      commit("SET_CLICK_USER_MODIFY");
+    },
+    showUserDelete({ commit }) {
+      commit("SET_CLICK_USER_DELETE");
     },
   },
 };

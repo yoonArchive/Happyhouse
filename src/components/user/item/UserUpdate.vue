@@ -88,6 +88,10 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
+const userStore = "userStore";
+
 export default {
   data() {
     return {
@@ -101,6 +105,9 @@ export default {
       isAvailable: false,
       msg: "",
     };
+  },
+  computed: {
+    ...mapState(userStore, ["userInfo"]),
   },
 };
 </script>
