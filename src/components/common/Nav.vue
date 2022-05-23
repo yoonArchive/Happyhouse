@@ -15,38 +15,26 @@
         <li class="nav-item mr-2">
           <router-link to="/user/login">Login | SignUp</router-link>
         </li>
+        <li class="nav-item mr-2"><a @click="userLogout">Logout</a></li>
         <li class="nav-item mr-2">
           <router-link to="/myPage">myPage</router-link>
         </li>
       </ul>
     </nav>
-    <!--<nav id="nav">
-      <ul>
-        <li class="special">
-          <a href="#menu" class="menuToggle" @click="showMenu"
-            ><span>Menu</span></a
-          >
-          <div id="menu">
-            <ul>
-              <li><a href="#">Home</a></li>
-              <li><a href="#">Generic</a></li>
-              <li><a href="#">Elements</a></li>
-              <li><a href="#">Notice</a></li>
-              <li><a href="#">Sign Up</a></li>
-              <li><a href="#">Log In</a></li>
-            </ul>
-          </div>
-        </li>
-      </ul>
-    </nav>-->
   </header>
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
+const userStore = "userStore";
+
 export default {
   methods: {
-    showMenu() {
-      console.log("menu");
+    ...mapActions(userStore, ["logout"]),
+    userLogout() {
+      this.logout();
+      this.$router.push("/");
     },
   },
 };
