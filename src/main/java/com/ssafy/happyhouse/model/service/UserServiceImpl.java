@@ -48,5 +48,4 @@ public class UserServiceImpl implements UserService {
 	public int deleteById(String userId) throws SQLException {
 		return userMapper.deleteById(userId);
 	}
-
 }
