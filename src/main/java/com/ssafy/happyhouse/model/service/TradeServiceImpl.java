@@ -60,6 +60,7 @@ public class TradeServiceImpl implements TradeService {
                 .stream()
                 .map(houseDeal -> HouseDealResponse.builder()
                         .no(houseDeal.getNo())
+                        .dealAmount(houseDeal.getDealAmount())
                         .dealDate(houseDeal.getDealDate())
                         .area(houseDeal.getArea())
                         .floor(houseDeal.getFloor())

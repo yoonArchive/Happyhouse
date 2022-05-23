@@ -9,6 +9,7 @@ import java.util.Date;
 public class HouseDeal {
 
     private BigDecimal no;
+    private String dealAmount;
     private int dealYear;
     private int dealMonth;
     private int dealDay;

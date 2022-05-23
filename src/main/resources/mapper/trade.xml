@@ -62,6 +62,7 @@
 
         <collection property="houseDeals" javaType="list" ofType="houseDeal">
             <id column="no" property="no"/>
+            <result column="dealAmount" property="dealAmount"/>
             <result column="dealYear" property="dealYear"/>
             <result column="dealMonth" property="dealMonth"/>
             <result column="dealDay" property="dealDay"/>
@@ -74,6 +75,7 @@
     <select id="getDetail" parameterType="decimal" resultMap="tradeInfos">
         select houseinfo.aptCode  houseinfo_aptCode,
                apartmentName,
+               dealAmount,
                buildYear,
                roadNameCode,
                roadName,
