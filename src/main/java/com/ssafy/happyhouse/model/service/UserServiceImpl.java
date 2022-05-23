@@ -2,11 +2,14 @@ package com.ssafy.happyhouse.model.service;
 
 import java.sql.SQLException;
 
+import com.ssafy.happyhouse.dto.UserUpdateRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.happyhouse.dto.User;
 import com.ssafy.happyhouse.model.mapper.UserMapper;
+
+import static com.ssafy.happyhouse.common.ErrorMessage.USER_NOT_FOUND;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -35,7 +38,15 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public int updateUser(User user) throws SQLException {
+	public int updateUser(String userId, UserUpdateRequest userUpdateRequest) throws Exception {
+		User user = userMapper.selectById(userId);
+		if (user == null) {
+			throw new Exception(USER_NOT_FOUND);
+		}
+		user.setUserPwd(userUpdateRequest.getUserPwd());
+		user.setUserName(userUpdateRequest.getName());
+		user.setEmail(userUpdateRequest.getEmail());
+		user.setPhone(userUpdateRequest.getPhone());
 		return userMapper.updateUser(user);
 	}
 

@@ -1,6 +1,7 @@
 package com.ssafy.happyhouse.controller;
 
 import static com.ssafy.happyhouse.common.ErrorMessage.USER_NOT_FOUND;
+import static com.ssafy.happyhouse.common.ErrorMessage.USER_UPDATE_FAIL;
 
 import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
@@ -8,6 +9,7 @@ import java.util.Date;
 
 import javax.servlet.http.HttpSession;
 
+import com.ssafy.happyhouse.dto.UserUpdateRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -75,15 +77,10 @@ public class UserController {
 
     @PostMapping("/detail")
     public ResponseEntity<User> getDetail(@RequestBody UserRequest userRequest) throws Exception {
-        // token 꺼내오기
-        String userToken = userRequest.getUserToken();
-        // 파싱
         Claims body = Jwts.parser()
                 .setSigningKey(SALT.getBytes(StandardCharsets.UTF_8))
-                .parseClaimsJws(userToken)
+                .parseClaimsJws(userRequest.getUserToken())
                 .getBody();
-        System.out.println(body);
-        System.out.println(body.get("id"));
         User user = userService.selectById((String) body.get("id"));
         if (user == null) {
             throw new Exception(USER_NOT_FOUND);
@@ -127,22 +124,34 @@ public class UserController {
     }
 
     @PutMapping
-    public ResponseEntity<?> updateUser(@RequestBody User user, HttpSession session) throws Exception {
-        int cnt = userService.updateUser(user);
-        if (cnt != 0) {
-            session.setAttribute("userInfo", user);
-            return new ResponseEntity<Void>(HttpStatus.OK);
-        } else
-            return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
+    public ResponseEntity<UserResponse> updateUser(@RequestBody UserUpdateRequest userUpdateRequest) throws Exception {
+        Claims body = Jwts.parser()
+                .setSigningKey(SALT.getBytes(StandardCharsets.UTF_8))
+                .parseClaimsJws(userUpdateRequest.getUserToken())
+                .getBody();
+        if (userService.updateUser((String) body.get("id"), userUpdateRequest) == 0) {
+            throw new Exception(USER_UPDATE_FAIL);
+        }
+
+        String jwt = Jwts.builder().setHeaderParam("typ", "JWT")
+                .setHeaderParam("regDate", System.currentTimeMillis())
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * EXPIRE_MINUTES))
+                .setSubject("access-token")
+                .claim("id", body.get("id"))
+                .claim("name", userUpdateRequest.getName())
+                .signWith(SignatureAlgorithm.HS256, SALT.getBytes("UTF-8")).compact();
+        return new ResponseEntity<>(new UserResponse(jwt), HttpStatus.OK);
     }
 
-    @DeleteMapping("/{userId}")
-    public ResponseEntity<?> deleteUser(@PathVariable String userId, HttpSession session) throws SQLException {
-        int cnt = userService.deleteById(userId);
-        if (cnt == 1) {
-            session.invalidate();
-            return new ResponseEntity<Void>(HttpStatus.OK);
-        } else
-            return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
+    @DeleteMapping
+    public ResponseEntity<Void> deleteUser(@RequestBody UserRequest userRequest) throws Exception {
+        Claims body = Jwts.parser()
+                .setSigningKey(SALT.getBytes(StandardCharsets.UTF_8))
+                .parseClaimsJws(userRequest.getUserToken())
+                .getBody();
+        if (userService.deleteById((String) body.get("id")) == 0) {
+            throw new Exception(USER_NOT_FOUND);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

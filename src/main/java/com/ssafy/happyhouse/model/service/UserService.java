@@ -3,6 +3,7 @@ package com.ssafy.happyhouse.model.service;
 import java.sql.SQLException;
 
 import com.ssafy.happyhouse.dto.User;
+import com.ssafy.happyhouse.dto.UserUpdateRequest;
 
 public interface UserService {
 
@@ -14,7 +15,7 @@ public interface UserService {
 
 	String findPwd(User user) throws SQLException;
 
-	int updateUser(User user) throws SQLException;
+	int updateUser(String user, UserUpdateRequest userUpdateRequest) throws SQLException, Exception;
 
 	User selectById(String userId) throws SQLException;
 
