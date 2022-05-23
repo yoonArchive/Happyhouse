@@ -303,7 +303,7 @@ export default {
 }
 
 #userId {
-  width: 71%;
+  width: 68%;
 }
 
 #buttons {
