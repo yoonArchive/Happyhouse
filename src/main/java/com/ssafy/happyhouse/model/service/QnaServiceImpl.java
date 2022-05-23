@@ -1,6 +1,5 @@
 package com.ssafy.happyhouse.model.service;
 
-import com.ssafy.happyhouse.common.AnswerStatus;
 import com.ssafy.happyhouse.dto.Answer;
 import com.ssafy.happyhouse.dto.Question;
 import com.ssafy.happyhouse.model.mapper.QnaMapper;
@@ -15,6 +14,9 @@ import java.util.function.Function;
 
 @Service
 public class QnaServiceImpl implements QnaService {
+
+    private static final String ANSWER_WAITING = "답변 대기";
+    private static final String ANSWER_DONE = "답변 완료";
 
     @Autowired
     QnaMapper qnaMapper;
@@ -33,7 +35,7 @@ public class QnaServiceImpl implements QnaService {
 
     @Override
     public int registerQuestion(Question question) {
-        question.setStatus(AnswerStatus.NOT_YET);
+        question.setStatus(ANSWER_WAITING);
         return qnaMapper.registerQuestion(question);
     }
 
@@ -41,7 +43,7 @@ public class QnaServiceImpl implements QnaService {
     @Transactional
     public int registerAnswer(Answer answer) {
         Question question = qnaMapper.getDetail(answer.getQuestionId());
-        question.setStatus(AnswerStatus.DONE);
+        question.setStatus(ANSWER_DONE);
         qnaMapper.updateAnswerStatus(question);
         return qnaMapper.registerAnswer(answer);
     }
@@ -66,7 +68,7 @@ public class QnaServiceImpl implements QnaService {
         Question question = qnaMapper.getQuestion(answerId);
         int result = qnaMapper.deleteAnswer(answerId);
         if (question.getAnswers().size() == 1 && result == 1) {
-            question.setStatus(AnswerStatus.NOT_YET);
+            question.setStatus(ANSWER_WAITING);
             qnaMapper.updateAnswerStatus(question);
         }
         return result;

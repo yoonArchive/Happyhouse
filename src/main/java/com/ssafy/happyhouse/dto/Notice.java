@@ -11,5 +11,5 @@ public class Notice {
     private String content;
     private String author;
     private String createDate;
-    private NoticeCategory category;
+    private String category;
 }
