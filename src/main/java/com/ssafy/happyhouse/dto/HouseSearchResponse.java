@@ -10,7 +10,9 @@ public class HouseSearchResponse {
     private BigDecimal aptCode;
     private String apartmentName;
     private String dongCode;
-    private String dong;
+    private String sidoName;
+    private String gugunName;
+    private String dongName;
     private String lat;
     private String lng;
 }

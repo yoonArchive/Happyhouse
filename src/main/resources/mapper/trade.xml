@@ -36,8 +36,10 @@
     </select>
 
     <select id="search" parameterType="string" resultType="houseSearchResponse">
-        select aptCode, apartmentName, dongCode, dong, lat, lng
+        select aptCode, apartmentName, houseinfo.dongCode, sidoName, gugunName, dongName, houseinfo.lat, houseinfo.lng
         from houseinfo
+                 join baseaddress
+                      on houseinfo.dongCode = baseaddress.dongCode
         where apartmentName like concat('%', #{keyword}, '%')
            or dong like concat('%', #{keyword}, '%')
     </select>
