@@ -1,7 +1,9 @@
 package com.ssafy.happyhouse.model.service;
 
+import com.ssafy.happyhouse.dto.HouseDetailResponse;
 import com.ssafy.happyhouse.dto.HouseListResponse;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -15,5 +17,7 @@ public interface TradeService {
 
     List<HouseListResponse> searchByDong(Map<String, String> address);
 
-    List<HouseListResponse> searchByApt(String aptName);
+    List<HouseListResponse> search(String keyword);
+
+    List<HouseDetailResponse> getHouseDeal(BigDecimal aptCode);
 }

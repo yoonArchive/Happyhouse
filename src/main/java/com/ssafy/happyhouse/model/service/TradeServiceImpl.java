@@ -1,10 +1,12 @@
 package com.ssafy.happyhouse.model.service;
 
+import com.ssafy.happyhouse.dto.HouseDetailResponse;
 import com.ssafy.happyhouse.dto.HouseListResponse;
 import com.ssafy.happyhouse.model.mapper.TradeMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -32,7 +34,12 @@ public class TradeServiceImpl implements TradeService{
     }
 
     @Override
-    public List<HouseListResponse> searchByApt(String aptName) {
-        return tradeMapper.searchByApt(aptName);
+    public List<HouseListResponse> search(String keyword) {
+        return tradeMapper.search(keyword);
+    }
+
+    @Override
+    public List<HouseDetailResponse> getHouseDeal(BigDecimal aptCode) {
+        return tradeMapper.getHouseDeal(aptCode);
     }
 }

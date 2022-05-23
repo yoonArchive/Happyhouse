@@ -1,15 +1,14 @@
 package com.ssafy.happyhouse.controller;
 
+import com.ssafy.happyhouse.dto.HouseDetailResponse;
 import com.ssafy.happyhouse.dto.HouseListResponse;
 import com.ssafy.happyhouse.model.service.TradeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -40,8 +39,13 @@ public class TradeController {
         return new ResponseEntity<>(tradeService.searchByDong(address), HttpStatus.OK);
     }
 
-    @GetMapping("/search/apt")
-    public ResponseEntity<List<HouseListResponse>> searchByApt(@RequestParam String aptName) {
-        return new ResponseEntity<>(tradeService.searchByApt(aptName), HttpStatus.OK);
+    @GetMapping("/search")
+    public ResponseEntity<List<HouseListResponse>> search(@RequestParam String keyword) {
+        return new ResponseEntity<>(tradeService.search(keyword), HttpStatus.OK);
+    }
+
+    @GetMapping("/{aptCode}")
+    public ResponseEntity<List<HouseDetailResponse>> getDetail(@PathVariable BigDecimal aptCode) {
+        return new ResponseEntity<>(tradeService.getHouseDeal(aptCode), HttpStatus.OK);
     }
 }
