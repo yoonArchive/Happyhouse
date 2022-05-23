@@ -12,5 +12,6 @@ public class HouseInfo {
     private String apartmentName;
     private RoadBasedAddress roadBasedAddress;
     private BaseAddress baseAddress;
+    private int buildYear;
     private List<HouseDeal> houseDeals;
 }

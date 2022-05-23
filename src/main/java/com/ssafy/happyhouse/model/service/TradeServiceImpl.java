@@ -63,6 +63,7 @@ public class TradeServiceImpl implements TradeService {
                 .roadBasedAddress(houseInfo.getRoadBasedAddress().toRoadBasedAddress())
                 .dongCode(houseInfo.getBaseAddress().getDongCode())
                 .baseAddress(houseInfo.getBaseAddress().toBaseAddress())
+                .buildYear(houseInfo.getBuildYear())
                 .houseDeals(houseDealResponses)
                 .build();
     }

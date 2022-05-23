@@ -37,6 +37,7 @@
     <resultMap id="tradeInfos" type="houseInfo">
         <id column="houseinfo_aptCode" property="aptCode"/>
         <result column="apartmentName" property="apartmentName"/>
+        <result column="buildYear" property="buildYear"/>
 
         <association property="roadBasedAddress" javaType="roadBasedAddress">
             <id column="roadNameCode" property="roadNameCode"/>
@@ -67,6 +68,7 @@
     <select id="getDetail" parameterType="decimal" resultMap="tradeInfos">
         select houseinfo.aptCode  houseinfo_aptCode,
                apartmentName,
+               buildYear,
                roadNameCode,
                roadName,
                roadNameBonBun,
