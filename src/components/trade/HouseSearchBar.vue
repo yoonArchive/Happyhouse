@@ -217,7 +217,7 @@ export default {
       this.listVisible = false;
       if (val === "dong") {
         console.log("watch dong");
-        this.initSearchByDongBox();
+        //this.initSearchByDongBox();
       } else if (val === "keyword") {
         if (this.listVisible) this.listVisible = false;
         console.log("watch keyword");
