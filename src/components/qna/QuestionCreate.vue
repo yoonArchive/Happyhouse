@@ -57,7 +57,6 @@ export default {
         title: "",
         content: "",
         author: "ssafy", // 나중에 수정
-        status: "NOT_YET",
       },
     };
   },
@@ -67,7 +66,6 @@ export default {
         title: this.registForm.title,
         content: this.registForm.content,
         author: this.registForm.author,
-        status: this.registForm.status,
       };
       this.$axios
         .post("/qnas/question", questionInfo)
