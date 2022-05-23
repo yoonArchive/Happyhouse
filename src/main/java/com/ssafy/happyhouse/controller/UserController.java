@@ -17,6 +17,8 @@ import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 import java.util.Date;
 
+import static com.ssafy.happyhouse.common.ErrorMessage.USER_NOT_FOUND;
+
 @RestController
 @CrossOrigin("*")
 @RequestMapping("/user")
@@ -46,21 +48,21 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<UserResponse> login(@RequestBody User user) throws Exception {
         User userInfo = userService.login(user);
-        if (userInfo != null) {
-            String jwt = Jwts.builder().setHeaderParam("typ", "JWT")
-                    .setHeaderParam("regDate", System.currentTimeMillis())
-                    .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * EXPIRE_MINUTES))
-                    .setSubject("access-token")
-                    .claim("id", userInfo.getUserId())
-                    .claim("name", userInfo.getUserName())
-                    .signWith(SignatureAlgorithm.HS256, SALT.getBytes("UTF-8")).compact();
-            return new ResponseEntity<>(new UserResponse(jwt), HttpStatus.OK);
-        } else
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        if (userInfo == null) {
+            throw new Exception(USER_NOT_FOUND);
+        }
+        String jwt = Jwts.builder().setHeaderParam("typ", "JWT")
+                .setHeaderParam("regDate", System.currentTimeMillis())
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * EXPIRE_MINUTES))
+                .setSubject("access-token")
+                .claim("id", userInfo.getUserId())
+                .claim("name", userInfo.getUserName())
+                .signWith(SignatureAlgorithm.HS256, SALT.getBytes("UTF-8")).compact();
+        return new ResponseEntity<>(new UserResponse(jwt), HttpStatus.OK);
     }
 
     @PostMapping("/detail")
-    public ResponseEntity<User> getDetail(@RequestBody UserRequest userRequest) throws SQLException {
+    public ResponseEntity<User> getDetail(@RequestBody UserRequest userRequest) throws Exception {
         // token 꺼내오기
         String userToken = userRequest.getUserToken();
         // 파싱
@@ -70,7 +72,11 @@ public class UserController {
                 .getBody();
         System.out.println(body);
         System.out.println(body.get("id"));
-        return new ResponseEntity<>(userService.selectById((String) body.get("id")), HttpStatus.OK);
+        User user = userService.selectById((String) body.get("id"));
+        if (user == null) {
+            throw new Exception(USER_NOT_FOUND);
+        }
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     @PostMapping("/logout")
@@ -82,6 +88,15 @@ public class UserController {
                 .getBody();
         System.out.println(body);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/findId")
+    public ResponseEntity<String> findId(@RequestParam String userName, String phone) throws Exception {
+        String userId = userService.findId(userName, phone);
+        if (userId == null) {
+            throw new Exception(USER_NOT_FOUND);
+        }
+        return new ResponseEntity<>(userId, HttpStatus.OK);
     }
 
     @GetMapping("/findPwd")

@@ -19,4 +19,6 @@ public interface UserMapper {
 	User selectById(String userId) throws SQLException;
 
 	int deleteById(String userId) throws SQLException;
+
+	String findId(String userName, String phone);
 }
