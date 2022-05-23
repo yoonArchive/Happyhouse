@@ -27,8 +27,8 @@
               (select dongCode from baseaddress where sidoName = #{si} and gugunName = #{gu} and dongName = #{dong})
     </select>
 
-    <select id="search" parameterType="string" resultType="houseListResponse">
-        select aptCode, apartmentName, lat, lng
+    <select id="search" parameterType="string" resultType="houseSearchResponse">
+        select aptCode, apartmentName, dongCode, dong, lat, lng
         from houseinfo
         where apartmentName like concat('%', #{keyword}, '%')
            or dong like concat('%', #{keyword}, '%')
