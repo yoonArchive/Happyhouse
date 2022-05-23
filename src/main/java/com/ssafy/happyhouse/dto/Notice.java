@@ -1,6 +1,5 @@
 package com.ssafy.happyhouse.dto;
 
-import com.ssafy.happyhouse.common.NoticeCategory;
 import lombok.Data;
 
 @Data
