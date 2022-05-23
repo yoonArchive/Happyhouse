@@ -14,11 +14,14 @@ import static com.ssafy.happyhouse.common.ErrorMessage.USER_NOT_FOUND;
 @Service
 public class UserServiceImpl implements UserService {
 
+	private static final String USER = "사용자";
+
 	@Autowired
 	private UserMapper userMapper;
 
 	@Override
 	public void registerUser(User user) throws SQLException {
+		user.setAuthority(USER);
 		userMapper.registerUser(user);
 	}
 
