@@ -1,11 +1,11 @@
 package com.ssafy.happyhouse.model.service;
 
-import com.ssafy.happyhouse.dto.HouseDetailResponse;
-import com.ssafy.happyhouse.dto.HouseListResponse;
-
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
+
+import com.ssafy.happyhouse.dto.HouseDetailResponse;
+import com.ssafy.happyhouse.dto.HouseListResponse;
 
 public interface TradeService {
 

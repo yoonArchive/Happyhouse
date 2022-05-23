@@ -1,11 +1,12 @@
 package com.ssafy.happyhouse.dto;
 
+import java.util.List;
+
 import com.ssafy.happyhouse.domain.HouseDeal;
 import com.ssafy.happyhouse.domain.OriginalAddress;
 import com.ssafy.happyhouse.domain.RoadBasedAddress;
-import lombok.Data;
 
-import java.util.List;
+import lombok.Data;
 
 @Data
 public class HouseDetailResponse {
