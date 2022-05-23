@@ -30,6 +30,64 @@
     <select id="search" parameterType="string" resultType="houseListResponse">
         select aptCode, apartmentName, lat, lng
         from houseinfo
-        where apartmentName like concat('%', #{keyword}, '%') or dong like concat('%', #{keyword}, '%')
+        where apartmentName like concat('%', #{keyword}, '%')
+           or dong like concat('%', #{keyword}, '%')
+    </select>
+
+    <resultMap id="tradeInfos" type="houseInfo">
+        <id column="houseinfo_aptCode" property="aptCode"/>
+        <result column="apartmentName" property="apartmentName"/>
+
+        <association property="roadBasedAddress" javaType="roadBasedAddress">
+            <id column="roadNameCode" property="roadNameCode"/>
+            <result column="roadName" property="roadName"/>
+            <result column="roadNameBonBun" property="roadNameBonBun"/>
+            <result column="roadNameBuBun" property="roadNameBuBun"/>
+        </association>
+
+        <association property="baseAddress" javaType="baseAddress">
+            <id column="houseinfo_dongCode" property="dongCode"/>
+            <result column="sidoName" property="sidoName"/>
+            <result column="gugunName" property="gugunName"/>
+            <result column="dongName" property="dongName"/>
+            <result column="jibun" property="jibun"/>
+        </association>
+
+        <collection property="houseDeals" javaType="list" ofType="houseDeal">
+            <id column="no" property="no"/>
+            <result column="dealYear" property="dealYear"/>
+            <result column="dealMonth" property="dealMonth"/>
+            <result column="dealDay" property="dealDay"/>
+            <result column="area" property="area"/>
+            <result column="floor" property="floor"/>
+            <result column="housedeal_aptCode" property="aptCode"/>
+        </collection>
+    </resultMap>
+
+    <select id="getDetail" parameterType="decimal" resultMap="tradeInfos">
+        select houseinfo.aptCode  houseinfo_aptCode,
+               apartmentName,
+               roadNameCode,
+               roadName,
+               roadNameBonBun,
+               roadNameBuBun,
+               houseinfo.dongCode houseinfo_dongCode,
+               sidoName,
+               gugunName,
+               dongName,
+               jibun,
+               housedeal.no,
+               dealYear,
+               dealMonth,
+               dealDay,
+               area,
+               floor,
+               housedeal.aptCode  housedeal_aptCode
+        from baseaddress,
+             houseinfo
+                 left join housedeal
+                      on houseinfo.aptCode = housedeal.aptCode
+        where houseinfo.aptCode = #{aptCode}
+          and baseaddress.dongCode = houseinfo.dongCode
     </select>
 </mapper>

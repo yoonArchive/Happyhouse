@@ -1,21 +1,31 @@
 package com.ssafy.happyhouse.dto;
 
-import java.util.List;
-
+import com.ssafy.happyhouse.domain.HouseDeal;
+import lombok.Builder;
 import lombok.Data;
+
+import java.math.BigDecimal;
+import java.util.List;
 
 @Data
 public class HouseDetailResponse {
 
+    private BigDecimal aptCode;
     private String apartmentName;
     private String roadNameCode;
-    private String roadName;
-    private String roadNameBonBun;
-    private String roadNameBuBun;
+    private String roadBasedAddress;
     private String dongCode;
-    private String sidoName;
-    private String gugunName;
-    private String dongName;
-    private String jibun;
+    private String baseAddress;
     private List<HouseDeal> houseDeals;
+
+    @Builder
+    public HouseDetailResponse(BigDecimal aptCode, String apartmentName, String roadNameCode, String roadBasedAddress, String dongCode, String baseAddress, List<HouseDeal> houseDeals) {
+        this.aptCode = aptCode;
+        this.apartmentName = apartmentName;
+        this.roadNameCode = roadNameCode;
+        this.roadBasedAddress = roadBasedAddress;
+        this.dongCode = dongCode;
+        this.baseAddress = baseAddress;
+        this.houseDeals = houseDeals;
+    }
 }

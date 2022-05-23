@@ -1,12 +1,13 @@
 package com.ssafy.happyhouse.model.mapper;
 
-import com.ssafy.happyhouse.dto.HouseDetailResponse;
+import com.ssafy.happyhouse.domain.HouseInfo;
 import com.ssafy.happyhouse.dto.HouseListResponse;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Mapper
 public interface TradeMapper {
@@ -21,5 +22,5 @@ public interface TradeMapper {
 
     List<HouseListResponse> search(String keyword);
 
-    List<HouseDetailResponse> getHouseDeal(BigDecimal aptCode);
+    Optional<HouseInfo> getDetail(BigDecimal aptCode);
 }

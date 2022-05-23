@@ -1,5 +1,6 @@
 package com.ssafy.happyhouse.model.service;
 
+import com.ssafy.happyhouse.domain.HouseInfo;
 import com.ssafy.happyhouse.dto.HouseDetailResponse;
 import com.ssafy.happyhouse.dto.HouseListResponse;
 import com.ssafy.happyhouse.model.mapper.TradeMapper;
@@ -10,8 +11,10 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
+import static com.ssafy.happyhouse.common.ErrorMessage.APT_NOT_FOUND;
+
 @Service
-public class TradeServiceImpl implements TradeService{
+public class TradeServiceImpl implements TradeService {
 
     @Autowired
     private TradeMapper tradeMapper;
@@ -39,7 +42,17 @@ public class TradeServiceImpl implements TradeService{
     }
 
     @Override
-    public List<HouseDetailResponse> getHouseDeal(BigDecimal aptCode) {
-        return tradeMapper.getHouseDeal(aptCode);
+    public HouseDetailResponse getDetail(BigDecimal aptCode) throws Exception {
+        HouseInfo houseInfo = tradeMapper.getDetail(aptCode)
+                .orElseThrow(() -> new Exception(APT_NOT_FOUND));
+        return HouseDetailResponse.builder()
+                .aptCode(houseInfo.getAptCode())
+                .apartmentName(houseInfo.getApartmentName())
+                .roadNameCode(houseInfo.getRoadBasedAddress().getRoadNameCode())
+                .roadBasedAddress(houseInfo.getRoadBasedAddress().toRoadBasedAddress())
+                .dongCode(houseInfo.getBaseAddress().getDongCode())
+                .baseAddress(houseInfo.getBaseAddress().toBaseAddress())
+                .houseDeals(houseInfo.getHouseDeals())
+                .build();
     }
 }

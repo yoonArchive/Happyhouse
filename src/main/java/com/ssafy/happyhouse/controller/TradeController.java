@@ -1,21 +1,16 @@
 package com.ssafy.happyhouse.controller;
 
-import java.math.BigDecimal;
-import java.util.List;
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.ssafy.happyhouse.dto.HouseDetailResponse;
 import com.ssafy.happyhouse.dto.HouseListResponse;
 import com.ssafy.happyhouse.model.service.TradeService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/trade")
@@ -50,7 +45,7 @@ public class TradeController {
     }
 
     @GetMapping("/{aptCode}")
-    public ResponseEntity<List<HouseDetailResponse>> getDetail(@PathVariable BigDecimal aptCode) {
-        return new ResponseEntity<>(tradeService.getHouseDeal(aptCode), HttpStatus.OK);
+    public ResponseEntity<HouseDetailResponse> getDetail(@PathVariable String aptCode) throws Exception {
+        return new ResponseEntity<>(tradeService.getDetail(new BigDecimal(aptCode)), HttpStatus.OK);
     }
 }

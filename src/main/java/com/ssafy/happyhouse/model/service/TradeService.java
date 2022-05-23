@@ -19,5 +19,5 @@ public interface TradeService {
 
     List<HouseListResponse> search(String keyword);
 
-    List<HouseDetailResponse> getHouseDeal(BigDecimal aptCode);
+    HouseDetailResponse getDetail(BigDecimal aptCode) throws Exception;
 }
