@@ -3,6 +3,7 @@ package com.ssafy.happyhouse.domain;
 import lombok.Data;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 @Data
 public class HouseDeal {
@@ -14,4 +15,8 @@ public class HouseDeal {
     private String area;
     private String floor;
     private BigDecimal aptCode;
+
+    public Date getDealDate() {
+        return new Date(dealYear-1900, dealMonth-1, dealDay+1);
+    }
 }

@@ -1,6 +1,7 @@
 package com.ssafy.happyhouse.model.service;
 
 import com.ssafy.happyhouse.domain.HouseInfo;
+import com.ssafy.happyhouse.dto.HouseDealResponse;
 import com.ssafy.happyhouse.dto.HouseDetailResponse;
 import com.ssafy.happyhouse.dto.HouseListResponse;
 import com.ssafy.happyhouse.model.mapper.TradeMapper;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static com.ssafy.happyhouse.common.ErrorMessage.APT_NOT_FOUND;
 
@@ -45,6 +47,15 @@ public class TradeServiceImpl implements TradeService {
     public HouseDetailResponse getDetail(BigDecimal aptCode) throws Exception {
         HouseInfo houseInfo = tradeMapper.getDetail(aptCode)
                 .orElseThrow(() -> new Exception(APT_NOT_FOUND));
+        List<HouseDealResponse> houseDealResponses = houseInfo.getHouseDeals()
+                .stream()
+                .map(houseDeal -> HouseDealResponse.builder()
+                        .no(houseDeal.getNo())
+                        .dealDate(houseDeal.getDealDate())
+                        .area(houseDeal.getArea())
+                        .floor(houseDeal.getFloor())
+                        .build())
+                .collect(Collectors.toList());
         return HouseDetailResponse.builder()
                 .aptCode(houseInfo.getAptCode())
                 .apartmentName(houseInfo.getApartmentName())
@@ -52,7 +63,7 @@ public class TradeServiceImpl implements TradeService {
                 .roadBasedAddress(houseInfo.getRoadBasedAddress().toRoadBasedAddress())
                 .dongCode(houseInfo.getBaseAddress().getDongCode())
                 .baseAddress(houseInfo.getBaseAddress().toBaseAddress())
-                .houseDeals(houseInfo.getHouseDeals())
+                .houseDeals(houseDealResponses)
                 .build();
     }
 }

@@ -1,6 +1,5 @@
 package com.ssafy.happyhouse.dto;
 
-import com.ssafy.happyhouse.domain.HouseDeal;
 import lombok.Builder;
 import lombok.Data;
 
@@ -16,10 +15,10 @@ public class HouseDetailResponse {
     private String roadBasedAddress;
     private String dongCode;
     private String baseAddress;
-    private List<HouseDeal> houseDeals;
+    private List<HouseDealResponse> houseDeals;
 
     @Builder
-    public HouseDetailResponse(BigDecimal aptCode, String apartmentName, String roadNameCode, String roadBasedAddress, String dongCode, String baseAddress, List<HouseDeal> houseDeals) {
+    public HouseDetailResponse(BigDecimal aptCode, String apartmentName, String roadNameCode, String roadBasedAddress, String dongCode, String baseAddress, List<HouseDealResponse> houseDeals) {
         this.aptCode = aptCode;
         this.apartmentName = apartmentName;
         this.roadNameCode = roadNameCode;
