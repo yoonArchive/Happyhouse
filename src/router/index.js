@@ -65,7 +65,6 @@ const routes = [
   // 실거래가
   {
     path: "/trade",
-    name: "Trade",
     component: () => import("@/views/TradeView.vue"),
     children: [
       // 조회
@@ -79,7 +78,6 @@ const routes = [
   // 공지사항
   {
     path: "/notice",
-    name: "Notice",
     component: () => import("@/views/NoticeView.vue"),
     children: [
       // 공지사항 목록
@@ -111,7 +109,6 @@ const routes = [
   // Q&A
   {
     path: "/qna",
-    name: "QnA",
     component: () => import("@/views/QnAView.vue"),
     children: [
       // 질문 목록

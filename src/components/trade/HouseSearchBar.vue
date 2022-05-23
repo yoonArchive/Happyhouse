@@ -151,8 +151,8 @@ export default {
       this.dongName = null;
       let sigu = {
         sido: this.sidoName,
-        gugun: this.gugunName
-      }
+        gugun: this.gugunName,
+      };
       if (this.gugunName) this.getDong(sigu);
     },
     async searchHouseLisByDong() {
@@ -172,6 +172,7 @@ export default {
         this.$emit("setMarker");
       }
     },
+    keywordSearch() {},
   },
   watch: {
     searchType: function (val) {

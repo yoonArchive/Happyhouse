@@ -11,7 +11,6 @@
             id="userId"
             v-model="user.userId"
             placeholder="Id"
-            @keyup.enter="confirm"
           />
         </div>
         <div></div>
@@ -89,12 +88,10 @@ export default {
     ...mapState(userStore, ["isLogin", "isLoginError"]),
   },
   methods: {
-    ...mapActions(userStore, ["userConfirm", "getUserInfo"]),
+    ...mapActions(userStore, ["login"]),
     async confirm() {
-      await this.userConfirm(this.user);
-      let token = sessionStorage.getItem("access-token");
+      await this.login(this.user);
       if (this.isLogin) {
-        await this.getUserInfo(token);
         this.$router.push({ name: "home" });
       }
     },
@@ -112,7 +109,8 @@ export default {
         });
         return;
       }
-      let loginInfo = {
+      this.confirm();
+      /*let loginInfo = {
         userId: this.user.userId,
         userPwd: this.user.userPwd,
       };
@@ -133,7 +131,7 @@ export default {
             icon: "warning",
             text: "아이디 혹은 비밀번호를 다시 확인해주세요.",
           });
-        });
+        });*/
     },
     goFindId() {
       this.$router.push("/user/findid");

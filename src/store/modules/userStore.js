@@ -1,6 +1,5 @@
 import jwt_decode from "jwt-decode";
-import { login } from "@/api/user.js";
-import { findPwd } from "../../api/user";
+import axios from "@/api/http";
 
 const userStore = {
   namespaced: true,
@@ -12,11 +11,7 @@ const userStore = {
     clickUserModify: false,
     clickUserDelete: false,
   },
-  getters: {
-    checkUserInfo: function (state) {
-      return state.userInfo;
-    },
-  },
+  getters: {},
   mutations: {
     SET_IS_LOGIN: (state, isLogin) => {
       state.isLogin = isLogin;
@@ -48,40 +43,28 @@ const userStore = {
       state.clickMyArea = false;
       state.clickUserModify = false;
     },
+    CLEAR_USER_INFO: (state) => {
+      state.isLogin = false;
+      state.userInfo = null;
+    },
   },
   actions: {
-    async userConfirm({ commit }, user) {
-      await login(
-        user,
-        (response) => {
-          if (response.data.message === "success") {
-            let token = response.data["access-token"];
-            commit("SET_IS_LOGIN", true);
-            commit("SET_IS_LOGIN_ERROR", false);
-            sessionStorage.setItem("access-token", token);
-          } else {
-            commit("SET_IS_LOGIN", false);
-            commit("SET_IS_LOGIN_ERROR", true);
-          }
-        },
-        () => {}
-      );
+    async login({ commit }, loginInfo) {
+      let { data } = await axios.post(`/user/login`, loginInfo);
+      console.log(data);
+      let token = data["userToken"];
+      console.log(token);
+      sessionStorage.setItem("access-token", token);
+      let decodedToken = jwt_decode(token);
+      console.log("토큰 정보 :", decodedToken);
+      commit("SET_USER_INFO", {
+        id: decodedToken.id,
+        name: decodedToken.name,
+      });
     },
-    getUserInfo({ commit }, token) {
-      let decode_token = jwt_decode(token);
-      findPwd(
-        decode_token.userId,
-        (response) => {
-          if (response.data.message === "success") {
-            commit("SET_USER_INFO", response.data.userInfo);
-          } else {
-            console.log("유저 정보 없음");
-          }
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+    logout({ commit }) {
+      sessionStorage.removeItem("access-token");
+      commit("CLEAR_USER_INFO");
     },
     showUserArea({ commit }) {
       commit("SET_CLICK_MY_AREA");
