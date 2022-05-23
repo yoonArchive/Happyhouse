@@ -30,7 +30,9 @@
     <select id="getDongLocation" parameterType="map" resultType="houseListResponse">
         select lat, lng
         from baseaddress
-        where sidoName = #{si} and gugunName = #{gu} and dongName = #{dong}
+        where sidoName = #{si}
+          and gugunName = #{gu}
+          and dongName = #{dong}
     </select>
 
     <select id="search" parameterType="string" resultType="houseSearchResponse">
@@ -96,8 +98,9 @@
         from baseaddress,
              houseinfo
                  left join housedeal
-                      on houseinfo.aptCode = housedeal.aptCode
+                           on houseinfo.aptCode = housedeal.aptCode
         where houseinfo.aptCode = #{aptCode}
           and baseaddress.dongCode = houseinfo.dongCode
+        order by dealYear desc, dealMonth desc, dealDay desc
     </select>
 </mapper>
