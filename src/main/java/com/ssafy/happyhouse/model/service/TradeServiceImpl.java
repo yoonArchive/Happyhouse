@@ -14,6 +14,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import static com.ssafy.happyhouse.common.ErrorMessage.APT_NOT_FOUND;
+import static com.ssafy.happyhouse.common.ErrorMessage.KEYWORD_NOT_FOUND;
 
 @Service
 public class TradeServiceImpl implements TradeService {
@@ -35,12 +36,16 @@ public class TradeServiceImpl implements TradeService {
 
     @Override
     public List<HouseListResponse> searchByDong(Map<String, String> address) {
-        return tradeMapper.searchByDong(address);
+        List<HouseListResponse> houseListResponses = tradeMapper.searchByDong(address)
+                .orElseGet(() -> tradeMapper.getDongLocation(address));
+        return houseListResponses;
     }
 
     @Override
-    public List<HouseListResponse> search(String keyword) {
-        return tradeMapper.search(keyword);
+    public List<HouseListResponse> search(String keyword) throws Exception {
+        List<HouseListResponse> houseListResponses = tradeMapper.search(keyword)
+                .orElseThrow(() -> new Exception(KEYWORD_NOT_FOUND));
+        return houseListResponses;
     }
 
     @Override

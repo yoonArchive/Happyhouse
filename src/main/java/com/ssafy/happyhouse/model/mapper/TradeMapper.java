@@ -18,9 +18,11 @@ public interface TradeMapper {
 
     List<String> getDongList(Map<String, String> siAndGu);
 
-    List<HouseListResponse> searchByDong(Map<String, String> address);
+    Optional<List<HouseListResponse>> searchByDong(Map<String, String> address);
 
-    List<HouseListResponse> search(String keyword);
+    Optional<List<HouseListResponse>> search(String keyword);
 
     Optional<HouseInfo> getDetail(BigDecimal aptCode);
+
+    List<HouseListResponse> getDongLocation(Map<String, String> address);
 }

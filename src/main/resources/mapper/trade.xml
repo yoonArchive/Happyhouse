@@ -27,6 +27,12 @@
               (select dongCode from baseaddress where sidoName = #{si} and gugunName = #{gu} and dongName = #{dong})
     </select>
 
+    <select id="getDongLocation" parameterType="map" resultType="houseListResponse">
+        select lat, lng
+        from baseaddress
+        where sidoName = #{si} and gugunName = #{gu} and dongName = #{dong}
+    </select>
+
     <select id="search" parameterType="string" resultType="houseSearchResponse">
         select aptCode, apartmentName, dongCode, dong, lat, lng
         from houseinfo

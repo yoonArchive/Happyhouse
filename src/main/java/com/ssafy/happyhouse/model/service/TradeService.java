@@ -17,7 +17,7 @@ public interface TradeService {
 
     List<HouseListResponse> searchByDong(Map<String, String> address);
 
-    List<HouseListResponse> search(String keyword);
+    List<HouseListResponse> search(String keyword) throws Exception;
 
     HouseDetailResponse getDetail(BigDecimal aptCode) throws Exception;
 }
