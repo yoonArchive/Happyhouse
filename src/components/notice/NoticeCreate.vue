@@ -26,9 +26,9 @@
                 v-model="registForm.category"
               >
                 <option value="">- Category -</option>
-                <option value="UPDATE">업데이트</option>
-                <option value="NOTICE">알림</option>
-                <option value="BUG">버그 개선</option>
+                <option value="업데이트">업데이트</option>
+                <option value="알림">알림</option>
+                <option value="버그개선">버그개선</option>
               </select>
             </div>
             <div class="col-12">
