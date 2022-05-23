@@ -6,11 +6,23 @@
     <form>
       <div class="row gtr-uniform aln-center">
         <div class="col-6 col-12-xsmall">
-          <input type="text" name="userName" id="userName" placeholder="Name" />
+          <input
+            type="text"
+            name="userName"
+            id="userName"
+            placeholder="Name"
+            v-model="userName"
+          />
         </div>
         <div></div>
         <div class="col-6 col-12-xsmall">
-          <input type="tel" name="phone" id="phone" placeholder="PHONE" />
+          <input
+            type="tel"
+            name="phone"
+            id="phone"
+            placeholder="PHONE"
+            v-model="userPhone"
+          />
         </div>
         <div></div>
         <div class="col-6">
@@ -41,8 +53,34 @@
 
 <script>
 export default {
+  data() {
+    return {
+      userName: null,
+      userPhone: null,
+    };
+  },
   methods: {
-    getPw() {},
+    getID() {
+      this.$axios
+        .get(`/user/findId`, {
+          params: {
+            userName: this.userName,
+            phone: this.userPhone,
+          },
+        })
+        .then(({ data }) => {
+          this.$swal.fire({
+            icon: "success",
+            html: `고객님의 정보와 일치하는 아이디는 <br>${data} 입니다.`,
+          });
+        })
+        .catch(() => {
+          this.$swal.fire({
+            icon: "error",
+            html: `고객님의 정보와 일치하는 회원정보가 없습니다.`,
+          });
+        });
+    },
     goLogin() {
       this.$router.push("/user/login");
     },

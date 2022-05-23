@@ -5,7 +5,7 @@
       <div class="inner">
         <h2>Happy House</h2>
         <p>Welcome to the HappyHouse</p>
-        <ul class="actions special">
+        <ul class="actions special" @click="limitAccess">
           <li>
             <router-link to="/trade" class="button primary"
               >실거래가 조회</router-link
@@ -173,13 +173,27 @@
 </template>
 
 <script>
-// @ is an alias to /src
-//import HelloWorld from "@/components/HelloWorld.vue";
+import { mapState } from "vuex";
+
+const userStore = "userStore";
 
 export default {
   name: "HomeView",
-  components: {
-    //HelloWorld,
+  computed: {
+    ...mapState(userStore, ["userInfo"]),
+  },
+
+  methods: {
+    limitAccess() {
+      if (!this.userInfo) {
+        this.$swal(
+          "접근 실패",
+          "Happy House 회원만 접근할 수 있습니다.",
+          "error"
+        );
+        this.$router.push("/user/login");
+      }
+    },
   },
 };
 </script>

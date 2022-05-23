@@ -1,4 +1,10 @@
-import { sidoList, gugunList, dongList, houseListByDong } from "@/api/house.js";
+import {
+  sidoList,
+  gugunList,
+  dongList,
+  showDetail,
+  houseListByDong,
+} from "@/api/house.js";
 
 const houseStore = {
   namespaced: true,
@@ -10,6 +16,8 @@ const houseStore = {
     house: null,
     houseCnt: 0,
     markerPositions: [],
+    houseInfo: null,
+    houseDeals: [],
   },
 
   getters: {},
@@ -29,6 +37,12 @@ const houseStore = {
       dongs.forEach((dong) => {
         state.dongs.push({ value: dong, text: dong });
       });
+    },
+    SET_HOUSE_INFO: (state, houseInfo) => {
+      state.houseInfo = houseInfo;
+    },
+    SET_HOUSE_DEALS: (state, houseDeals) => {
+      state.houseDeals = houseDeals;
     },
     CLEAR_SIDO_LIST: (state) => {
       state.sidos = [{ value: null, text: "시 선택" }];
@@ -69,6 +83,7 @@ const houseStore = {
     getSido: ({ commit }) => {
       sidoList(
         ({ data }) => {
+          console.log(data);
           commit("SET_SIDO_LIST", data);
         },
         (error) => {
@@ -111,9 +126,11 @@ const houseStore = {
         gu: aptInfo.gu,
         dong: aptInfo.dong,
       };
+      console.log(params);
       await houseListByDong(
         params,
         ({ data }) => {
+          console.log(data);
           commit("SET_HOUSE_LIST_BY_DONG", data);
           commit("SET_HOUSE_COUNT", data.length);
           commit("SET_MARKER_POSITIONS", data);
@@ -123,9 +140,30 @@ const houseStore = {
         }
       );
     },
-    detailHouse: ({ commit }, house) => {
+    detailHouse: ({ commit }, aptCode) => {
+      showDetail(
+        aptCode,
+        ({ data }) => {
+          // 해당 아파트에 대한 모든 실거래가 정보
+          let houseInfoData = {
+            apartmentName: data.apartmentName,
+            aptCode: data.aptCode,
+            baseAddress: data.baseAddress,
+            roadBasedAddress: data.roadBasedAddress,
+            dongCode: data.dongCode,
+            buildYear: data.buildYear,
+          };
+          console.log(houseInfoData);
+          commit("SET_HOUSE_INFO", houseInfoData);
+          console.log(data.houseDeals);
+          commit("SET_HOUSE_DEALS", data.houseDeals);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
       // 나중에 house.일련번호를 이용하여 API 호출
-      commit("SET_DETAIL_HOUSE", house);
+      commit("SET_DETAIL_HOUSE", aptCode);
     },
   },
 };

@@ -4,7 +4,7 @@
       <div id="detailBox" class="card">
         <div class="table-wrapper">
           <div class="row">
-            <h4>{{ house.aptName }}</h4>
+            <h4>{{ houseInfo.apartmentName }}</h4>
             <vue-clap-button
               class="icon"
               icon="love"
@@ -15,29 +15,38 @@
           <table>
             <tbody>
               <tr>
-                <td>주소</td>
-                <td>{{ house.dongName }}</td>
+                <td>지번 주소</td>
+                <td>{{ houseInfo.baseAddress }}</td>
+              </tr>
+              <tr>
+                <td>도로명 주소</td>
+                <td>{{ houseInfo.roadBasedAddress }}</td>
               </tr>
               <tr>
                 <td>건축년도</td>
-                <td>{{ house.buildYear }}</td>
-              </tr>
-              <tr>
-                <td>면적</td>
-                <td>{{ house.area }}</td>
-              </tr>
-              <tr>
-                <td>거래금액</td>
-                <td>
-                  {{
-                    (parseInt(house.dealAmount.replace(",", "")) * 10000)
-                      | price
-                  }}
-                </td>
+                <td>{{ houseInfo.buildYear }}</td>
               </tr>
             </tbody>
           </table>
 
+          <div style="height: 440px; overflow: auto">
+            <table>
+              <thead>
+                <th>거래일자</th>
+                <th>면적</th>
+                <th>층수</th>
+                <th>가격</th>
+              </thead>
+              <tbody>
+                <tr v-for="(houseDeal, index) in houseDeals" :key="index">
+                  <td>{{ houseDeal.dealDate | date }}</td>
+                  <td>{{ houseDeal.area }}</td>
+                  <td>{{ houseDeal.floor }}</td>
+                  <td>{{ houseDeal.dealAmount }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
           <!--<HeartBtn
           v-if="isAuth && level == 2"
           class="px-1"
@@ -60,15 +69,15 @@ export default {
   name: "HouseDetail",
   components: {},
   computed: {
-    ...mapState(houseStore, ["house", "houses"]),
+    ...mapState(houseStore, ["house", "houseInfo", "houseDeals"]),
   },
   methods: {
     onBookmarkHouse() {},
   },
   filters: {
-    price(value) {
+    date(value) {
       if (!value) return value;
-      return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      return value.substr(0, 10);
     },
   },
 };
@@ -104,6 +113,7 @@ table {
 }
 th,
 td {
+  color: black;
   padding: 2px;
 }
 </style>

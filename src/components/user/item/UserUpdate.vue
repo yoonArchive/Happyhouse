@@ -8,10 +8,10 @@
             type="text"
             name="userId"
             id="userId"
-            v-model="userId"
             placeholder="Id"
+            v-model="userId"
+            readonly
           />
-          <div id="idResult" class="mb-3">{{ msg }}</div>
         </div>
         <div></div>
         <div class="col-6 col-12-xsmall">
@@ -31,17 +31,20 @@
             id="newPwd"
             v-model="newPwd"
             placeholder="새로운 비밀번호"
+            @keyup="checkPassword"
           />
         </div>
         <div></div>
         <div class="col-6 col-12-xsmall">
           <input
             type="password"
-            name="userPwd-check"
-            id="userPwd-check"
+            name="newPwd-check"
+            id="newPwd-check"
             v-model="newPwdCheck"
             placeholder="새로운 비밀번호 (확인)"
+            @keyup="checkPassword"
           />
+          <div id="passwordResult" class="mb-3">{{ passwordCheckMessage }}</div>
         </div>
         <div></div>
         <div class="col-6 col-12-xsmall">
@@ -78,7 +81,7 @@
           <ul class="actions stacked">
             <li></li>
             <li>
-              <button type="button" class="button">변경</button>
+              <button type="button" class="button" @click="modify">변경</button>
             </li>
           </ul>
         </div>
@@ -88,7 +91,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapActions, mapMutations } from "vuex";
 
 const userStore = "userStore";
 
@@ -96,18 +99,108 @@ export default {
   data() {
     return {
       userId: null,
-      userPwd: null,
-      newPwd: null,
-      newPwdCheck: null,
+      userPwd: "",
+      newPwd: "",
+      newPwdCheck: "",
       userName: null,
       email: null,
       phone: null,
       isAvailable: false,
-      msg: "",
+      passwordCheckMessage: "",
+      isCheckPassword: false,
     };
   },
   computed: {
-    ...mapState(userStore, ["userInfo"]),
+    ...mapState(userStore, ["user", "userInfo", "isUpdated"]),
+  },
+  created() {
+    this.getDetail();
+    this.userId = this.user.userId;
+    this.userName = this.user.userName;
+    this.email = this.user.email;
+    this.phone = this.user.phone;
+  },
+  methods: {
+    ...mapActions(userStore, ["getDetail", "updateUser", "showUserModify"]),
+    ...mapMutations(userStore, ["CLEAR_IS_UPDATED"]),
+    checkPassword() {
+      if (this.newPwdCheck.length === 0 || this.newPwd === this.newPwdCheck) {
+        this.passwordCheckMessage = "";
+        this.isCheckPassword = true;
+      } else {
+        this.passwordCheckMessage = "비밀번호가 일치하지 않습니다.";
+        this.isCheckPassword = false;
+      }
+    },
+    modify() {
+      let regEmail =
+        /^[0-9a-zA-Z]([-_\\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
+      let regPhone = /01[016789]-[^0][0-9]{2,3}-[0-9]{3,4}/;
+
+      if (!this.userPwd) {
+        this.$swal({
+          className: "swal",
+          text: "비밀번호를 입력해주세요.",
+        });
+      } else if (!this.isCheckPassword) {
+        this.$swal({
+          className: "swal",
+          text: "비밀번호가 일치하지 않습니다.",
+        });
+      } else if (!this.userName) {
+        this.$swal({
+          className: "swal",
+          text: "이름을 입력해주세요.",
+        });
+      } else if (!this.email) {
+        this.$swal({
+          className: "swal",
+          text: "이메일을 입력해주세요.",
+        });
+      } else if (!regEmail.test(this.email)) {
+        this.$swal({
+          className: "swal",
+          text: "이메일 형식을 확인해주세요.",
+        });
+      } else if (!this.phone) {
+        this.$swal({
+          className: "swal",
+          text: "연락처를 입력해주세요.",
+        });
+      } else if (!regPhone.test(this.phone)) {
+        this.$swal({
+          className: "swal",
+          text: "연락처 형식을 확인해주세요.",
+        });
+      } else {
+        let data = {
+          userPwd: this.newPwd,
+          name: this.userName,
+          email: this.email,
+          phone: this.phone,
+        };
+        this.updateUser(data);
+        this.reset();
+
+        /*if (this.isUpdated) {
+          this.$swal({
+            className: "swal",
+            text: "수정 성공",
+          });
+          this.CLEAR_IS_UPDATED();
+        } else {
+          this.$swal({
+            className: "swal",
+            text: "수정 실패",
+          });
+        }*/
+      }
+    },
+    reset() {
+      this.userPwd = "";
+      this.newPwd = "";
+      this.newPwdCheck = "";
+    },
   },
 };
 </script>

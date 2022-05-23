@@ -181,7 +181,7 @@ export default {
     signup() {
       let regEmail =
         /^[0-9a-zA-Z]([-_\\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
-      let regPhone = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/;
+      let regPhone = /01[016789]-[^0][0-9]{2,3}-[0-9]{3,4}/;
 
       if (!this.userId) {
         this.$swal({
@@ -203,6 +203,11 @@ export default {
           className: "swal",
           text: "비밀번호를 입력해주세요.",
         });
+      } else if (!this.isCheckPassword) {
+        this.$swal({
+          className: "swal",
+          text: "비밀번호가 일치하지 않습니다.",
+        });
       } else if (!this.userName) {
         this.$swal({
           className: "swal",
@@ -216,7 +221,7 @@ export default {
       } else if (!regEmail.test(this.email)) {
         this.$swal({
           className: "swal",
-          text: "이메일을 확인해주세요.",
+          text: "이메일 형식을 확인해주세요.",
         });
       } else if (!this.phone) {
         this.$swal({
@@ -226,7 +231,7 @@ export default {
       } else if (!regPhone.test(this.phone)) {
         this.$swal({
           className: "swal",
-          text: "연락처를 확인해주세요.",
+          text: "연락처 형식을 확인해주세요.",
         });
       } else {
         let data = {

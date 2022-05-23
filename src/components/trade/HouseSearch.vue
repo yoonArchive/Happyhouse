@@ -69,9 +69,8 @@ export default {
       "SET_DETAIL_HOUSE",
       "CLEAR_DETAIL_HOUSE",
     ]),
-    selectHouse(selectedHouse) {
-      console.log(selectedHouse);
-      this.detailHouse(selectedHouse);
+    selectHouse(selectedAptCode) {
+      this.detailHouse(selectedAptCode);
     },
     initMap() {
       const container = document.getElementById("map");
@@ -108,7 +107,7 @@ export default {
         this.markers.forEach((marker, index) => {
           let item = this.houses[index];
           kakao.maps.event.addListener(marker, "click", () => {
-            this.selectHouse(item);
+            this.selectHouse(item.aptCode);
           });
         });
 

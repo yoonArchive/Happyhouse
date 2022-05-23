@@ -61,7 +61,7 @@
         </select>
         <select
           v-model="dongName"
-          @change="searchHouseLisByDong"
+          @change="searchHouseListByDong"
           class="array-select form-control form-select"
           aria-label="example"
         >
@@ -155,7 +155,7 @@ export default {
       };
       if (this.gugunName) this.getDong(sigu);
     },
-    async searchHouseLisByDong() {
+    async searchHouseListByDong() {
       if (this.dongName) {
         this.CLEAR_MARKER_POSITIONS();
         this.CLEAR_HOUSE_LIST();

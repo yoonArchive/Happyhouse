@@ -4,8 +4,10 @@ import axios from "@/api/http";
 const userStore = {
   namespaced: true,
   state: {
+    user: null,
     isLogin: false,
     isLoginError: false,
+    //isUpdated: false,
     userInfo: null,
     clickMyArea: false,
     clickUserModify: false,
@@ -19,9 +21,15 @@ const userStore = {
     SET_IS_LOGIN_ERROR: (state, isLoginError) => {
       state.isLoginError = isLoginError;
     },
+    // SET_IS_UPDATED: (state) => {
+    //   state.isUpdated = true;
+    // },
     SET_USER_INFO: (state, userInfo) => {
       state.isLogin = true;
       state.userInfo = userInfo;
+    },
+    SET_USER_DETAIL: (state, user) => {
+      state.user = user;
     },
     SET_CLICK_MY_AREA: (state) => {
       state.clickMyArea = true;
@@ -46,7 +54,11 @@ const userStore = {
     CLEAR_USER_INFO: (state) => {
       state.isLogin = false;
       state.userInfo = null;
+      state.user = null;
     },
+    // CLEAR_IS_UPDATED: (state) => {
+    //   state.isUpdated = false;
+    // },
   },
   actions: {
     async login({ commit }, loginInfo) {
@@ -65,6 +77,40 @@ const userStore = {
     logout({ commit }) {
       sessionStorage.removeItem("access-token");
       commit("CLEAR_USER_INFO");
+    },
+    async getDetail({ commit }) {
+      let token = {
+        userToken: sessionStorage.getItem("access-token"),
+      };
+      let { data } = await axios.post(`user/detail`, token);
+      commit("SET_USER_DETAIL", data);
+    },
+    async updateUser({ commit }, changeData) {
+      let updateInfo = {
+        userToken: sessionStorage.getItem("access-token"),
+        userPwd: changeData.userPwd,
+        name: changeData.name,
+        email: changeData.email,
+        phone: changeData.phone,
+      };
+      await axios
+        .put(`user`, updateInfo)
+        .then(({ data }) => {
+          alert("회원정보가 수정되었습니다.");
+          //commit("SET_IS_UPDATED");
+          let token = data["userToken"];
+          sessionStorage.setItem("access-token", token);
+          let decodedToken = jwt_decode(token);
+          commit("SET_USER_DETAIL", updateInfo);
+          commit("SET_USER_INFO", {
+            id: decodedToken.id,
+            name: decodedToken.name,
+          });
+        })
+        .catch(() => {
+          alert("회원정보 수정 실패");
+          // commit("CLEAR_IS_UPDATED");
+        });
     },
     showUserArea({ commit }) {
       commit("SET_CLICK_MY_AREA");
