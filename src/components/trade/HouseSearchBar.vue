@@ -99,6 +99,29 @@
       >
         검색
       </button>
+      <br /><br />
+      <div
+        v-if="keywordList"
+        style="height: 440px; overflow: auto; font-size: 12px; color: black"
+      >
+        <table>
+          <thead>
+            <th style="font-size: 13px; color: black; width: 55%">주소</th>
+            <th style="font-size: 13px; color: black; width: 45%">아파트명</th>
+          </thead>
+          <tbody>
+            <tr v-for="(element, index) in keywordList" :key="index">
+              <td>
+                {{ element.sidoName }} {{ element.gugunName }}
+                {{ element.dongName }}
+              </td>
+              <td @click="selectApt(index)">
+                <a>{{ element.apartmentName }}</a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </template>
@@ -116,10 +139,18 @@ export default {
       sidoName: null,
       gugunName: null,
       dongName: null,
+      inputKeyword: null,
     };
   },
   computed: {
-    ...mapState(houseStore, ["sidos", "guguns", "dongs", "houses", "houseCnt"]),
+    ...mapState(houseStore, [
+      "sidos",
+      "guguns",
+      "dongs",
+      "houses",
+      "houseCnt",
+      "keywordList",
+    ]),
   },
   created() {
     this.CLEAR_SIDO_LIST();
@@ -131,6 +162,8 @@ export default {
       "getGugun",
       "getDong",
       "getHouseListByDong",
+      "getListByKeyword",
+      "detailHouse",
     ]),
     ...mapMutations(houseStore, [
       "CLEAR_SIDO_LIST",
@@ -172,7 +205,12 @@ export default {
         this.$emit("setMarker");
       }
     },
-    keywordSearch() {},
+    keywordSearch() {
+      this.getListByKeyword(this.inputKeyword);
+    },
+    selectApt(index) {
+      this.detailHouse(this.keywordList[index].aptCode);
+    },
   },
   watch: {
     searchType: function (val) {

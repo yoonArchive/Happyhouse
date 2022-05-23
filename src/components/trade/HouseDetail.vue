@@ -3,6 +3,7 @@
     <div v-if="house">
       <div id="detailBox" class="card">
         <div class="table-wrapper">
+          <img src="@/assets/img/apt.jpg" alt="My Image" height="180" />
           <div class="row">
             <h4>{{ houseInfo.apartmentName }}</h4>
             <vue-clap-button
@@ -13,23 +14,25 @@
             ></vue-clap-button>
           </div>
           <table>
-            <tbody>
-              <tr>
-                <td>지번 주소</td>
+            <tbody id="aptDetail">
+              <tr style="background-color: white">
+                <td style="font-weight: 700; text-align: center">지번 주소</td>
                 <td>{{ houseInfo.baseAddress }}</td>
               </tr>
-              <tr>
-                <td>도로명 주소</td>
+              <tr style="background-color: white">
+                <td style="font-weight: 700; text-align: center">
+                  도로명 주소
+                </td>
                 <td>{{ houseInfo.roadBasedAddress }}</td>
               </tr>
-              <tr>
-                <td>건축년도</td>
+              <tr style="background-color: white">
+                <td style="font-weight: 700; text-align: center">건축년도</td>
                 <td>{{ houseInfo.buildYear }}</td>
               </tr>
             </tbody>
           </table>
 
-          <div style="height: 440px; overflow: auto">
+          <div style="height: 250px; overflow: auto">
             <table>
               <thead>
                 <th>거래일자</th>

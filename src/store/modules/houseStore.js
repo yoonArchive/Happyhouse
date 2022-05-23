@@ -4,6 +4,7 @@ import {
   dongList,
   showDetail,
   houseListByDong,
+  ListByKeyword,
 } from "@/api/house.js";
 
 const houseStore = {
@@ -18,6 +19,7 @@ const houseStore = {
     markerPositions: [],
     houseInfo: null,
     houseDeals: [],
+    keywordList: [],
   },
 
   getters: {},
@@ -38,11 +40,17 @@ const houseStore = {
         state.dongs.push({ value: dong, text: dong });
       });
     },
+    SET_HOUSE: (state, house) => {
+      state.house = house;
+    },
     SET_HOUSE_INFO: (state, houseInfo) => {
       state.houseInfo = houseInfo;
     },
     SET_HOUSE_DEALS: (state, houseDeals) => {
       state.houseDeals = houseDeals;
+    },
+    SET_KEYWORD_LIST: (state, keywordResults) => {
+      state.keywordList = keywordResults;
     },
     CLEAR_SIDO_LIST: (state) => {
       state.sidos = [{ value: null, text: "시 선택" }];
@@ -134,6 +142,21 @@ const houseStore = {
           commit("SET_HOUSE_LIST_BY_DONG", data);
           commit("SET_HOUSE_COUNT", data.length);
           commit("SET_MARKER_POSITIONS", data);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    },
+    getListByKeyword: async ({ commit }, keyword) => {
+      const params = {
+        keyword: keyword,
+      };
+      await ListByKeyword(
+        params,
+        ({ data }) => {
+          console.log(data);
+          commit("SET_KEYWORD_LIST", data);
         },
         (error) => {
           console.log(error);

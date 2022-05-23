@@ -25,4 +25,15 @@ async function houseListByDong(params, success, fail) {
     .catch(fail);
 }
 
-export { sidoList, gugunList, dongList, showDetail, houseListByDong };
+async function ListByKeyword(params, success, fail) {
+  await api.get(`trade/search`, { params: params }).then(success).catch(fail);
+}
+
+export {
+  sidoList,
+  gugunList,
+  dongList,
+  showDetail,
+  houseListByDong,
+  ListByKeyword,
+};
