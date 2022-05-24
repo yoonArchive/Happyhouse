@@ -2,7 +2,7 @@
   <article id="main">
     <header>
       <h2>Notice</h2>
-      <p>공지사항</p>
+      <p>최신 Happy House의 소식을 확인하실 수 있습니다.</p>
     </header>
     <section class="wrapper style5">
       <div class="inner">
@@ -44,7 +44,8 @@
             <li><a href="#" class="page">9</a></li>
             <li><a href="#" class="page">10</a></li>
             <li><a href="#" class="button small">Next</a></li>
-            <button v-show="userInfo.authority==='관리자'"
+            <button
+              v-show="userInfo.authority === '관리자'"
               type="button"
               class="button small"
               id="registNoticeBtn"
@@ -61,7 +62,7 @@
 </template>
 
 <script>
-import {mapState} from "vuex";
+import { mapState } from "vuex";
 import NoticeListItem from "@/components/notice/item/NoticeListItem.vue";
 
 const userStore = "userStore";
@@ -82,7 +83,7 @@ export default {
     });
   },
   computed: {
-    ...mapState(userStore, ["userInfo"])
+    ...mapState(userStore, ["userInfo"]),
   },
   methods: {
     moveWrite() {

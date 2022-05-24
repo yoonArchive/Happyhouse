@@ -2,7 +2,7 @@
   <article id="main">
     <header>
       <h2>Q&A</h2>
-      <p>1:1 문의</p>
+      <p>Happy House와 관련하여 궁금하신 점을 남겨주세요.</p>
     </header>
     <section class="wrapper style5">
       <div class="inner">
@@ -13,8 +13,8 @@
               <col style="width: 10%" />
               <col style="width: 45%" />
               <col style="width: 20%" />
-              <col style="width: 15%" />
               <col style="width: 10%" />
+              <col style="width: 15%" />
             </colgroup>
             <thead>
               <tr>
@@ -119,16 +119,16 @@ export default {
     },
     search() {
       console.log(this.searchCategory);
-      let url = '/qnas/search';
-      if (this.searchCategory !== '') {
-        url += '/' + this.searchCategory;
+      let url = "/qnas/search";
+      if (this.searchCategory !== "") {
+        url += "/" + this.searchCategory;
       }
       this.$axios
-        .get(url + '?keyword=' + this.searchKeyword)
+        .get(url + "?keyword=" + this.searchKeyword)
         .then(({ data }) => {
           this.questions = data;
         });
-    }
+    },
   },
 };
 </script>

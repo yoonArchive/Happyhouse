@@ -23,6 +23,9 @@
         <li class="nav-item mr-2" v-if="userInfo">
           <router-link to="/myPage">myPage</router-link>
         </li>
+        <li class="nav-item mr-2" v-if="userInfo">
+          <router-link to="/admin">admin</router-link>
+        </li>
       </ul>
     </nav>
   </header>

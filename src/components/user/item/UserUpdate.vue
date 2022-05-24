@@ -79,7 +79,6 @@
         <div></div>
         <div class="col-6 col-12-medium">
           <ul class="actions stacked">
-            <li></li>
             <li>
               <button type="button" class="button" @click="modify">변경</button>
             </li>

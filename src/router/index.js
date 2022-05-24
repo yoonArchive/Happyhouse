@@ -137,6 +137,20 @@ const routes = [
       },
     ],
   },
+  // 관리자 페이지
+  {
+    path: "/admin",
+    name: "Admin",
+    component: () => import("@/views/AdminView.vue"),
+    children: [
+      // 회원 목록 조회
+      {
+        path: "",
+        name: "UserList",
+        component: () => import("@/components/admin/UserList.vue"),
+      },
+    ],
+  },
 ];
 
 const router = new VueRouter({

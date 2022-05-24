@@ -26,7 +26,7 @@
               </tr>
               <tr style="background-color: white">
                 <td style="font-weight: 700; text-align: center">건축년도</td>
-                <td>{{ houseInfo.buildYear }}</td>
+                <td>{{ houseInfo.buildYear }}년</td>
               </tr>
             </tbody>
           </table>
@@ -44,7 +44,9 @@
                   <td>{{ houseDeal.dealDate | date }}</td>
                   <td>{{ houseDeal.area }}</td>
                   <td>{{ houseDeal.floor }}</td>
-                  <td>{{ houseDeal.dealAmount }}</td>
+                  <td style="color: red; font-weight: 700">
+                    {{ houseDeal.dealAmount }}
+                  </td>
                 </tr>
               </tbody>
             </table>
