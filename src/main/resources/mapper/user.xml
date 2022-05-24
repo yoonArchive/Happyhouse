@@ -70,6 +70,13 @@
         values (#{userId}, #{aptCode});
     </insert>
 
+    <select id="getLikeId" parameterType="houseLike" resultType="houseLikeAddResponse">
+        select likeId
+        from houselike
+        where userId = #{userId}
+          and aptCode = #{aptCode};
+    </select>
+
     <select id="getHouseLikes" parameterType="string" resultType="houseLikeResponse">
         select likeId,
                houseinfo.aptCode,

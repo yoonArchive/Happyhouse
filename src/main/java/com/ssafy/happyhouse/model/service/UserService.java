@@ -1,5 +1,6 @@
 package com.ssafy.happyhouse.model.service;
 
+import com.ssafy.happyhouse.dto.user.HouseLikeAddResponse;
 import com.ssafy.happyhouse.dto.user.HouseLikeResponse;
 import com.ssafy.happyhouse.dto.user.User;
 import com.ssafy.happyhouse.dto.user.UserUpdateRequest;
@@ -28,7 +29,7 @@ public interface UserService {
 
     void checkPwd(String userId, String userPwd) throws Exception;
 
-    void addHouseLike(String userId, BigDecimal aptCode) throws Exception;
+    HouseLikeAddResponse addHouseLike(String userId, BigDecimal aptCode) throws Exception;
 
 	List<HouseLikeResponse> getHouseLikes(String userId) throws Exception;
 

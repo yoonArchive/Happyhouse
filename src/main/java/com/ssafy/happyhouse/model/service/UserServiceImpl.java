@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import com.ssafy.happyhouse.domain.HouseLike;
+import com.ssafy.happyhouse.dto.user.HouseLikeAddResponse;
 import com.ssafy.happyhouse.dto.user.HouseLikeResponse;
 import com.ssafy.happyhouse.dto.user.UserUpdateRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,11 +79,12 @@ public class UserServiceImpl implements UserService {
 	}
 
     @Override
-    public void addHouseLike(String userId, BigDecimal aptCode) throws Exception {
+    public HouseLikeAddResponse addHouseLike(String userId, BigDecimal aptCode) throws Exception {
 		int result = userMapper.addHouseLike(new HouseLike(userId, aptCode));
 		if (result == 0) {
 			throw new Exception(ADD_HOUSE_LIKE_FAIL);
 		}
+		return userMapper.getLikeId(new HouseLike(userId, aptCode));
 	}
 
     @Override

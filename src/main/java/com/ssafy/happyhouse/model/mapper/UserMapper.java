@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.ssafy.happyhouse.domain.HouseLike;
+import com.ssafy.happyhouse.dto.user.HouseLikeAddResponse;
 import com.ssafy.happyhouse.dto.user.HouseLikeResponse;
 import com.ssafy.happyhouse.dto.user.User;
 
@@ -34,4 +35,6 @@ public interface UserMapper {
 	List<HouseLikeResponse> getHouseLikes(String userId);
 
 	int deleteHouseLike(BigDecimal likeId);
+
+	HouseLikeAddResponse getLikeId(HouseLike houseLike);
 }
