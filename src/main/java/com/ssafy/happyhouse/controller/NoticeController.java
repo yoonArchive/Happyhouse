@@ -1,6 +1,6 @@
 package com.ssafy.happyhouse.controller;
 
-import com.ssafy.happyhouse.dto.Notice;
+import com.ssafy.happyhouse.dto.post.Notice;
 import com.ssafy.happyhouse.model.service.NoticeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

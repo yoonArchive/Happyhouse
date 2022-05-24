@@ -1,15 +1,14 @@
 package com.ssafy.happyhouse.model.service;
 
 import com.ssafy.happyhouse.domain.HouseInfo;
-import com.ssafy.happyhouse.dto.HouseDealResponse;
-import com.ssafy.happyhouse.dto.HouseDetailResponse;
-import com.ssafy.happyhouse.dto.HouseListResponse;
+import com.ssafy.happyhouse.dto.trade.HouseDealResponse;
+import com.ssafy.happyhouse.dto.trade.HouseDetailResponse;
+import com.ssafy.happyhouse.dto.trade.HouseListResponse;
 import com.ssafy.happyhouse.model.mapper.TradeMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;

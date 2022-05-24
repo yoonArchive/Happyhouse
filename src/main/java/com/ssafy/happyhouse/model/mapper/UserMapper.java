@@ -1,14 +1,15 @@
 package com.ssafy.happyhouse.model.mapper;
 
 import java.sql.SQLException;
+import java.util.Optional;
 
-import com.ssafy.happyhouse.dto.User;
+import com.ssafy.happyhouse.dto.user.User;
 
 public interface UserMapper {
 
 	void registerUser(User user) throws SQLException;
 
-	int idCheck(String checkId) throws Exception;
+	int checkId(String checkId) throws Exception;
 
 	User login(User user) throws SQLException;
 
@@ -21,4 +22,6 @@ public interface UserMapper {
 	int deleteById(String userId) throws SQLException;
 
 	String findId(String userName, String phone);
+
+    Optional<User> checkPwd(String userId, String userPwd);
 }

@@ -1,4 +1,4 @@
-package com.ssafy.happyhouse.dto;
+package com.ssafy.happyhouse.dto.post;
 
 import lombok.Data;
 

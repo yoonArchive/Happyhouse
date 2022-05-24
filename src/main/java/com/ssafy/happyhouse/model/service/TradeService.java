@@ -4,8 +4,8 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
-import com.ssafy.happyhouse.dto.HouseDetailResponse;
-import com.ssafy.happyhouse.dto.HouseListResponse;
+import com.ssafy.happyhouse.dto.trade.HouseDetailResponse;
+import com.ssafy.happyhouse.dto.trade.HouseListResponse;
 
 public interface TradeService {
 

@@ -4,29 +4,17 @@ import static com.ssafy.happyhouse.common.ErrorMessage.USER_NOT_FOUND;
 import static com.ssafy.happyhouse.common.ErrorMessage.USER_UPDATE_FAIL;
 
 import java.nio.charset.StandardCharsets;
-import java.sql.SQLException;
 import java.util.Date;
 
-import javax.servlet.http.HttpSession;
-
-import com.ssafy.happyhouse.dto.UserUpdateRequest;
+import com.ssafy.happyhouse.dto.user.UserUpdateRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.ssafy.happyhouse.dto.User;
-import com.ssafy.happyhouse.dto.UserRequest;
-import com.ssafy.happyhouse.dto.UserResponse;
+import com.ssafy.happyhouse.dto.user.User;
+import com.ssafy.happyhouse.dto.user.UserRequest;
+import com.ssafy.happyhouse.dto.user.UserResponse;
 import com.ssafy.happyhouse.model.service.UserService;
 
 import io.jsonwebtoken.Claims;
@@ -51,8 +39,8 @@ public class UserController {
     }
 
     @GetMapping("/idCheck")
-    public ResponseEntity<?> idCheck(@RequestParam("userId") String checkId) throws Exception {
-        int idCount = userService.idCheck(checkId);
+    public ResponseEntity<?> checkId(@RequestParam("userId") String checkId) throws Exception {
+        int idCount = userService.checkId(checkId);
         if (idCount == 0) {
             return new ResponseEntity<Void>(HttpStatus.OK);
         } else
@@ -145,11 +133,22 @@ public class UserController {
         return new ResponseEntity<>(new UserResponse(jwt), HttpStatus.OK);
     }
 
-    @DeleteMapping
-    public ResponseEntity<Void> deleteUser(@RequestBody UserRequest userRequest) throws Exception {
+    @GetMapping("/pwdCheck")
+    public ResponseEntity<Void> checkPwd(@RequestParam String userToken, @RequestParam String userPwd) throws Exception {
         Claims body = Jwts.parser()
                 .setSigningKey(SALT.getBytes(StandardCharsets.UTF_8))
-                .parseClaimsJws(userRequest.getUserToken())
+                .parseClaimsJws(userToken)
+                .getBody();
+        userService.checkPwd((String) body.get("id"), userPwd);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @DeleteMapping
+    public ResponseEntity<Void> deleteUser(@RequestHeader("access-token") String accessToken) throws Exception {
+        System.out.println(accessToken);
+        Claims body = Jwts.parser()
+                .setSigningKey(SALT.getBytes(StandardCharsets.UTF_8))
+                .parseClaimsJws(accessToken)
                 .getBody();
         if (userService.deleteById((String) body.get("id")) == 0) {
             throw new Exception(USER_NOT_FOUND);

@@ -1,7 +1,7 @@
 package com.ssafy.happyhouse.controller;
 
-import com.ssafy.happyhouse.dto.Answer;
-import com.ssafy.happyhouse.dto.Question;
+import com.ssafy.happyhouse.dto.post.Answer;
+import com.ssafy.happyhouse.dto.post.Question;
 import com.ssafy.happyhouse.model.service.QnaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

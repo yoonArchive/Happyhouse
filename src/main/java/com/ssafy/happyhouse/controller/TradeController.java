@@ -1,7 +1,7 @@
 package com.ssafy.happyhouse.controller;
 
-import com.ssafy.happyhouse.dto.HouseDetailResponse;
-import com.ssafy.happyhouse.dto.HouseListResponse;
+import com.ssafy.happyhouse.dto.trade.HouseDetailResponse;
+import com.ssafy.happyhouse.dto.trade.HouseListResponse;
 import com.ssafy.happyhouse.model.service.TradeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

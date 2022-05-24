@@ -1,7 +1,7 @@
 package com.ssafy.happyhouse.model.mapper;
 
 import com.ssafy.happyhouse.domain.HouseInfo;
-import com.ssafy.happyhouse.dto.HouseListResponse;
+import com.ssafy.happyhouse.dto.trade.HouseListResponse;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.math.BigDecimal;

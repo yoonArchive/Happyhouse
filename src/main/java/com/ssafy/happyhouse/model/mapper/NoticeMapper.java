@@ -1,6 +1,6 @@
 package com.ssafy.happyhouse.model.mapper;
 
-import com.ssafy.happyhouse.dto.Notice;
+import com.ssafy.happyhouse.dto.post.Notice;
 
 import java.util.List;
 

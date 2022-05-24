@@ -1,4 +1,4 @@
-package com.ssafy.happyhouse.dto;
+package com.ssafy.happyhouse.dto.user;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;

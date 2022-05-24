@@ -2,13 +2,14 @@ package com.ssafy.happyhouse.model.service;
 
 import java.sql.SQLException;
 
-import com.ssafy.happyhouse.dto.UserUpdateRequest;
+import com.ssafy.happyhouse.dto.user.UserUpdateRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ssafy.happyhouse.dto.User;
+import com.ssafy.happyhouse.dto.user.User;
 import com.ssafy.happyhouse.model.mapper.UserMapper;
 
+import static com.ssafy.happyhouse.common.ErrorMessage.FALSE_PASSWORD;
 import static com.ssafy.happyhouse.common.ErrorMessage.USER_NOT_FOUND;
 
 @Service
@@ -26,8 +27,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public int idCheck(String checkId) throws Exception {
-		return userMapper.idCheck(checkId);
+	public int checkId(String checkId) throws Exception {
+		return userMapper.checkId(checkId);
 	}
 
 	@Override
@@ -66,5 +67,11 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public String findId(String userName, String phone) {
 		return userMapper.findId(userName, phone);
+	}
+
+	@Override
+	public void checkPwd(String userId, String userPwd) throws Exception {
+		userMapper.checkPwd(userId, userPwd)
+				.orElseThrow(() -> new Exception(FALSE_PASSWORD));
 	}
 }

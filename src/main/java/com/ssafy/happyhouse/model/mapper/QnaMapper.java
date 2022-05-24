@@ -1,7 +1,7 @@
 package com.ssafy.happyhouse.model.mapper;
 
-import com.ssafy.happyhouse.dto.Answer;
-import com.ssafy.happyhouse.dto.Question;
+import com.ssafy.happyhouse.dto.post.Answer;
+import com.ssafy.happyhouse.dto.post.Question;
 
 import java.util.List;
 
