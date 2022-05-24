@@ -46,10 +46,8 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public int updateUser(String userId, UserUpdateRequest userUpdateRequest) throws Exception {
-		User user = userMapper.selectById(userId);
-		if (user == null) {
-			throw new Exception(USER_NOT_FOUND);
-		}
+		User user = userMapper.selectById(userId)
+				.orElseThrow(() -> new Exception(USER_NOT_FOUND));
 		user.setUserPwd(userUpdateRequest.getUserPwd());
 		user.setUserName(userUpdateRequest.getName());
 		user.setEmail(userUpdateRequest.getEmail());
@@ -58,8 +56,9 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User selectById(String userId) throws SQLException {
-		return userMapper.selectById(userId);
+	public User selectById(String userId) throws Exception {
+		return userMapper.selectById(userId)
+				.orElseThrow(() -> new Exception(USER_NOT_FOUND));
 	}
 
 	@Override
@@ -94,4 +93,13 @@ public class UserServiceImpl implements UserService {
 		}
 		return houseLikes;
     }
+
+	@Override
+	public void deleteHouseLike(String userId, BigDecimal likeId) throws Exception {
+		userMapper.selectById(userId)
+				.orElseThrow(() -> new Exception(USER_NOT_FOUND));
+		if (userMapper.deleteHouseLike(likeId) == 0) {
+			throw new Exception(DELETE_HOUSE_LIKE_FAIL);
+		}
+	}
 }

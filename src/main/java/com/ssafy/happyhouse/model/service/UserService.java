@@ -20,7 +20,7 @@ public interface UserService {
 
 	int updateUser(String user, UserUpdateRequest userUpdateRequest) throws SQLException, Exception;
 
-	User selectById(String userId) throws SQLException;
+	User selectById(String userId) throws Exception;
 
 	int deleteById(String userId) throws SQLException;
 
@@ -31,4 +31,6 @@ public interface UserService {
     void addHouseLike(String userId, BigDecimal aptCode) throws Exception;
 
 	List<HouseLikeResponse> getHouseLikes(String userId) throws Exception;
+
+	void deleteHouseLike(String userId, BigDecimal likeId) throws Exception;
 }

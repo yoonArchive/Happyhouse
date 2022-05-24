@@ -154,6 +154,13 @@ public class UserController {
         return new ResponseEntity<>(userService.getHouseLikes((String) body.get("id")), HttpStatus.OK);
     }
 
+    @DeleteMapping("/like/{likeId}")
+    public ResponseEntity<Void> deleteHouseLike(@PathVariable BigDecimal likeId, @RequestHeader("access-token") String accessToken) throws Exception {
+        Claims body = getBody(accessToken);
+        userService.deleteHouseLike((String) body.get("id"), likeId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     private Claims getBody(@RequestHeader("access-token") String accessToken) {
         return Jwts.parser()
                 .setSigningKey(SALT.getBytes(StandardCharsets.UTF_8))

@@ -71,11 +71,26 @@
     </insert>
 
     <select id="getHouseLikes" parameterType="string" resultType="houseLikeResponse">
-        select likeId, houseinfo.aptCode, apartmentName, houseinfo.dongCode, sidoName, gugunName, dongName, houseinfo.lat, houseinfo.lng
+        select likeId,
+               houseinfo.aptCode,
+               apartmentName,
+               houseinfo.dongCode,
+               sidoName,
+               gugunName,
+               dongName,
+               houseinfo.lat,
+               houseinfo.lng
         from houselike,
              houseinfo
                  join baseaddress
                       on houseinfo.dongCode = baseaddress.dongCode
-        where userId=#{userId} and houselike.aptCode=houseinfo.aptCode
+        where userId = #{userId}
+          and houselike.aptCode = houseinfo.aptCode
     </select>
+
+    <delete id="deleteHouseLike" parameterType="decimal">
+        delete
+        from houselike
+        where likeId = #{likeId};
+    </delete>
 </mapper>

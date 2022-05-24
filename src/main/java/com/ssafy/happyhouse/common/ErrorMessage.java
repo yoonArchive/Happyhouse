@@ -8,6 +8,7 @@ public class ErrorMessage {
     public static final String FALSE_PASSWORD = "잘못된 비밀번호 입니다.";
     public static final String ADD_HOUSE_LIKE_FAIL = "관심매물 등록에 실패했습니다.";
     public static final String LOAD_HOUSE_LIKE_FAIL = "관심매물 조회에 실패했습니다.";
+    public static final String DELETE_HOUSE_LIKE_FAIL = "관심매물 삭제에 실패했습니다.";
 
     // 아파트 거래 관련
     public static final String APT_NOT_FOUND = "해당 아파트가 존재하지 않습니다.";

@@ -1,5 +1,6 @@
 package com.ssafy.happyhouse.model.mapper;
 
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
@@ -20,7 +21,7 @@ public interface UserMapper {
 
 	int updateUser(User user) throws SQLException;
 
-	User selectById(String userId) throws SQLException;
+	Optional<User> selectById(String userId) throws SQLException;
 
 	int deleteById(String userId) throws SQLException;
 
@@ -31,4 +32,6 @@ public interface UserMapper {
     int addHouseLike(HouseLike houseLike);
 
 	List<HouseLikeResponse> getHouseLikes(String userId);
+
+	int deleteHouseLike(BigDecimal likeId);
 }
