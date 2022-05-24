@@ -71,6 +71,7 @@ public class UserController {
                 .setSubject("access-token")
                 .claim("id", userInfo.getUserId())
                 .claim("name", userInfo.getUserName())
+                .claim("authority", userInfo.getAuthority())
                 .signWith(SignatureAlgorithm.HS256, SALT.getBytes("UTF-8")).compact();
         return new ResponseEntity<>(new UserResponse(jwt), HttpStatus.OK);
     }
@@ -139,6 +140,7 @@ public class UserController {
                 .setSubject("access-token")
                 .claim("id", body.get("id"))
                 .claim("name", userUpdateRequest.getName())
+                .claim("authority", body.get("authority"))
                 .signWith(SignatureAlgorithm.HS256, SALT.getBytes("UTF-8")).compact();
         return new ResponseEntity<>(new UserResponse(jwt), HttpStatus.OK);
     }
