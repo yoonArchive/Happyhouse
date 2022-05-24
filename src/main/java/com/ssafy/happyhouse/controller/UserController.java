@@ -140,9 +140,9 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PostMapping("/like")
+    @PostMapping("/like/{aptCode}")
     public ResponseEntity<Void> addHouseLike(@RequestHeader("access-token") String accessToken,
-                                             @RequestParam BigDecimal aptCode) throws Exception {
+                                             @PathVariable BigDecimal aptCode) throws Exception {
         Claims body = getBody(accessToken);
         userService.addHouseLike((String) body.get("id"), aptCode);
         return new ResponseEntity<>(HttpStatus.OK);
