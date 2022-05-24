@@ -16,12 +16,26 @@
       <label for="check">안내사항을 모두 확인하였으며, 이에 동의합니다 </label>
     </div>
     <br />
-    <button type="button" class="button">탈퇴</button>
+    <button type="button" class="button" @click="submit">탈퇴</button>
   </div>
 </template>
 
 <script>
-export default {};
+import {mapActions, mapState} from "vuex";
+
+const userStore = "userStore";
+
+export default {
+  computed: {
+    ...mapState(userStore, ["userInfo"])
+  },
+  methods:{
+    ...mapActions(userStore, ["deleteUser"]),
+    submit() {
+      this.deleteUser();
+    }
+  }
+};
 </script>
 
 <style></style>
