@@ -185,7 +185,7 @@ export default {
   },
   created() {
     const msg = this.$route.params.msg;
-    if (msg) this.$swal(msg)
+    if (msg) this.$swal("success", msg, "success");
   },
   methods: {
     limitAccess() {

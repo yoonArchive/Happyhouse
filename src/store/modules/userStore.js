@@ -120,7 +120,7 @@ const userStore = {
                 .then(() => {
                     sessionStorage.removeItem("access-token");
                     commit("CLEAR_USER_INFO");
-                    router.push({name:"home",params:{msg: "회원 탈퇴가완료되었습니다."}});
+                    router.push({name:"home",params:{msg: "탈퇴가 완료되었습니다."}});
                 })
                 .catch(() => {
                     alert("회원 탈퇴 중 문제가 발생했습니다.");
