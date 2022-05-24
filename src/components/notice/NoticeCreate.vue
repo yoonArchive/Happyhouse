@@ -62,6 +62,10 @@
 </template>
 
 <script>
+import {mapState} from "vuex";
+
+const userStore = "userStore";
+
 export default {
   name: "NoticeCreate",
   data() {
@@ -70,9 +74,12 @@ export default {
         title: "",
         category: "",
         content: "",
-        author: "admin", // 나중에 수정
+        author: ""
       },
     };
+  },
+  computed: {
+    ...mapState(userStore, ["userInfo"])
   },
   methods: {
     registNotice() {
@@ -80,7 +87,7 @@ export default {
         title: this.registForm.title,
         category: this.registForm.category,
         content: this.registForm.content,
-        author: this.registForm.author,
+        author: this.userInfo.id,
       };
       this.$axios
         .post("/notice", noticeInfo)
