@@ -161,7 +161,7 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    private Claims getBody(@RequestHeader("access-token") String accessToken) {
+    private Claims getBody(String accessToken) {
         return Jwts.parser()
                 .setSigningKey(SALT.getBytes(StandardCharsets.UTF_8))
                 .parseClaimsJws(accessToken)

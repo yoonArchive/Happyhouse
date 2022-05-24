@@ -1,6 +1,5 @@
 package com.ssafy.happyhouse;
 
-import com.ssafy.happyhouse.interceptor.LoginInterceptor;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -9,6 +8,8 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import com.ssafy.happyhouse.interceptor.LoginInterceptor;
 
 @SpringBootApplication
 @EnableAspectJAutoProxy
