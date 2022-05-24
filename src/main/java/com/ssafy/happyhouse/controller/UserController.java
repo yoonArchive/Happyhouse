@@ -6,16 +6,15 @@ import static com.ssafy.happyhouse.common.ErrorMessage.USER_UPDATE_FAIL;
 import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
+import java.util.List;
 
-import com.ssafy.happyhouse.dto.user.UserUpdateRequest;
+import com.ssafy.happyhouse.dto.trade.HouseListResponse;
+import com.ssafy.happyhouse.dto.user.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.ssafy.happyhouse.dto.user.User;
-import com.ssafy.happyhouse.dto.user.UserRequest;
-import com.ssafy.happyhouse.dto.user.UserResponse;
 import com.ssafy.happyhouse.model.service.UserService;
 
 import io.jsonwebtoken.Claims;
@@ -94,8 +93,8 @@ public class UserController {
 
     @GetMapping("/findPwd")
     public ResponseEntity<String> findPwd(@RequestParam String userId,
-                                     @RequestParam String userName,
-                                     @RequestParam String phone) throws Exception {
+                                          @RequestParam String userName,
+                                          @RequestParam String phone) throws Exception {
         User user = new User();
         user.setUserId(userId);
         user.setUserName(userName);
@@ -147,6 +146,12 @@ public class UserController {
         Claims body = getBody(accessToken);
         userService.addHouseLike((String) body.get("id"), aptCode);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/like")
+    public ResponseEntity<List<HouseLikeResponse>> getHouseLikes(@RequestHeader("access-token") String accessToken) throws Exception {
+        Claims body = getBody(accessToken);
+        return new ResponseEntity<>(userService.getHouseLikes((String) body.get("id")), HttpStatus.OK);
     }
 
     private Claims getBody(@RequestHeader("access-token") String accessToken) {

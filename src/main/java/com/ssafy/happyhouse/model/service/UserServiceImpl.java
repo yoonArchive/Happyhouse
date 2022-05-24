@@ -2,8 +2,10 @@ package com.ssafy.happyhouse.model.service;
 
 import java.math.BigDecimal;
 import java.sql.SQLException;
+import java.util.List;
 
 import com.ssafy.happyhouse.domain.HouseLike;
+import com.ssafy.happyhouse.dto.user.HouseLikeResponse;
 import com.ssafy.happyhouse.dto.user.UserUpdateRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -83,4 +85,13 @@ public class UserServiceImpl implements UserService {
 			throw new Exception(ADD_HOUSE_LIKE_FAIL);
 		}
 	}
+
+    @Override
+    public List<HouseLikeResponse> getHouseLikes(String userId) throws Exception {
+		List<HouseLikeResponse> houseLikes = userMapper.getHouseLikes(userId);
+		if (houseLikes == null) {
+			throw new Exception(LOAD_HOUSE_LIKE_FAIL);
+		}
+		return houseLikes;
+    }
 }

@@ -1,9 +1,11 @@
 package com.ssafy.happyhouse.model.mapper;
 
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Optional;
 
 import com.ssafy.happyhouse.domain.HouseLike;
+import com.ssafy.happyhouse.dto.user.HouseLikeResponse;
 import com.ssafy.happyhouse.dto.user.User;
 
 public interface UserMapper {
@@ -27,4 +29,6 @@ public interface UserMapper {
     Optional<User> checkPwd(String userId, String userPwd);
 
     int addHouseLike(HouseLike houseLike);
+
+	List<HouseLikeResponse> getHouseLikes(String userId);
 }
