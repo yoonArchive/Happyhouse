@@ -24,6 +24,7 @@
                 name="category"
                 id="category"
                 v-model="registForm.category"
+                required
               >
                 <option value="">- Category -</option>
                 <option value="업데이트">업데이트</option>
