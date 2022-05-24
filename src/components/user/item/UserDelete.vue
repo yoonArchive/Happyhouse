@@ -12,7 +12,7 @@
       방법이 없어 임의로 삭제해 드릴 수 없습니다.
     </blockquote>
     <div class="col-6 col-12-small">
-      <input type="checkbox" id="check" name="check" checked />
+      <input type="checkbox" id="check" name="check" @change="isChecked = !isChecked"/>
       <label for="check">안내사항을 모두 확인하였으며, 이에 동의합니다 </label>
     </div>
     <br />
@@ -26,12 +26,21 @@ import {mapActions, mapState} from "vuex";
 const userStore = "userStore";
 
 export default {
+  data() {
+    return {
+      isChecked: false,
+    }
+  },
   computed: {
     ...mapState(userStore, ["userInfo"])
   },
   methods:{
     ...mapActions(userStore, ["deleteUser"]),
     submit() {
+      if (!this.isChecked) {
+        this.$swal("error", "안내사항을 읽고 동의해주세요.", "error");
+        return;
+      }
       this.deleteUser();
     }
   }

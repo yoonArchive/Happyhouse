@@ -1,5 +1,6 @@
 import jwt_decode from "jwt-decode";
 import axios from "@/api/http";
+import router from "@/router";
 
 const userStore = {
     namespaced: true,
@@ -55,6 +56,7 @@ const userStore = {
             state.isLogin = false;
             state.userInfo = null;
             state.user = null;
+            state.clickUserDelete = false;
         },
         // CLEAR_IS_UPDATED: (state) => {
         //   state.isUpdated = false;
@@ -111,17 +113,14 @@ const userStore = {
                 })
                 .catch(() => {
                     alert("회원정보 수정 실패");
-                    // commit("CLEAR_IS_UPDATED");
                 });
         },
-        async deleteUser() {
-            let deleteInfo = {
-                userToken: sessionStorage.getItem("access-token")
-            };
-            console.log(deleteInfo);
-            await axios.delete(`user`, deleteInfo)
+        async deleteUser({commit}) {
+            await axios.delete(`user`)
                 .then(() => {
-                    alert("회원 탈퇴가 완료되었습니다.");
+                    sessionStorage.removeItem("access-token");
+                    commit("CLEAR_USER_INFO");
+                    router.push({name:"home",params:{msg: "회원 탈퇴가완료되었습니다."}});
                 })
                 .catch(() => {
                     alert("회원 탈퇴 중 문제가 발생했습니다.");

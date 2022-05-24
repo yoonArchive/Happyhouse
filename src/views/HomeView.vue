@@ -8,7 +8,8 @@
         <ul class="actions special" @click="limitAccess">
           <li>
             <router-link to="/trade" class="button primary"
-              >실거래가 조회</router-link
+            >실거래가 조회
+            </router-link
             >
           </li>
         </ul>
@@ -21,12 +22,12 @@
       <div class="inner">
         <header class="major">
           <h2>
-            Arcu aliquet vel lobortis ata nisl<br />
+            Arcu aliquet vel lobortis ata nisl<br/>
             eget augue amet aliquet nisl cep donec
           </h2>
           <p>
             Aliquam ut ex ut augue consectetur interdum. Donec amet imperdiet
-            eleifend<br />
+            eleifend<br/>
             fringilla tincidunt. Nullam dui leo Aenean mi ligula, rhoncus
             ullamcorper.
           </p>
@@ -34,17 +35,17 @@
         <ul class="icons major">
           <li>
             <span class="icon fa-gem major style1"
-              ><span class="label">Lorem</span></span
+            ><span class="label">Lorem</span></span
             >
           </li>
           <li>
             <span class="icon fa-heart major style2"
-              ><span class="label">Ipsum</span></span
+            ><span class="label">Ipsum</span></span
             >
           </li>
           <li>
             <span class="icon solid fa-code major style3"
-              ><span class="label">Dolor</span></span
+            ><span class="label">Dolor</span></span
             >
           </li>
         </ul>
@@ -54,10 +55,10 @@
     <!-- Two -->
     <section id="two" class="wrapper alt style2">
       <section class="spotlight">
-        <div class="image"><img src="@/images/pic01.jpg" alt="" /></div>
+        <div class="image"><img src="@/images/pic01.jpg" alt=""/></div>
         <div class="content">
           <h2>
-            Magna primis lobortis<br />
+            Magna primis lobortis<br/>
             sed ullamcorper
           </h2>
           <p>
@@ -67,10 +68,10 @@
         </div>
       </section>
       <section class="spotlight">
-        <div class="image"><img src="@/images/pic02.jpg" alt="" /></div>
+        <div class="image"><img src="@/images/pic02.jpg" alt=""/></div>
         <div class="content">
           <h2>
-            Tortor dolore feugiat<br />
+            Tortor dolore feugiat<br/>
             elementum magna
           </h2>
           <p>
@@ -80,10 +81,10 @@
         </div>
       </section>
       <section class="spotlight">
-        <div class="image"><img src="@/images/pic03.jpg" alt="" /></div>
+        <div class="image"><img src="@/images/pic03.jpg" alt=""/></div>
         <div class="content">
           <h2>
-            Augue eleifend aliquet<br />
+            Augue eleifend aliquet<br/>
             sed condimentum
           </h2>
           <p>
@@ -101,7 +102,7 @@
           <h2>Accumsan mus tortor nunc aliquet</h2>
           <p>
             Aliquam ut ex ut augue consectetur interdum. Donec amet imperdiet
-            eleifend<br />
+            eleifend<br/>
             fringilla tincidunt. Nullam dui leo Aenean mi ligula, rhoncus
             ullamcorper.
           </p>
@@ -173,7 +174,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import {mapState} from "vuex";
 
 const userStore = "userStore";
 
@@ -182,14 +183,17 @@ export default {
   computed: {
     ...mapState(userStore, ["userInfo"]),
   },
-
+  created() {
+    const msg = this.$route.params.msg;
+    if (msg) this.$swal(msg)
+  },
   methods: {
     limitAccess() {
       if (!this.userInfo) {
         this.$swal(
-          "접근 실패",
-          "Happy House 회원만 접근할 수 있습니다.",
-          "error"
+            "접근 실패",
+            "Happy House 회원만 접근할 수 있습니다.",
+            "error"
         );
         this.$router.push("/user/login");
       }
