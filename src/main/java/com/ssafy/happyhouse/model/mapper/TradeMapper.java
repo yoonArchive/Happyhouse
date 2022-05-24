@@ -2,6 +2,7 @@ package com.ssafy.happyhouse.model.mapper;
 
 import com.ssafy.happyhouse.domain.trade.HouseInfo;
 import com.ssafy.happyhouse.dto.trade.HouseListResponse;
+import com.ssafy.happyhouse.dto.trade.HouseSearchResponse;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.math.BigDecimal;
@@ -20,7 +21,7 @@ public interface TradeMapper {
 
     List<HouseListResponse> searchByDong(Map<String, String> address);
 
-    List<HouseListResponse> search(String keyword);
+    List<HouseSearchResponse> search(String keyword);
 
     Optional<HouseInfo> getDetail(BigDecimal aptCode);
 

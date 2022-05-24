@@ -2,6 +2,7 @@ package com.ssafy.happyhouse.controller;
 
 import com.ssafy.happyhouse.dto.trade.HouseDetailResponse;
 import com.ssafy.happyhouse.dto.trade.HouseListResponse;
+import com.ssafy.happyhouse.dto.trade.HouseSearchResponse;
 import com.ssafy.happyhouse.model.service.TradeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -40,7 +41,7 @@ public class TradeController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<HouseListResponse>> search(@RequestParam String keyword) throws Exception {
+    public ResponseEntity<List<HouseSearchResponse>> search(@RequestParam String keyword) throws Exception {
         return new ResponseEntity<>(tradeService.search(keyword), HttpStatus.OK);
     }
 

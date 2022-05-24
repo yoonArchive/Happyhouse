@@ -6,6 +6,7 @@ import java.util.Map;
 
 import com.ssafy.happyhouse.dto.trade.HouseDetailResponse;
 import com.ssafy.happyhouse.dto.trade.HouseListResponse;
+import com.ssafy.happyhouse.dto.trade.HouseSearchResponse;
 
 public interface TradeService {
 
@@ -17,7 +18,7 @@ public interface TradeService {
 
     List<HouseListResponse> searchByDong(Map<String, String> address);
 
-    List<HouseListResponse> search(String keyword) throws Exception;
+    List<HouseSearchResponse> search(String keyword) throws Exception;
 
     HouseDetailResponse getDetail(BigDecimal aptCode) throws Exception;
 }

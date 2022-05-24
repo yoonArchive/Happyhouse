@@ -4,6 +4,7 @@ import com.ssafy.happyhouse.domain.trade.HouseInfo;
 import com.ssafy.happyhouse.dto.trade.HouseDealResponse;
 import com.ssafy.happyhouse.dto.trade.HouseDetailResponse;
 import com.ssafy.happyhouse.dto.trade.HouseListResponse;
+import com.ssafy.happyhouse.dto.trade.HouseSearchResponse;
 import com.ssafy.happyhouse.model.mapper.TradeMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,8 +45,8 @@ public class TradeServiceImpl implements TradeService {
     }
 
     @Override
-    public List<HouseListResponse> search(String keyword) throws Exception {
-        List<HouseListResponse> houseListResponses = tradeMapper.search(keyword);
+    public List<HouseSearchResponse> search(String keyword) throws Exception {
+        List<HouseSearchResponse> houseListResponses = tradeMapper.search(keyword);
         if (houseListResponses == null) {
             throw new Exception(KEYWORD_NOT_FOUND);
         }
