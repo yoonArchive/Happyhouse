@@ -45,7 +45,7 @@
             <li><a href="#" class="page">10</a></li>
             <li><a href="#" class="button small">Next</a></li>
             <button
-              v-show="userInfo.authority === '관리자'"
+              v-show="userInfo != null && userInfo.authority === '관리자'"
               type="button"
               class="button small"
               id="registNoticeBtn"
