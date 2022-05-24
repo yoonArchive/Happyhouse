@@ -101,7 +101,7 @@
       </button>
       <br /><br />
       <div
-        v-if="keywordList"
+        v-if="listVisible"
         style="height: 440px; overflow: auto; font-size: 12px; color: black"
       >
         <table>
@@ -140,6 +140,7 @@ export default {
       gugunName: null,
       dongName: null,
       inputKeyword: null,
+      listVisible: false,
     };
   },
   computed: {
@@ -170,7 +171,10 @@ export default {
       "CLEAR_GUGUN_LIST",
       "CLEAR_DONG_LIST",
       "CLEAR_HOUSE_LIST",
+      "CLEAR_KEYWORD_LIST",
       "CLEAR_MARKER_POSITIONS",
+      "SET_MARKER_POSITIONS_BY_KEYWORD",
+      "SET_HOUSE_LIST_BY_DONG",
     ]),
     gugunList() {
       this.CLEAR_GUGUN_LIST();
@@ -206,21 +210,27 @@ export default {
       }
     },
     keywordSearch() {
+      this.listVisible = true;
       this.getListByKeyword(this.inputKeyword);
     },
     selectApt(index) {
+      this.CLEAR_MARKER_POSITIONS();
+      this.CLEAR_HOUSE_LIST();
       this.detailHouse(this.keywordList[index].aptCode);
+      this.SET_MARKER_POSITIONS_BY_KEYWORD([this.keywordList[index]]);
+      this.SET_HOUSE_LIST_BY_DONG([this.keywordList[index]]);
+      this.$emit("setMarker");
     },
   },
   watch: {
     searchType: function (val) {
       this.listVisible = false;
       if (val === "dong") {
-        console.log("watch dong");
-        //this.initSearchByDongBox();
+        this.listVisible = false;
+        this.inputKeyword = "";
       } else if (val === "keyword") {
+        this.CLEAR_KEYWORD_LIST();
         if (this.listVisible) this.listVisible = false;
-        console.log("watch keyword");
       }
     },
   },

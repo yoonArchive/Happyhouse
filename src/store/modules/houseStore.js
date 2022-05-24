@@ -64,6 +64,9 @@ const houseStore = {
     CLEAR_HOUSE_LIST: (state) => {
       state.houses = [];
     },
+    CLEAR_KEYWORD_LIST: (state) => {
+      state.keywordList = null;
+    },
     CLEAR_DETAIL_HOUSE: (state) => {
       state.house = null;
     },
@@ -80,6 +83,13 @@ const houseStore = {
       state.houseCnt = length;
     },
     SET_MARKER_POSITIONS: (state, aptsData) => {
+      console.log(aptsData);
+      state.markerPositions = aptsData.map((aptData) => [
+        aptData.lat,
+        aptData.lng,
+      ]);
+    },
+    SET_MARKER_POSITIONS_BY_KEYWORD: (state, aptsData) => {
       state.markerPositions = aptsData.map((aptData) => [
         aptData.lat,
         aptData.lng,
@@ -91,7 +101,6 @@ const houseStore = {
     getSido: ({ commit }) => {
       sidoList(
         ({ data }) => {
-          console.log(data);
           commit("SET_SIDO_LIST", data);
         },
         (error) => {
@@ -138,7 +147,6 @@ const houseStore = {
       await houseListByDong(
         params,
         ({ data }) => {
-          console.log(data);
           commit("SET_HOUSE_LIST_BY_DONG", data);
           commit("SET_HOUSE_COUNT", data.length);
           commit("SET_MARKER_POSITIONS", data);
@@ -155,7 +163,6 @@ const houseStore = {
       await ListByKeyword(
         params,
         ({ data }) => {
-          console.log(data);
           commit("SET_KEYWORD_LIST", data);
         },
         (error) => {
@@ -176,9 +183,7 @@ const houseStore = {
             dongCode: data.dongCode,
             buildYear: data.buildYear,
           };
-          console.log(houseInfoData);
           commit("SET_HOUSE_INFO", houseInfoData);
-          console.log(data.houseDeals);
           commit("SET_HOUSE_DEALS", data.houseDeals);
         },
         (error) => {

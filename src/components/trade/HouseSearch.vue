@@ -8,11 +8,11 @@
         </div>
       </div>
       <div>
-        <house-detail></house-detail>
+        <house-detail @setMarker="displayMarker"></house-detail>
       </div>
-      <div class="button-group">
+      <!-- <div class="button-group">
         <button @click="displayMarker(markerPositions)">marker set 2</button>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
@@ -91,6 +91,7 @@ export default {
       const positions = this.markerPositions.map(
         (position) => new kakao.maps.LatLng(...position)
       );
+
       const imgSrc = require("@/assets/map/house_icon5.png");
       const imgSize = new kakao.maps.Size(50, 50);
       const markerImage = new kakao.maps.MarkerImage(imgSrc, imgSize);
