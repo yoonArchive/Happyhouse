@@ -13,11 +13,10 @@
         <hr />
         <pre>{{ questionForm.content }}</pre>
         <div class="row gtr-uniform aln-center">
-          <div></div>
-          <div class="col-6">
-            <ul class="actions">
+          <div>
+            <ul class="actions aln-center">
               <li>
-                <button
+                <button v-show="userInfo.id === questionForm.author || userInfo.authority === '관리자'"
                   type="button"
                   class="primary"
                   id="modifyBtn"
@@ -27,7 +26,7 @@
                 </button>
               </li>
               <li>
-                <button
+                <button v-show="userInfo.id === questionForm.author || userInfo.authority === '관리자'"
                   type="button"
                   class="button"
                   id="deleteQuestionBtn"
@@ -82,6 +81,10 @@
 
 <script>
 import CommentListItem from "@/components/qna/item/CommentListItem.vue";
+import {mapState} from "vuex";
+
+const userStore = "userStore";
+
 export default {
   components: {
     CommentListItem,
@@ -92,12 +95,12 @@ export default {
         questionId: "",
         title: "",
         content: "",
-        author: "ssafy", // 나중에 수정
+        author: "",
         createDate: "",
       },
       commentForm: {
         questionId: 0,
-        author: "ssafy", // 나중에 수정
+        author: "",
         content: "",
         createDate: "",
       },
@@ -108,6 +111,7 @@ export default {
     this.initialize();
   },
   computed: {
+    ...mapState(userStore, ["userInfo"]),
     lengthMsg() {
       return `총 ${this.comments.length}개의 댓글이 있습니다.`;
     },
@@ -160,9 +164,13 @@ export default {
       this.$router.push("/qna");
     },
     addComment() {
+      if (this.commentForm.content === "") {
+        this.$swal("내용을 입력하세요.");
+        return;
+      }
       let commentInfo = {
         questionId: this.questionForm.questionId,
-        author: this.commentForm.author,
+        author: this.userInfo.id,
         content: this.commentForm.content,
       };
       this.$axios

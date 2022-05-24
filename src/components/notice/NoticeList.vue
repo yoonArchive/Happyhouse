@@ -44,7 +44,7 @@
             <li><a href="#" class="page">9</a></li>
             <li><a href="#" class="page">10</a></li>
             <li><a href="#" class="button small">Next</a></li>
-            <button
+            <button v-show="userInfo.authority==='관리자'"
               type="button"
               class="button small"
               id="registNoticeBtn"
@@ -61,7 +61,11 @@
 </template>
 
 <script>
+import {mapState} from "vuex";
 import NoticeListItem from "@/components/notice/item/NoticeListItem.vue";
+
+const userStore = "userStore";
+
 export default {
   name: "NoticeList",
   components: {
@@ -76,6 +80,9 @@ export default {
     this.$axios.get(`/notice/list/1`).then(({ data }) => {
       this.notices = data;
     });
+  },
+  computed: {
+    ...mapState(userStore, ["userInfo"])
   },
   methods: {
     moveWrite() {

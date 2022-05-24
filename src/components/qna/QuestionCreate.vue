@@ -49,6 +49,10 @@
 </template>
 
 <script>
+import {mapState} from "vuex";
+
+const userStore = "userStore";
+
 export default {
   name: "QuestionCreate",
   data() {
@@ -56,16 +60,18 @@ export default {
       registForm: {
         title: "",
         content: "",
-        author: "ssafy", // 나중에 수정
       },
     };
+  },
+  computed: {
+    ...mapState(userStore, ["userInfo"])
   },
   methods: {
     registQuestion() {
       let questionInfo = {
         title: this.registForm.title,
         content: this.registForm.content,
-        author: this.registForm.author,
+        author: this.userInfo.id,
       };
       this.$axios
         .post("/qnas/question", questionInfo)

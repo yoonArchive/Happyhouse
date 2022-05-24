@@ -9,8 +9,7 @@
             <vue-clap-button
               class="icon"
               icon="love"
-              :size="35"
-              :initClicked="1"
+              :size="20"
             ></vue-clap-button>
           </div>
           <table>
@@ -63,8 +62,6 @@
 </template>
 
 <script>
-// import "bootstrap/dist/css/bootstrap.min.css";
-// import "bootstrap";
 import { mapState } from "vuex";
 
 const houseStore = "houseStore";
@@ -93,16 +90,18 @@ export default {
   top: 9%;
   right: 1%;
   width: 25%;
+  height: 90%;
   padding: 15px;
   z-index: 100;
   background-color: rgba(241, 239, 239, 0.8);
   overflow-y: auto;
 }
-.form-check-label {
-  color: black;
-  font-size: 0.8em;
-  font-weight: 600;
+
+.icon {
+  margin-top: 4px;
+  margin-left: -10px;
 }
+
 h4 {
   color: black;
 }

@@ -72,6 +72,7 @@ const userStore = {
       commit("SET_USER_INFO", {
         id: decodedToken.id,
         name: decodedToken.name,
+        authority: decodedToken.authority,
       });
     },
     logout({ commit }) {
@@ -105,6 +106,7 @@ const userStore = {
           commit("SET_USER_INFO", {
             id: decodedToken.id,
             name: decodedToken.name,
+            authority: decodedToken.authority,
           });
         })
         .catch(() => {

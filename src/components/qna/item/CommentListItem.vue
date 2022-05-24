@@ -4,8 +4,8 @@
       {{ author }} | {{ createDate }}
     </span>
     <span style="float: right">
-      <img src="@/images/commentUpdate.png" @click="modify">
-      <img src="@/images/commentDelete.png" @click="deleteAnswer">
+      <img src="@/images/commentUpdate.png" v-show="userInfo.id === author || userInfo.authority === '관리자'" @click="modify">
+      <img src="@/images/commentDelete.png" v-show="userInfo.id === author || userInfo.authority === '관리자'" @click="deleteAnswer">
     </span>
     <br/><br/>
     <div v-show="isNotModify" id="comment">
@@ -34,6 +34,9 @@
 
 <script>
 import http from "@/api/http.js";
+import {mapState} from "vuex";
+
+const userStore = "userStore";
 
 export default {
   name: "CommentListItem",
@@ -50,6 +53,9 @@ export default {
       isNotModify: true,
       modifiedContent: this.content
     }
+  },
+  computed: {
+    ...mapState(userStore, ["userInfo"])
   },
   methods: {
     modify() {

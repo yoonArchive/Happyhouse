@@ -10,15 +10,14 @@
           <h2 class="s">{{ notice.category }}</h2>
           <h2>{{ notice.title }}</h2>
         </header>
-        <p>{{ notice.author }} | {{ notice.createDate }}</p>
+        <p> 관리자 | {{ notice.createDate }}</p>
         <hr />
         <pre>{{ notice.content }}</pre>
         <div class="row gtr-uniform aln-center">
-          <div></div>
-          <div class="col-6">
-            <ul class="actions">
+          <div>
+            <ul class="actions aln-center">
               <li>
-                <button
+                <button v-show="userInfo.authority==='관리자'"
                   type="button"
                   class="primary"
                   id="modifyBtn"
@@ -28,7 +27,7 @@
                 </button>
               </li>
               <li>
-                <button
+                <button v-show="userInfo.authority === '관리자'"
                   type="button"
                   class="button"
                   id="deleteNoticeBtn"
@@ -56,11 +55,18 @@
 </template>
 
 <script>
+import {mapState} from "vuex";
+
+const userStore = "userStore";
+
 export default {
   data() {
     return {
       notice: {},
     };
+  },
+  computed: {
+    ...mapState(userStore, ["userInfo"])
   },
   created() {
     this.$axios
@@ -115,6 +121,7 @@ export default {
 
 <style>
 @import url(//fonts.googleapis.com/earlyaccess/nanumgothic.css);
+
 pre,
 button {
   font-family: "Nanum Gothic", serif;
