@@ -1,5 +1,6 @@
 package com.ssafy.happyhouse.model.service;
 
+import java.math.BigDecimal;
 import java.sql.SQLException;
 
 import com.ssafy.happyhouse.dto.user.User;
@@ -24,4 +25,6 @@ public interface UserService {
 	String findId(String userName, String phone);
 
     void checkPwd(String userId, String userPwd) throws Exception;
+
+    void addHouseLike(String userId, BigDecimal aptCode) throws Exception;
 }

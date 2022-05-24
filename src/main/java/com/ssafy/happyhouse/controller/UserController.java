@@ -3,6 +3,7 @@ package com.ssafy.happyhouse.controller;
 import static com.ssafy.happyhouse.common.ErrorMessage.USER_NOT_FOUND;
 import static com.ssafy.happyhouse.common.ErrorMessage.USER_UPDATE_FAIL;
 
+import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
 
@@ -66,10 +67,7 @@ public class UserController {
 
     @PostMapping("/detail")
     public ResponseEntity<User> getDetail(@RequestBody UserRequest userRequest) throws Exception {
-        Claims body = Jwts.parser()
-                .setSigningKey(SALT.getBytes(StandardCharsets.UTF_8))
-                .parseClaimsJws(userRequest.getUserToken())
-                .getBody();
+        Claims body = getBody(userRequest.getUserToken());
         User user = userService.selectById((String) body.get("id"));
         if (user == null) {
             throw new Exception(USER_NOT_FOUND);
@@ -80,10 +78,7 @@ public class UserController {
     @PostMapping("/logout")
     public ResponseEntity<Void> logout(@RequestBody UserRequest userRequest) {
         String userToken = userRequest.getUserToken();
-        Claims body = Jwts.parser()
-                .setSigningKey(SALT.getBytes(StandardCharsets.UTF_8))
-                .parseClaimsJws(userToken)
-                .getBody();
+        Claims body = getBody(userToken);
         System.out.println(body);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -114,10 +109,7 @@ public class UserController {
 
     @PutMapping
     public ResponseEntity<UserResponse> updateUser(@RequestBody UserUpdateRequest userUpdateRequest) throws Exception {
-        Claims body = Jwts.parser()
-                .setSigningKey(SALT.getBytes(StandardCharsets.UTF_8))
-                .parseClaimsJws(userUpdateRequest.getUserToken())
-                .getBody();
+        Claims body = getBody(userUpdateRequest.getUserToken());
         if (userService.updateUser((String) body.get("id"), userUpdateRequest) == 0) {
             throw new Exception(USER_UPDATE_FAIL);
         }
@@ -135,24 +127,32 @@ public class UserController {
 
     @GetMapping("/pwdCheck")
     public ResponseEntity<Void> checkPwd(@RequestParam String userToken, @RequestParam String userPwd) throws Exception {
-        Claims body = Jwts.parser()
-                .setSigningKey(SALT.getBytes(StandardCharsets.UTF_8))
-                .parseClaimsJws(userToken)
-                .getBody();
+        Claims body = getBody(userToken);
         userService.checkPwd((String) body.get("id"), userPwd);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping
     public ResponseEntity<Void> deleteUser(@RequestHeader("access-token") String accessToken) throws Exception {
-        System.out.println(accessToken);
-        Claims body = Jwts.parser()
-                .setSigningKey(SALT.getBytes(StandardCharsets.UTF_8))
-                .parseClaimsJws(accessToken)
-                .getBody();
+        Claims body = getBody(accessToken);
         if (userService.deleteById((String) body.get("id")) == 0) {
             throw new Exception(USER_NOT_FOUND);
         }
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("/like")
+    public ResponseEntity<Void> addHouseLike(@RequestHeader("access-token") String accessToken,
+                                             @RequestParam BigDecimal aptCode) throws Exception {
+        Claims body = getBody(accessToken);
+        userService.addHouseLike((String) body.get("id"), aptCode);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    private Claims getBody(@RequestHeader("access-token") String accessToken) {
+        return Jwts.parser()
+                .setSigningKey(SALT.getBytes(StandardCharsets.UTF_8))
+                .parseClaimsJws(accessToken)
+                .getBody();
     }
 }

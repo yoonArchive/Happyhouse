@@ -1,6 +1,6 @@
 package com.ssafy.happyhouse.model.service;
 
-import com.ssafy.happyhouse.domain.HouseInfo;
+import com.ssafy.happyhouse.domain.trade.HouseInfo;
 import com.ssafy.happyhouse.dto.trade.HouseDealResponse;
 import com.ssafy.happyhouse.dto.trade.HouseDetailResponse;
 import com.ssafy.happyhouse.dto.trade.HouseListResponse;

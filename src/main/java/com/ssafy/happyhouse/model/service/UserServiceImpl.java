@@ -1,7 +1,9 @@
 package com.ssafy.happyhouse.model.service;
 
+import java.math.BigDecimal;
 import java.sql.SQLException;
 
+import com.ssafy.happyhouse.domain.HouseLike;
 import com.ssafy.happyhouse.dto.user.UserUpdateRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,8 +11,7 @@ import org.springframework.stereotype.Service;
 import com.ssafy.happyhouse.dto.user.User;
 import com.ssafy.happyhouse.model.mapper.UserMapper;
 
-import static com.ssafy.happyhouse.common.ErrorMessage.FALSE_PASSWORD;
-import static com.ssafy.happyhouse.common.ErrorMessage.USER_NOT_FOUND;
+import static com.ssafy.happyhouse.common.ErrorMessage.*;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -73,5 +74,13 @@ public class UserServiceImpl implements UserService {
 	public void checkPwd(String userId, String userPwd) throws Exception {
 		userMapper.checkPwd(userId, userPwd)
 				.orElseThrow(() -> new Exception(FALSE_PASSWORD));
+	}
+
+    @Override
+    public void addHouseLike(String userId, BigDecimal aptCode) throws Exception {
+		int result = userMapper.addHouseLike(new HouseLike(userId, aptCode));
+		if (result == 0) {
+			throw new Exception(ADD_HOUSE_LIKE_FAIL);
+		}
 	}
 }
