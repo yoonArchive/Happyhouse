@@ -55,6 +55,7 @@
 
 <script>
 import { mapState, mapActions } from "vuex";
+
 const houseStore = "houseStore";
 const userStore = "userStore";
 export default {
@@ -65,7 +66,7 @@ export default {
   },
   computed: {
     ...mapState(houseStore, ["house", "houseInfo", "houseDeals"]),
-    ...mapState(userStore, ["houseWishList", "isInWishList"]),
+    ...mapState(userStore, ["isInWishList", "houseWishListInfos"]),
   },
   methods: {
     ...mapActions(userStore, ["addWishList", "deleteWishHouse"]),
@@ -74,13 +75,13 @@ export default {
     },
     removeItem() {
       let index = -1;
-      for (let i = 0; i < this.houseWishList.length; i++) {
-        if (this.houseWishList[i][1] == this.house) {
+      for (let i = 0; i < this.houseWishListInfos.length; i++) {
+        if (this.houseWishListInfos[i].aptCode == this.house) {
           index = i;
           break;
         }
       }
-      let likeId = this.houseWishList[index][0];
+      let likeId = this.houseWishListInfos[index].likeId;
       this.deleteWishHouse(likeId);
     },
   },

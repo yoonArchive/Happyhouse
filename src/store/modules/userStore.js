@@ -32,7 +32,14 @@ const userStore = {
       state.user = user;
     },
     ADD_HOUSE_WISH_LIST: (state, data) => {
+      console.log(data);
       state.houseWishList.push(data);
+    },
+    SET_HOUSE_WISH_LIST: (state, data) => {
+      console.log(data);
+      for (let i = 0; i < data.length; i++) {
+        state.houseWishList.push([data[i].likeId, data[i].aptCode]);
+      }
     },
     SET_HOUSE_WISH_LIST_INFOS: (state, houseWishListInfos) => {
       state.houseWishListInfos = houseWishListInfos;
@@ -69,6 +76,9 @@ const userStore = {
       state.user = null;
       state.clickUserDelete = false;
     },
+    CLEAR_HOUSE_WISH_LIST_INFOS: (state) => {
+      state.houseWishListInfos = null;
+    },
     CLEAR_HOUSE_WISH_LIST: (state) => {
       state.houseWishList = null;
     },
@@ -94,6 +104,11 @@ const userStore = {
     logout({ commit }) {
       sessionStorage.removeItem("access-token");
       commit("CLEAR_USER_INFO");
+      commit("CLEAR_HOUSE_WISH_LIST_INFOS");
+      commit("CLEAR_HOUSE_WISH_LIST");
+      router.push({
+        name: "home",
+      });
     },
     async getDetail({ commit }) {
       let token = {
@@ -114,7 +129,6 @@ const userStore = {
         .put(`user`, updateInfo)
         .then(({ data }) => {
           alert("회원정보가 수정되었습니다.");
-
           let token = data["userToken"];
           sessionStorage.setItem("access-token", token);
           let decodedToken = jwt_decode(token);
@@ -155,7 +169,6 @@ const userStore = {
         });
     },
     async addWishList({ commit }, aptCode) {
-      console.log(aptCode + "추가");
       await axios.post(`user/like/${aptCode}`).then(({ data }) => {
         commit("ADD_HOUSE_WISH_LIST", [data.likeId, aptCode]);
         commit("SET_IS_IN_WISH_LIST");
@@ -166,6 +179,7 @@ const userStore = {
         .get(`user/like`)
         .then(({ data }) => {
           commit("SET_HOUSE_WISH_LIST_INFOS", data);
+          //commit("SET_HOUSE_WISH_LIST", data);
         })
         .catch((error) => {
           alert("목록을 불러오는 중 문제가 발생하였습니다.");
@@ -177,15 +191,12 @@ const userStore = {
         .delete(`user/like/${likeId}`)
         .then(() => {
           commit("CLEAR_IS_IN_WISH_LIST");
-          /*let index = -1;
-          for (let i = 0; i < state.houseWishList.length; i++) {
-            if (state.houseWishList[i][0] == likeId) {
-              index = i;
-              break;
-            }
-          }*/
-          const index = state.houseWishList.findIndex((el) => el[0] == likeId);
-          state.houseWishList.splice(index, 1);
+          //let index = -1;
+
+          const index = state.houseWishListInfos.findIndex(
+            (el) => el.likeId == likeId
+          );
+          state.houseWishListInfos.splice(index, 1);
         })
         .catch(() => {
           alert("관심 매물 삭제에 실패하였습니다.");
@@ -193,8 +204,8 @@ const userStore = {
     },
     getIsInWishList({ state, commit }, aptCode) {
       let isIn = false;
-      for (let i = 0; i < state.houseWishList.length; i++) {
-        if (state.houseWishList[i][1] == aptCode) {
+      for (let i = 0; i < state.houseWishListInfos.length; i++) {
+        if (state.houseWishListInfos[i].aptCode == aptCode) {
           isIn = true;
           break;
         }

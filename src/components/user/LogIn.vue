@@ -85,14 +85,15 @@ export default {
     };
   },
   computed: {
-    ...mapState(userStore, ["isLogin", "isLoginError"]),
+    ...mapState(userStore, ["isLogin", "isLoginError", "getWishHouses"]),
   },
   methods: {
-    ...mapActions(userStore, ["login"]),
+    ...mapActions(userStore, ["login", "getWishList"]),
     async confirm() {
       await this.login(this.user);
       if (this.isLogin) {
         this.$router.push({ name: "home" });
+        this.getWishList();
       }
     },
     checkValue() {

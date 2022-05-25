@@ -183,7 +183,6 @@ const houseStore = {
             dongCode: data.dongCode,
             buildYear: data.buildYear,
           };
-          console.log(houseInfoData);
           commit("SET_HOUSE", houseInfoData.aptCode);
           commit("SET_HOUSE_INFO", houseInfoData);
           commit("SET_HOUSE_DEALS", data.houseDeals);

@@ -2,11 +2,13 @@
   <div>
     <div id="wrapper">
       <div id="map"></div>
-      <div id="searchBox" class="card">
-        <div>
-          <!--<div v-if="searchBarVisible">-->
+      <div v-if="searchBarVisible">
+        <div id="searchBox" class="card">
           <house-search-bar @setMarker="displayMarker"></house-search-bar>
         </div>
+      </div>
+      <div id="back" v-else>
+        <img src="@/assets/img/back.png" width="50" height="50" />
       </div>
       <div>
         <house-detail @setMarker="displayMarker"></house-detail>
@@ -18,6 +20,7 @@
 <script>
 import HouseSearchBar from "@/components/trade/HouseSearchBar.vue";
 import HouseDetail from "@/components/trade/HouseDetail.vue";
+//import BackIcon from "@/components/trade/BackIcon.vue";
 import { mapState, mapActions, mapMutations } from "vuex";
 const houseStore = "houseStore";
 const userStore = "userStore";
@@ -26,11 +29,15 @@ export default {
   components: {
     HouseSearchBar,
     HouseDetail,
+    // BackIcon,
   },
   data() {
     return {
+      map: null,
       markers: [],
       searchBarVisible: true,
+      longitude: 0,
+      latitude: 0,
     };
   },
   computed: {
@@ -39,35 +46,34 @@ export default {
       "houseCnt",
       "houseInfo",
       "markerPositions",
-      "houseWishList",
     ]),
+    ...mapState(userStore, ["houseWishListInfos"]),
   },
   created() {
+    this.CLEAR_DETAIL_HOUSE();
+    if (!("geolocation" in navigator)) {
+      return;
+    }
     const code = this.$route.params.code;
     const index = this.$route.params.index;
-    console.log(code);
-    console.log(index);
     if (code) {
       this.searchBarVisible = false;
       this.CLEAR_MARKER_POSITIONS();
       this.CLEAR_HOUSE_LIST();
       this.detailHouse(code);
-      this.SET_MARKER_POSITIONS(this.houseWishList[index]);
-      this.displayMarker();
-      /*this.selectHouse(msg);
-      this.CLEAR_MARKER_POSITIONS();
-      this.SET_MARKER_POSITIONS(msg);
-      this.displayMarker();*/
-    }
-    this.CLEAR_DETAIL_HOUSE();
-    if (!("geolocation" in navigator)) {
-      return;
+      this.SET_IS_IN_WISH_LIST();
+      console.log(this.houseWishListInfos[index]);
     }
     // get position
     navigator.geolocation.getCurrentPosition(
       (pos) => {
-        this.latitude = pos.coords.latitude;
-        this.longitude = pos.coords.longitude;
+        if (code) {
+          this.latitude = this.houseWishListInfos[index].lat;
+          this.longitude = this.houseWishListInfos[index].lng;
+        } else {
+          this.latitude = pos.coords.latitude;
+          this.longitude = pos.coords.longitude;
+        }
         if (window.kakao && window.kakao.maps) {
           this.initMap();
         } else {
@@ -90,9 +96,9 @@ export default {
       "CLEAR_HOUSE_LIST",
       "CLEAR_DETAIL_HOUSE",
       "CLEAR_MARKER_POSITIONS",
-      "SET_MARKER_POSITIONS_OF_MY_AREA",
+      "SET_MARKER_POSITIONS",
     ]),
-
+    ...mapMutations(userStore, ["SET_IS_IN_WISH_LIST"]),
     selectHouse(selectedAptCode) {
       this.detailHouse(selectedAptCode);
       this.getIsInWishList(selectedAptCode);
@@ -116,6 +122,7 @@ export default {
       const positions = this.markerPositions.map(
         (position) => new kakao.maps.LatLng(...position)
       );
+      console.log(positions);
       const imgSrc = require("@/assets/map/house_icon5.png");
       const imgSize = new kakao.maps.Size(50, 50);
       const markerImage = new kakao.maps.MarkerImage(imgSrc, imgSize);
@@ -165,6 +172,12 @@ export default {
   z-index: 100;
   background-color: rgba(241, 239, 239, 0.8);
   overflow-y: auto;
+}
+#back {
+  position: absolute;
+  top: 9%;
+  left: 0.5%;
+  width: 25%;
 }
 .bi-plus-circle {
   font-size: 1.5rem;

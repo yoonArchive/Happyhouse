@@ -28,7 +28,12 @@
       </li>
     </ul>
     <ul class="copyright">
-      <li>&copy; Untitled</li>
+      <li>이용 약관</li>
+      <li>개인정보처리방침</li>
+      <li>사이트맵</li>
+    </ul>
+    <ul class="copyright">
+      <li>&copy; SSAFY</li>
       <li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
     </ul>
   </footer>

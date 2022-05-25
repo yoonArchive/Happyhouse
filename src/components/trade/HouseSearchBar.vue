@@ -130,6 +130,7 @@
 import { mapState, mapActions, mapMutations } from "vuex";
 
 const houseStore = "houseStore";
+const userStore = "userStore";
 
 export default {
   name: "HouseSearchBar",
@@ -166,6 +167,7 @@ export default {
       "getListByKeyword",
       "detailHouse",
     ]),
+    ...mapActions(userStore, ["getIsInWishList"]),
     ...mapMutations(houseStore, [
       "CLEAR_SIDO_LIST",
       "CLEAR_GUGUN_LIST",
@@ -217,6 +219,7 @@ export default {
       this.CLEAR_MARKER_POSITIONS();
       this.CLEAR_HOUSE_LIST();
       this.detailHouse(this.keywordList[index].aptCode);
+      this.getIsInWishList(this.keywordList[index].aptCode);
       console.log([this.keywordList[index]]);
       this.SET_MARKER_POSITIONS([this.keywordList[index]]);
       this.SET_HOUSE_LIST_BY_DONG([this.keywordList[index]]);
