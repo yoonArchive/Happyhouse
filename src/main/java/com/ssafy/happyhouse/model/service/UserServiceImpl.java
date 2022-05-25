@@ -7,8 +7,9 @@ import java.util.List;
 import com.ssafy.happyhouse.domain.HouseLike;
 import com.ssafy.happyhouse.dto.user.HouseLikeAddResponse;
 import com.ssafy.happyhouse.dto.user.HouseLikeResponse;
-import com.ssafy.happyhouse.dto.user.UserUpdateRequest;
+import com.ssafy.happyhouse.dto.user.UpdateRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.happyhouse.dto.user.User;
@@ -24,9 +25,13 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private UserMapper userMapper;
 
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+
 	@Override
 	public void registerUser(User user) throws SQLException {
 		user.setAuthority(USER);
+		user.encodePassword(passwordEncoder);
 		userMapper.registerUser(user);
 	}
 
@@ -36,8 +41,11 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User login(User user) throws SQLException {
-		return userMapper.login(user);
+	public User login(User user) throws Exception {
+		User loginUser = userMapper.selectById(user.getUserId())
+				.orElseThrow(() -> new Exception(USER_NOT_FOUND));
+		validatePassword(user, loginUser.getUserPwd());
+		return loginUser;
 	}
 
 	@Override
@@ -46,13 +54,14 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public int updateUser(String userId, UserUpdateRequest userUpdateRequest) throws Exception {
+	public int updateUser(String userId, UpdateRequest updateRequest) throws Exception {
 		User user = userMapper.selectById(userId)
 				.orElseThrow(() -> new Exception(USER_NOT_FOUND));
-		user.setUserPwd(userUpdateRequest.getUserPwd());
-		user.setUserName(userUpdateRequest.getName());
-		user.setEmail(userUpdateRequest.getEmail());
-		user.setPhone(userUpdateRequest.getPhone());
+		user.setUserPwd(updateRequest.getUserPwd());
+		user.setUserName(updateRequest.getName());
+		user.setEmail(updateRequest.getEmail());
+		user.setPhone(updateRequest.getPhone());
+		user.encodePassword(passwordEncoder);
 		return userMapper.updateUser(user);
 	}
 
@@ -102,6 +111,17 @@ public class UserServiceImpl implements UserService {
 				.orElseThrow(() -> new Exception(USER_NOT_FOUND));
 		if (userMapper.deleteHouseLike(likeId) == 0) {
 			throw new Exception(DELETE_HOUSE_LIKE_FAIL);
+		}
+	}
+
+	@Override
+	public List<User> getUsers() {
+		return userMapper.getUsers();
+	}
+
+	private void validatePassword(User user, String password) throws Exception {
+		if (!passwordEncoder.matches(user.getUserPwd(), password)) {
+			throw new Exception(USER_NOT_FOUND);
 		}
 	}
 }

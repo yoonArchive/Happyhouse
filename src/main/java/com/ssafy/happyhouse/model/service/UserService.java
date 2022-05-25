@@ -3,7 +3,7 @@ package com.ssafy.happyhouse.model.service;
 import com.ssafy.happyhouse.dto.user.HouseLikeAddResponse;
 import com.ssafy.happyhouse.dto.user.HouseLikeResponse;
 import com.ssafy.happyhouse.dto.user.User;
-import com.ssafy.happyhouse.dto.user.UserUpdateRequest;
+import com.ssafy.happyhouse.dto.user.UpdateRequest;
 
 import java.math.BigDecimal;
 import java.sql.SQLException;
@@ -15,11 +15,11 @@ public interface UserService {
 
 	int checkId(String checkId) throws Exception;
 
-	User login(User user) throws SQLException;
+	User login(User user) throws Exception;
 
 	String findPwd(User user) throws SQLException;
 
-	int updateUser(String user, UserUpdateRequest userUpdateRequest) throws SQLException, Exception;
+	int updateUser(String user, UpdateRequest updateRequest) throws SQLException, Exception;
 
 	User selectById(String userId) throws Exception;
 
@@ -34,4 +34,6 @@ public interface UserService {
 	List<HouseLikeResponse> getHouseLikes(String userId) throws Exception;
 
 	void deleteHouseLike(String userId, BigDecimal likeId) throws Exception;
+
+	List<User> getUsers();
 }

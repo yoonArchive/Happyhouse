@@ -16,8 +16,6 @@ public interface UserMapper {
 
 	int checkId(String checkId) throws Exception;
 
-	User login(User user) throws SQLException;
-
 	String findPwd(User user) throws SQLException;
 
 	int updateUser(User user) throws SQLException;
@@ -37,4 +35,6 @@ public interface UserMapper {
 	int deleteHouseLike(BigDecimal likeId);
 
 	HouseLikeAddResponse getLikeId(HouseLike houseLike);
+
+	List<User> getUsers();
 }

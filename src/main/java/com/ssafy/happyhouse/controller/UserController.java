@@ -8,7 +8,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.List;
 
-import com.ssafy.happyhouse.dto.trade.HouseListResponse;
 import com.ssafy.happyhouse.dto.user.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -107,9 +106,9 @@ public class UserController {
     }
 
     @PutMapping
-    public ResponseEntity<UserResponse> updateUser(@RequestBody UserUpdateRequest userUpdateRequest) throws Exception {
-        Claims body = getBody(userUpdateRequest.getUserToken());
-        if (userService.updateUser((String) body.get("id"), userUpdateRequest) == 0) {
+    public ResponseEntity<UserResponse> updateUser(@RequestBody UpdateRequest updateRequest) throws Exception {
+        Claims body = getBody(updateRequest.getUserToken());
+        if (userService.updateUser((String) body.get("id"), updateRequest) == 0) {
             throw new Exception(USER_UPDATE_FAIL);
         }
 
@@ -118,7 +117,7 @@ public class UserController {
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * EXPIRE_MINUTES))
                 .setSubject("access-token")
                 .claim("id", body.get("id"))
-                .claim("name", userUpdateRequest.getName())
+                .claim("name", updateRequest.getName())
                 .claim("authority", body.get("authority"))
                 .signWith(SignatureAlgorithm.HS256, SALT.getBytes("UTF-8")).compact();
         return new ResponseEntity<>(new UserResponse(jwt), HttpStatus.OK);
@@ -158,6 +157,11 @@ public class UserController {
         Claims body = getBody(accessToken);
         userService.deleteHouseLike((String) body.get("id"), likeId);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/admin")
+    public ResponseEntity<List<User>> getUsers() {
+        return new ResponseEntity<>(userService.getUsers(), HttpStatus.OK);
     }
 
     private Claims getBody(String accessToken) {
