@@ -75,11 +75,11 @@
         </select>
       </div>
     </div>
+    <!--@keyup.enter="search"-->
     <div v-if="searchType == 'keyword'" class="input-group row">
       <input
-        @keyup.enter="search"
         type="text"
-        v-model="searchKeyword"
+        v-model="inputKeyword"
         class="form-control d-inline-block"
         placeholder="아파트 또는 법정동 입력"
         style="color: gray; width: 70%; font-size: 0.8em; margin: 0 10px 0 20px"
@@ -173,7 +173,7 @@ export default {
       "CLEAR_HOUSE_LIST",
       "CLEAR_KEYWORD_LIST",
       "CLEAR_MARKER_POSITIONS",
-      "SET_MARKER_POSITIONS_BY_KEYWORD",
+      "SET_MARKER_POSITIONS",
       "SET_HOUSE_LIST_BY_DONG",
     ]),
     gugunList() {
@@ -217,7 +217,8 @@ export default {
       this.CLEAR_MARKER_POSITIONS();
       this.CLEAR_HOUSE_LIST();
       this.detailHouse(this.keywordList[index].aptCode);
-      this.SET_MARKER_POSITIONS_BY_KEYWORD([this.keywordList[index]]);
+      console.log([this.keywordList[index]]);
+      this.SET_MARKER_POSITIONS([this.keywordList[index]]);
       this.SET_HOUSE_LIST_BY_DONG([this.keywordList[index]]);
       this.$emit("setMarker");
     },

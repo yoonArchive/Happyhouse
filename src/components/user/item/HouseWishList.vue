@@ -58,10 +58,9 @@ export default {
     ...mapMutations(userStore, ["CLEAR_CLICK_MY_AREA"]),
     goDetail(index) {
       let aptCode = this.houseWishListInfos[index].aptCode;
-      console.log(aptCode);
       this.$router.push({
         name: "View",
-        params: { msg: `${aptCode}` },
+        params: { code: `${aptCode}`, index: `${index}` },
       });
     },
     deleteItem(index) {
@@ -74,10 +73,10 @@ export default {
           confirmButtonText: "삭제",
           cancelButtonText: "취소",
         })
-        .then((result) => {
+        .then(async (result) => {
           if (result.value) {
-            this.deleteWishHouse(house.likeId);
-            this.getWishList(); //바로 안됨
+            await this.deleteWishHouse(house.likeId);
+            this.getWishList();
           }
         });
     },

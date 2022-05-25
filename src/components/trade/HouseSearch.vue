@@ -3,8 +3,8 @@
     <div id="wrapper">
       <div id="map"></div>
       <div id="searchBox" class="card">
-        <!--<div v-if="searchBarVisible">-->
         <div>
+          <!--<div v-if="searchBarVisible">-->
           <house-search-bar @setMarker="displayMarker"></house-search-bar>
         </div>
       </div>
@@ -19,7 +19,6 @@
 import HouseSearchBar from "@/components/trade/HouseSearchBar.vue";
 import HouseDetail from "@/components/trade/HouseDetail.vue";
 import { mapState, mapActions, mapMutations } from "vuex";
-//import userStore from "@/store/modules/userStore";
 const houseStore = "houseStore";
 const userStore = "userStore";
 export default {
@@ -38,16 +37,27 @@ export default {
     ...mapState(houseStore, [
       "houses",
       "houseCnt",
+      "houseInfo",
       "markerPositions",
       "houseWishList",
     ]),
   },
   created() {
-    const msg = this.$route.params.msg;
-    if (msg) {
-      console.log(msg);
+    const code = this.$route.params.code;
+    const index = this.$route.params.index;
+    console.log(code);
+    console.log(index);
+    if (code) {
       this.searchBarVisible = false;
-      this.selectHouse(msg);
+      this.CLEAR_MARKER_POSITIONS();
+      this.CLEAR_HOUSE_LIST();
+      this.detailHouse(code);
+      this.SET_MARKER_POSITIONS(this.houseWishList[index]);
+      this.displayMarker();
+      /*this.selectHouse(msg);
+      this.CLEAR_MARKER_POSITIONS();
+      this.SET_MARKER_POSITIONS(msg);
+      this.displayMarker();*/
     }
     this.CLEAR_DETAIL_HOUSE();
     if (!("geolocation" in navigator)) {
@@ -76,7 +86,12 @@ export default {
   methods: {
     ...mapActions(houseStore, ["detailHouse"]),
     ...mapActions(userStore, ["getIsInWishList"]),
-    ...mapMutations(houseStore, ["CLEAR_DETAIL_HOUSE"]),
+    ...mapMutations(houseStore, [
+      "CLEAR_HOUSE_LIST",
+      "CLEAR_DETAIL_HOUSE",
+      "CLEAR_MARKER_POSITIONS",
+      "SET_MARKER_POSITIONS_OF_MY_AREA",
+    ]),
 
     selectHouse(selectedAptCode) {
       this.detailHouse(selectedAptCode);

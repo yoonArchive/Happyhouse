@@ -6,12 +6,15 @@ const instance = axios.create({
   },
 });
 
-instance.interceptors.request.use((config)=>{
-  console.log(config);
-  config.headers["access-token"] = sessionStorage.getItem("access-token");
-  return config
-},(error) => {
-  return Promise.reject(error);
-})
+instance.interceptors.request.use(
+  (config) => {
+    config.headers["access-token"] = sessionStorage.getItem("access-token");
+    console.log(config);
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
 
 export default instance;

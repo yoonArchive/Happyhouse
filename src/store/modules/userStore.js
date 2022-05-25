@@ -177,13 +177,14 @@ const userStore = {
         .delete(`user/like/${likeId}`)
         .then(() => {
           commit("CLEAR_IS_IN_WISH_LIST");
-          let index = -1;
+          /*let index = -1;
           for (let i = 0; i < state.houseWishList.length; i++) {
             if (state.houseWishList[i][0] == likeId) {
               index = i;
               break;
             }
-          }
+          }*/
+          const index = state.houseWishList.findIndex((el) => el[0] == likeId);
           state.houseWishList.splice(index, 1);
         })
         .catch(() => {

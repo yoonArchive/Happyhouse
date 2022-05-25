@@ -83,16 +83,15 @@ const houseStore = {
       state.houseCnt = length;
     },
     SET_MARKER_POSITIONS: (state, aptsData) => {
+      console.log(aptsData);
       state.markerPositions = aptsData.map((aptData) => [
         aptData.lat,
         aptData.lng,
       ]);
     },
-    SET_MARKER_POSITIONS_BY_KEYWORD: (state, aptsData) => {
-      state.markerPositions = aptsData.map((aptData) => [
-        aptData.lat,
-        aptData.lng,
-      ]);
+    SET_MARKER_POSITIONS_OF_MY_AREA: (state, aptsData) => {
+      console.log(aptsData);
+      state.markerPositions = [aptsData.lat, aptsData.lng];
     },
   },
 
@@ -146,6 +145,7 @@ const houseStore = {
       await houseListByDong(
         params,
         ({ data }) => {
+          console.log(data);
           commit("SET_HOUSE_LIST_BY_DONG", data);
           commit("SET_HOUSE_COUNT", data.length);
           commit("SET_MARKER_POSITIONS", data);
