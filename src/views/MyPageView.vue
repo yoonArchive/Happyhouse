@@ -25,7 +25,7 @@
 import { mapState } from "vuex";
 import MyPageMenu from "@/components/user/item/MyPageMenu.vue";
 import UserUpdate from "@/components/user/item/UserUpdate.vue";
-import MyAreaList from "@/components/user/item/MyAreaList.vue";
+import MyAreaList from "@/components/user/item/HouseWishList.vue";
 import UserDelete from "@/components/user/item/UserDelete.vue";
 
 const userStore = "userStore";

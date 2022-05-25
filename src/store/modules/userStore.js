@@ -8,7 +8,6 @@ const userStore = {
     user: null,
     isLogin: false,
     isLoginError: false,
-    //isUpdated: false,
     userInfo: null,
     clickMyArea: false,
     clickUserModify: false,
@@ -25,9 +24,6 @@ const userStore = {
     SET_IS_LOGIN_ERROR: (state, isLoginError) => {
       state.isLoginError = isLoginError;
     },
-    // SET_IS_UPDATED: (state) => {
-    //   state.isUpdated = true;
-    // },
     SET_USER_INFO: (state, userInfo) => {
       state.isLogin = true;
       state.userInfo = userInfo;
@@ -73,9 +69,6 @@ const userStore = {
       state.user = null;
       state.clickUserDelete = false;
     },
-    // CLEAR_IS_UPDATED: (state) => {
-    //   state.isUpdated = false;
-    // },
     CLEAR_HOUSE_WISH_LIST: (state) => {
       state.houseWishList = null;
     },
@@ -121,7 +114,6 @@ const userStore = {
         .put(`user`, updateInfo)
         .then(({ data }) => {
           alert("회원정보가 수정되었습니다.");
-          //commit("SET_IS_UPDATED");
           let token = data["userToken"];
           sessionStorage.setItem("access-token", token);
           let decodedToken = jwt_decode(token);

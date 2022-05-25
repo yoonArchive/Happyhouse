@@ -21,7 +21,9 @@
 import HouseSearchBar from "@/components/trade/HouseSearchBar.vue";
 import HouseDetail from "@/components/trade/HouseDetail.vue";
 import { mapState, mapActions, mapMutations } from "vuex";
+//import userStore from "@/store/modules/userStore";
 const houseStore = "houseStore";
+const userStore = "userStore";
 export default {
   name: "HouseSearch",
   components: {
@@ -35,10 +37,17 @@ export default {
     };
   },
   computed: {
-    ...mapState(houseStore, ["houses", "houseCnt", "markerPositions"]),
+    ...mapState(houseStore, [
+      "houses",
+      "houseCnt",
+      "markerPositions",
+      "houseWishList",
+    ]),
   },
   created() {
+    //this.getWishList();
     this.CLEAR_DETAIL_HOUSE();
+
     if (!("geolocation" in navigator)) {
       return;
     }
@@ -64,6 +73,7 @@ export default {
   },
   methods: {
     ...mapActions(houseStore, ["getHouseListByDong", "detailHouse"]),
+    ...mapActions(userStore, ["getWishList", "getIsInWishList"]),
     ...mapMutations(houseStore, [
       "SET_HOUSE_COUNT",
       "SET_DETAIL_HOUSE",
@@ -71,6 +81,7 @@ export default {
     ]),
     selectHouse(selectedAptCode) {
       this.detailHouse(selectedAptCode);
+      this.getIsInWishList(selectedAptCode);
     },
     initMap() {
       const container = document.getElementById("map");
@@ -111,7 +122,6 @@ export default {
             this.selectHouse(item.aptCode);
           });
         });
-
         // 지도 이동시켜주기
         // 배열.reduce((누적값, 현재값,인덱스,요소)=>{return 결과값}, 초기값)
         const bounds = positions.reduce(

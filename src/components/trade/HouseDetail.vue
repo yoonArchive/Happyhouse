@@ -6,11 +6,8 @@
           <img src="@/assets/img/apt.jpg" alt="My Image" height="180" />
           <div class="row">
             <h4>{{ houseInfo.apartmentName }}</h4>
-            <vue-clap-button
-              class="icon"
-              icon="love"
-              :size="20"
-            ></vue-clap-button>
+            <span v-if="isInWishList" @click="removeItem">💖</span>
+            <span v-else @click="addItem">🤍</span>
           </div>
           <table>
             <tbody id="aptDetail">
@@ -51,30 +48,61 @@
               </tbody>
             </table>
           </div>
-          <!--<HeartBtn
-          v-if="isAuth && level == 2"
-          class="px-1"
-          @changeHeartBtn="onBookmarkHouse"
-        />-->
         </div>
-        <!-- contents -->
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapActions, mapMutations } from "vuex";
 
 const houseStore = "houseStore";
+const userStore = "userStore";
 export default {
   name: "HouseDetail",
   components: {},
+  data() {
+    return {};
+  },
   computed: {
     ...mapState(houseStore, ["house", "houseInfo", "houseDeals"]),
+    ...mapState(userStore, [
+      "houseWishList",
+      "houseWishListInfos",
+      "isInWishList",
+    ]),
   },
   methods: {
-    onBookmarkHouse() {},
+    ...mapActions(userStore, ["addWishList", "deleteWishHouse", "getWishList"]),
+    ...mapMutations(userStore, [
+      "SET_IS_IN_WISH_LIST",
+      "CLEAR_IS_IN_WISH_LIST",
+    ]),
+    addItem() {
+      console.log(this.house + "추가");
+      this.addWishList(this.house);
+      this.SET_IS_IN_WISH_LIST();
+      this.getWishList();
+    },
+    removeItem() {
+      this.getWishList();
+      // houseWishListInfos 에서 house(aptCode)의 index 추출
+      let index = -1;
+      for (let i = 0; i < this.houseWishListInfos.length; i++) {
+        console.log(this.houseWishListInfos[i].aptCode + " " + this.house);
+        if (this.houseWishListInfos[i].aptCode == this.house) {
+          console.log("똑같다");
+          index = i;
+          break;
+        }
+      }
+      console.log(index);
+      let likeId = this.houseWishListInfos[index].likeId;
+      console.log(likeId);
+      this.deleteWishHouse(likeId);
+      this.CLEAR_IS_IN_WISH_LIST();
+    },
   },
   filters: {
     date(value) {
