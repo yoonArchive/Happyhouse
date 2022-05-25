@@ -37,5 +37,5 @@ public interface UserService {
 
 	List<User> getUsers();
 
-    void updateUserAuthority(String userId, UpdateRequest updateRequest) throws Exception;
+    void updateUserAuthority(UpdateRequest updateRequest) throws Exception;
 }

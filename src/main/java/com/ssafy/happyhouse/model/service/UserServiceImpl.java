@@ -128,8 +128,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void updateUserAuthority(String userId, UpdateRequest updateRequest) throws Exception {
-		User user = userMapper.selectById(userId)
+	public void updateUserAuthority(UpdateRequest updateRequest) throws Exception {
+		User user = userMapper.selectById(updateRequest.getUserId())
 				.orElseThrow(() -> new Exception(USER_NOT_FOUND));
 		user.setAuthority(updateRequest.getAuthority());
 		if (userMapper.updateUserAuthority(user) == 0) {

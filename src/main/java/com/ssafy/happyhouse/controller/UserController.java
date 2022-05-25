@@ -163,7 +163,7 @@ public class UserController {
 
     @PutMapping("/authority")
     public ResponseEntity<Void> updateUserAuthority(@RequestBody UpdateRequest updateRequest) throws Exception {
-        userService.updateUserAuthority((String) getBody(updateRequest.getUserId()).get("id"), updateRequest);
+        userService.updateUserAuthority(updateRequest);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
