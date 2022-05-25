@@ -78,8 +78,10 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public int deleteById(String userId) throws SQLException {
-		return userMapper.deleteById(userId);
+	public void deleteById(String userId) throws Exception {
+		if (userMapper.deleteById(userId) == 0) {
+			throw new Exception(USER_NOT_FOUND);
+		}
 	}
 
 	@Override

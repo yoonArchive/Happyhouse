@@ -23,7 +23,7 @@ public interface UserService {
 
 	User selectById(String userId) throws Exception;
 
-	int deleteById(String userId) throws SQLException;
+	void deleteById(String userId) throws Exception;
 
 	String findId(String userName, String phone);
 

@@ -132,16 +132,13 @@ public class UserController {
 
     @DeleteMapping
     public ResponseEntity<Void> deleteUser(@RequestHeader("access-token") String accessToken) throws Exception {
-        Claims body = getBody(accessToken);
-        if (userService.deleteById((String) body.get("id")) == 0) {
-            throw new Exception(USER_NOT_FOUND);
-        }
+        userService.deleteById((String) getBody(accessToken).get("id"));
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("/like/{aptCode}")
     public ResponseEntity<HouseLikeAddResponse> addHouseLike(@RequestHeader("access-token") String accessToken,
-                                             @PathVariable BigDecimal aptCode) throws Exception {
+                                                             @PathVariable BigDecimal aptCode) throws Exception {
         Claims body = getBody(accessToken);
         return new ResponseEntity<>(userService.addHouseLike((String) body.get("id"), aptCode), HttpStatus.OK);
     }
@@ -165,8 +162,14 @@ public class UserController {
     }
 
     @PutMapping("/authority")
-    public ResponseEntity<Void> updateUserAuthority(@RequestHeader("access-token") String accessToken, @RequestBody UpdateRequest updateRequest) throws Exception {
-        userService.updateUserAuthority((String) getBody(accessToken).get("id"), updateRequest);
+    public ResponseEntity<Void> updateUserAuthority(@RequestBody UpdateRequest updateRequest) throws Exception {
+        userService.updateUserAuthority((String) getBody(updateRequest.getUserId()).get("id"), updateRequest);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<Void> deleteUserById(@PathVariable String userId) throws Exception {
+        userService.deleteById(userId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
