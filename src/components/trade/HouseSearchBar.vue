@@ -77,11 +77,11 @@
     </div>
     <div v-if="searchType == 'keyword'" class="input-group row">
       <input
-        @keyup.enter="keywordSearch"
+        @keyup.enter="search"
         type="text"
-        v-model="inputKeyword"
+        v-model="searchKeyword"
         class="form-control d-inline-block"
-        placeholder="아파트명 / 주택명 / 법정동 입력"
+        placeholder="아파트 또는 법정동 입력"
         style="color: gray; width: 70%; font-size: 0.8em; margin: 0 10px 0 20px"
       />
       <button
