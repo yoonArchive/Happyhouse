@@ -3,16 +3,14 @@
     <div id="wrapper">
       <div id="map"></div>
       <div id="searchBox" class="card">
-        <div v-if="searchBarVisible">
+        <!--<div v-if="searchBarVisible">-->
+        <div>
           <house-search-bar @setMarker="displayMarker"></house-search-bar>
         </div>
       </div>
       <div>
         <house-detail @setMarker="displayMarker"></house-detail>
       </div>
-      <!-- <div class="button-group">
-        <button @click="displayMarker(markerPositions)">marker set 2</button>
-      </div> -->
     </div>
   </div>
 </template>

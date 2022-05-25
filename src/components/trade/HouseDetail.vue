@@ -82,7 +82,8 @@ export default {
           break;
         }
       }
-      this.deleteWishHouse(index);
+      let likeId = this.houseWishList[index][0];
+      this.deleteWishHouse(likeId);
     },
   },
   filters: {
