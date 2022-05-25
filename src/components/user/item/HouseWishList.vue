@@ -1,12 +1,14 @@
 <template>
   <section>
     <h4>관심 지역 목록</h4>
-    <div class="table-wrapper">
+    <br />
+    <div class="table-wrapper" v-if="houseWishListInfos.length > 0">
       <table>
         <thead>
           <tr>
             <th>주소</th>
             <th>아파트명</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -15,36 +17,76 @@
               {{ houseInfo.sidoName }} {{ houseInfo.gugunName }}
               {{ houseInfo.dongName }}
             </td>
-            <td @click="goDetail">
+            <td @click="goDetail(index)">
               <a>{{ houseInfo.apartmentName }}</a>
             </td>
-            <td @click="deleteItem(index)">삭제</td>
+            <td @click="deleteItem(index)">
+              <img
+                src="@/assets/img/Red-Trash-Transparent-Icon.png"
+                width="18"
+                height="18"
+              />
+            </td>
           </tr>
         </tbody>
       </table>
+    </div>
+    <div v-else>
+      <br />
+      <h3>관심 매물을 등록해주세요.</h3>
     </div>
   </section>
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
+import { mapState, mapActions, mapMutations } from "vuex";
 
 const userStore = "userStore";
-const houseStore = "houseStore";
 export default {
   created() {
     this.getWishList();
+    if (this.houseWishListInfos.length == 0) {
+      this.$swal({
+        className: "swal",
+        icon: "warning",
+        text: "등록된 관심 매물이 없습니다.",
+      });
+    }
   },
   methods: {
     ...mapActions(userStore, ["getWishList", "deleteWishHouse"]),
-    goDetail() {},
+    ...mapMutations(userStore, ["CLEAR_CLICK_MY_AREA"]),
+    goDetail(index) {
+      let aptCode = this.houseWishListInfos[index].aptCode;
+      console.log(aptCode);
+      this.$router.push({
+        name: "View",
+        params: { msg: `${aptCode}` },
+      });
+    },
     deleteItem(index) {
       let house = this.houseWishListInfos[index];
-      this.deleteWishHouse(house.likeId);
+      this.$swal
+        .fire({
+          text: `${house.apartmentName}을 삭제하시겠습니까?`,
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonText: "삭제",
+          cancelButtonText: "취소",
+        })
+        .then((result) => {
+          if (result.value) {
+            this.deleteWishHouse(house.likeId);
+            this.getWishList(); //바로 안됨
+          }
+        });
     },
   },
   computed: {
-    ...mapState(houseStore, ["houseWishListInfos"]),
+    ...mapState(userStore, ["houseWishListInfos"]),
+  },
+  destroyed() {
+    this.CLEAR_CLICK_MY_AREA();
   },
 };
 </script>

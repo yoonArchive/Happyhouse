@@ -3,7 +3,7 @@
     <div id="wrapper">
       <div id="map"></div>
       <div id="searchBox" class="card">
-        <div>
+        <div v-if="searchBarVisible">
           <house-search-bar @setMarker="displayMarker"></house-search-bar>
         </div>
       </div>
@@ -33,7 +33,7 @@ export default {
   data() {
     return {
       markers: [],
-      listVisible: false,
+      searchBarVisible: true,
     };
   },
   computed: {
@@ -45,9 +45,14 @@ export default {
     ]),
   },
   created() {
-    //this.getWishList();
-    this.CLEAR_DETAIL_HOUSE();
+    const msg = this.$route.params.msg;
+    if (msg) {
+      console.log(msg);
+      this.searchBarVisible = false;
+      this.selectHouse(msg);
+    }
 
+    this.CLEAR_DETAIL_HOUSE();
     if (!("geolocation" in navigator)) {
       return;
     }
@@ -72,13 +77,9 @@ export default {
     );
   },
   methods: {
-    ...mapActions(houseStore, ["getHouseListByDong", "detailHouse"]),
-    ...mapActions(userStore, ["getWishList", "getIsInWishList"]),
-    ...mapMutations(houseStore, [
-      "SET_HOUSE_COUNT",
-      "SET_DETAIL_HOUSE",
-      "CLEAR_DETAIL_HOUSE",
-    ]),
+    ...mapActions(houseStore, ["detailHouse"]),
+    ...mapActions(userStore, ["getIsInWishList"]),
+    ...mapMutations(houseStore, ["CLEAR_DETAIL_HOUSE"]),
     selectHouse(selectedAptCode) {
       this.detailHouse(selectedAptCode);
       this.getIsInWishList(selectedAptCode);
@@ -102,7 +103,6 @@ export default {
       const positions = this.markerPositions.map(
         (position) => new kakao.maps.LatLng(...position)
       );
-
       const imgSrc = require("@/assets/map/house_icon5.png");
       const imgSize = new kakao.maps.Size(50, 50);
       const markerImage = new kakao.maps.MarkerImage(imgSrc, imgSize);

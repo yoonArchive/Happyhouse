@@ -83,7 +83,6 @@ const houseStore = {
       state.houseCnt = length;
     },
     SET_MARKER_POSITIONS: (state, aptsData) => {
-      console.log(aptsData);
       state.markerPositions = aptsData.map((aptData) => [
         aptData.lat,
         aptData.lng,
@@ -171,6 +170,7 @@ const houseStore = {
       );
     },
     detailHouse: ({ commit }, aptCode) => {
+      console.log("detail");
       showDetail(
         aptCode,
         ({ data }) => {
@@ -183,6 +183,8 @@ const houseStore = {
             dongCode: data.dongCode,
             buildYear: data.buildYear,
           };
+          console.log(houseInfoData);
+          commit("SET_HOUSE", houseInfoData.aptCode);
           commit("SET_HOUSE_INFO", houseInfoData);
           commit("SET_HOUSE_DEALS", data.houseDeals);
         },

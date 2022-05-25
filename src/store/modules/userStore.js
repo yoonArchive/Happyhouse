@@ -31,11 +31,8 @@ const userStore = {
     SET_USER_DETAIL: (state, user) => {
       state.user = user;
     },
-    ADD_HOUSE_WISH_LIST: (state, aptCode) => {
-      state.houseWishList.push(aptCode);
-    },
-    SET_HOUSE_WISH_LIST: (state, houseWishList) => {
-      state.houseWishList = houseWishList;
+    ADD_HOUSE_WISH_LIST: (state, data) => {
+      state.houseWishList.push(data);
     },
     SET_HOUSE_WISH_LIST_INFOS: (state, houseWishListInfos) => {
       state.houseWishListInfos = houseWishListInfos;
@@ -62,6 +59,9 @@ const userStore = {
       state.clickUserDelete = false;
       state.clickMyArea = false;
       state.clickUserModify = false;
+    },
+    CLEAR_CLICK_MY_AREA: (state) => {
+      state.clickMyArea = false;
     },
     CLEAR_USER_INFO: (state) => {
       state.isLogin = false;
@@ -144,39 +144,51 @@ const userStore = {
         });
     },
     async addWishList({ commit }, aptCode) {
-      console.log(aptCode);
-      await axios.post(`user/like/${aptCode}`).then(() => {
-        commit("ADD_HOUSE_WISH_LIST", aptCode);
+      console.log(aptCode + "추가");
+      await axios.post(`user/like/${aptCode}`).then(({ data }) => {
+        commit("ADD_HOUSE_WISH_LIST", [data.likeId, aptCode]);
+        commit("SET_IS_IN_WISH_LIST");
       });
     },
     async getWishList({ commit }) {
       await axios
         .get(`user/like`)
         .then(({ data }) => {
-          console.log(data);
           commit("SET_HOUSE_WISH_LIST_INFOS", data);
         })
         .catch((error) => {
+          alert("목록을 불러오는 중 문제가 발생하였습니다.");
           console.log(error);
         });
     },
-    async deleteWishHouse(likeId) {
-      console.log(likeId);
+    async deleteWishHouse({ state, commit }, likeId) {
       await axios
-        .delete(`user/like`, likeId)
+        .delete(`user/like/${likeId}`)
         .then(() => {
-          alert("삭제 완료");
+          commit("CLEAR_IS_IN_WISH_LIST");
+          let index = -1;
+          for (let i = 0; i < state.houseWishList.length; i++) {
+            if (state.houseWishList[i][0] == likeId) {
+              index = i;
+              break;
+            }
+          }
+          state.houseWishList.splice(index, 1);
         })
         .catch(() => {
-          alert("삭제 실패");
+          alert("관심 매물 삭제에 실패하였습니다.");
         });
     },
     getIsInWishList({ state, commit }, aptCode) {
-      if (state.houseWishList.includes(aptCode)) {
-        commit("SET_IS_IN_WISH_LIST");
-      } else {
-        commit("CLEAR_IS_IN_WISH_LIST");
+      let isIn = false;
+      for (let i = 0; i < state.houseWishList.length; i++) {
+        if (state.houseWishList[i][1] == aptCode) {
+          isIn = true;
+          break;
+        }
       }
+      if (isIn) commit("SET_IS_IN_WISH_LIST");
+      else commit("CLEAR_IS_IN_WISH_LIST");
     },
     showUserArea({ commit }) {
       commit("SET_CLICK_MY_AREA");
