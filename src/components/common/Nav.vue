@@ -17,14 +17,14 @@
             >Login | SignUp</router-link
           >
         </li>
-        <li class="nav-item mr-2" v-if="userInfo">
-          <a @click="userLogout">Logout</a>
-        </li>
-        <li class="nav-item mr-2" v-if="userInfo">
+        <li class="nav-item mr-2" v-if="userInfo && userInfo.authority !== '관리자'">
           <router-link to="/myPage">myPage</router-link>
         </li>
-        <li class="nav-item mr-2" v-if="userInfo">
+        <li class="nav-item mr-2" v-if="userInfo && userInfo.authority === '관리자'">
           <router-link to="/admin">admin</router-link>
+        </li>
+        <li class="nav-item mr-2" v-if="userInfo">
+          <a @click="userLogout">Logout</a>
         </li>
       </ul>
     </nav>
