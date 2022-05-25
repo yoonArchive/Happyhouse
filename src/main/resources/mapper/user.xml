@@ -97,6 +97,7 @@
     <select id="getUsers" resultType="user">
         select *
         from user
-        where userId != 'admin';
+        where userId != 'admin'
+        order by joinDate desc;
     </select>
 </mapper>
