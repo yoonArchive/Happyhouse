@@ -49,7 +49,6 @@ export default {
       this.searchBarVisible = false;
       this.selectHouse(msg);
     }
-
     this.CLEAR_DETAIL_HOUSE();
     if (!("geolocation" in navigator)) {
       return;
@@ -78,6 +77,7 @@ export default {
     ...mapActions(houseStore, ["detailHouse"]),
     ...mapActions(userStore, ["getIsInWishList"]),
     ...mapMutations(houseStore, ["CLEAR_DETAIL_HOUSE"]),
+
     selectHouse(selectedAptCode) {
       this.detailHouse(selectedAptCode);
       this.getIsInWishList(selectedAptCode);

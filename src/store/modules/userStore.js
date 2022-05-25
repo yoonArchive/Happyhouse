@@ -114,6 +114,7 @@ const userStore = {
         .put(`user`, updateInfo)
         .then(({ data }) => {
           alert("회원정보가 수정되었습니다.");
+
           let token = data["userToken"];
           sessionStorage.setItem("access-token", token);
           let decodedToken = jwt_decode(token);
@@ -131,17 +132,17 @@ const userStore = {
     async updateUserAuthority(data) {
       console.log(data);
       let updateInfo = {
-        authority: data
+        authority: data,
       };
       console.log(updateInfo);
       await axios
-          .put(`user/authority`, updateInfo)
-          .then(( ) => {
-            alert("회원정보가 수정되었습니다.");
-          })
-          .catch(() => {
-            alert("회원정보 수정 실패");
-          });
+        .put(`user/authority`, updateInfo)
+        .then(() => {
+          alert("회원정보가 수정되었습니다.");
+        })
+        .catch(() => {
+          alert("회원정보 수정 실패");
+        });
     },
     async deleteUser({ commit }) {
       await axios

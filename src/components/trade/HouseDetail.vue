@@ -27,7 +27,6 @@
               </tr>
             </tbody>
           </table>
-
           <div style="height: 250px; overflow: auto">
             <table>
               <thead>
@@ -56,7 +55,6 @@
 
 <script>
 import { mapState, mapActions } from "vuex";
-
 const houseStore = "houseStore";
 const userStore = "userStore";
 export default {
@@ -108,12 +106,10 @@ export default {
   background-color: rgba(241, 239, 239, 0.8);
   overflow-y: auto;
 }
-
 .icon {
   margin-top: 4px;
   margin-left: -10px;
 }
-
 h4 {
   color: black;
 }
