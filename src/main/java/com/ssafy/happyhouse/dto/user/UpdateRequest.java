@@ -3,7 +3,7 @@ package com.ssafy.happyhouse.dto.user;
 import lombok.Data;
 
 @Data
-public class UserUpdateRequest {
+public class UpdateRequest {
 
     private String userToken;
     private String userPwd;
