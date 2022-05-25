@@ -129,14 +129,9 @@ const userStore = {
           alert("회원정보 수정 실패");
         });
     },
-    async updateUserAuthority(data) {
-      console.log(data);
-      let updateInfo = {
-        authority: data,
-      };
-      console.log(updateInfo);
+    async updateUserAuthority(context, updateUserInfo) {
       await axios
-        .put(`user/authority`, updateInfo)
+        .put(`user/authority`, updateUserInfo)
         .then(() => {
           alert("회원정보가 수정되었습니다.");
         })

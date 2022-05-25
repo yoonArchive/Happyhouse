@@ -2,16 +2,15 @@
   <tr>
     <td>{{ index }}</td>
     <td>{{ userId }}</td>
-    <td> ***</td>
+    <td>***</td>
     <td>{{ userName }}</td>
     <td>{{ email }}</td>
     <td>{{ phone }}</td>
     <td>{{ joinDate }}</td>
     <td>
       <select
-          :v-model="authority"
+          v-model="updatedAuthority"
           class="array-select form-control form-select"
-          @change="print"
       >
         <option value="사용자">사용자</option>
         <option value="관리자">관리자</option>
@@ -27,6 +26,7 @@
 <script>
 import moment from "moment";
 import {mapActions} from "vuex";
+import axios from "@/api/http";
 
 const userStore = "userStore";
 
@@ -42,27 +42,30 @@ export default {
     authority: String,
     joinDate: String
   },
-  data() {
-    return {
-      updatedAuthority: ""
-    }
-  },
   filters: {
     dateFormat(joinDate) {
       return moment(new Date(joinDate)).format("YY.MM.DD");
     },
   },
+  data() {
+    return {
+      updatedAuthority: this.authority
+    }
+  },
   methods: {
-    ...mapActions(userStore, ["updateUserAuthority", "deleteUser"]),
+    ...mapActions(userStore, ["updateUserAuthority"]),
     updateUser() {
-      console.log(this.authority);
-      this.updateUserAuthority(this.authority);
+      this.$emit("update", this.userId, this.updatedAuthority);
     },
     deleteUser() {
-      alert("삭제");
-    },
-    print() {
-      console.log(this.authority);
+      axios.delete(`user/${this.userId}`)
+          .then( async () => {
+            alert("회원 삭제가 완료되었습니다.");
+            await this.$emit("refresh");
+          })
+          .catch(() => {
+            alert("회원 탈퇴 중 문제가 발생했습니다.");
+          });
     }
   }
 };

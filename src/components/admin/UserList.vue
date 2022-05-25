@@ -33,6 +33,8 @@
             :key="user.userId"
             v-bind="user"
             :index="index+1"
+            @refresh="initialize"
+            @update="updateUser"
         />
         </tbody>
       </table>
@@ -43,6 +45,9 @@
 <script>
 import http from "@/api/http.js";
 import UserListItem from "@/components/admin/item/UserListItem.vue";
+import {mapActions} from "vuex";
+
+const userStore = "userStore";
 
 export default {
   name: "Admin",
@@ -55,13 +60,26 @@ export default {
     };
   },
   created() {
-    http.get("/user/admin")
-        .then(({data}) => {
-          this.users = data;
-        })
-        .catch(({error}) => {
-          this.$swal("error", error, "error");
-        });
+    this.initialize();
+  },
+  methods:{
+    ...mapActions(userStore, ["updateUserAuthority"]),
+    initialize() {
+      http.get("/user/admin")
+          .then(({data}) => {
+            this.users = data;
+          })
+          .catch(({error}) => {
+            this.$swal("error", error, "error");
+          });
+    },
+    updateUser(userId, authority) {
+      let data = {
+        userId: userId,
+        authority: authority
+      };
+      this.updateUserAuthority(data);
+    }
   }
 };
 </script>
