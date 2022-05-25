@@ -16,6 +16,8 @@ public interface UserMapper {
 
 	int checkId(String checkId) throws Exception;
 
+	Optional<User> login(User user) throws SQLException;
+
 	String findPwd(User user) throws SQLException;
 
 	int updateUser(User user) throws SQLException;
@@ -37,4 +39,6 @@ public interface UserMapper {
 	HouseLikeAddResponse getLikeId(HouseLike houseLike);
 
 	List<User> getUsers();
+
+	int updateUserAuthority(User user);
 }

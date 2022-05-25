@@ -36,4 +36,6 @@ public interface UserService {
 	void deleteHouseLike(String userId, BigDecimal likeId) throws Exception;
 
 	List<User> getUsers();
+
+    void updateUserAuthority(String userId, UpdateRequest updateRequest) throws Exception;
 }

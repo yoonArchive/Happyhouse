@@ -164,6 +164,12 @@ public class UserController {
         return new ResponseEntity<>(userService.getUsers(), HttpStatus.OK);
     }
 
+    @PutMapping("/authority")
+    public ResponseEntity<Void> updateUserAuthority(@RequestHeader("access-token") String accessToken, @RequestBody UpdateRequest updateRequest) throws Exception {
+        userService.updateUserAuthority((String) getBody(accessToken).get("id"), updateRequest);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     private Claims getBody(String accessToken) {
         return Jwts.parser()
                 .setSigningKey(SALT.getBytes(StandardCharsets.UTF_8))

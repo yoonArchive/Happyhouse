@@ -20,6 +20,7 @@ import static com.ssafy.happyhouse.common.ErrorMessage.*;
 @Service
 public class UserServiceImpl implements UserService {
 
+	private static final String ADMIN = "admin";
 	private static final String USER = "사용자";
 
 	@Autowired
@@ -42,7 +43,12 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User login(User user) throws Exception {
-		User loginUser = userMapper.selectById(user.getUserId())
+		User loginUser;
+		if (user.getUserId().equals(ADMIN)) {
+			return userMapper.login(user)
+					.orElseThrow(() -> new Exception(USER_NOT_FOUND));
+		}
+		loginUser = userMapper.selectById(user.getUserId())
 				.orElseThrow(() -> new Exception(USER_NOT_FOUND));
 		validatePassword(user, loginUser.getUserPwd());
 		return loginUser;
@@ -117,6 +123,16 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<User> getUsers() {
 		return userMapper.getUsers();
+	}
+
+	@Override
+	public void updateUserAuthority(String userId, UpdateRequest updateRequest) throws Exception {
+		User user = userMapper.selectById(userId)
+				.orElseThrow(() -> new Exception(USER_NOT_FOUND));
+		user.setAuthority(updateRequest.getAuthority());
+		if (userMapper.updateUserAuthority(user) == 0) {
+			throw new Exception(USER_UPDATE_FAIL);
+		}
 	}
 
 	private void validatePassword(User user, String password) throws Exception {

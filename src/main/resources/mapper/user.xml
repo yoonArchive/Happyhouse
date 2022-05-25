@@ -15,6 +15,13 @@
         where userId = #{userId};
     </select>
 
+    <select id="login" parameterType="user" resultType="user">
+        select *
+        from user
+        where userId = #{userId}
+          and userPwd = #{userPwd};
+    </select>
+
     <select id="findId" parameterType="string" resultType="string">
         select userId
         from user
@@ -100,4 +107,10 @@
         where userId != 'admin'
         order by joinDate desc;
     </select>
+
+    <update id="updateUserAuthority" parameterType="user">
+        update user
+        set authority=#{authority}
+        where userId = #{userId};
+    </update>
 </mapper>
