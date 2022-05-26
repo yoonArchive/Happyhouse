@@ -50,7 +50,7 @@ public class UserServiceImpl implements UserService {
 		}
 		loginUser = userMapper.selectById(user.getUserId())
 				.orElseThrow(() -> new Exception(USER_NOT_FOUND));
-		validatePassword(user, loginUser.getUserPwd());
+		validatePassword(user.getUserPwd(), loginUser.getUserPwd());
 		return loginUser;
 	}
 
@@ -91,8 +91,13 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void checkPwd(String userId, String userPwd) throws Exception {
-		userMapper.checkPwd(userId, userPwd)
-				.orElseThrow(() -> new Exception(FALSE_PASSWORD));
+		User user = userMapper.selectById(userId)
+				.orElseThrow(() -> new Exception(USER_NOT_FOUND));
+		System.out.println(user.getUserPwd()+", "+userPwd);
+		if (passwordEncoder.matches("$2a$10$IZLzbVCb5e8fXSAJFCdOvOJ0FWw7re3tf55JTlySCcjInTGwb5QvO", userPwd)) {
+			System.out.println("똑같다");
+		}
+		validatePassword(userPwd, user.getUserPwd());
 	}
 
     @Override
@@ -137,8 +142,8 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 
-	private void validatePassword(User user, String password) throws Exception {
-		if (!passwordEncoder.matches(user.getUserPwd(), password)) {
+	private void validatePassword(String originalPassword, String password) throws Exception {
+		if (!passwordEncoder.matches(originalPassword, password)) {
 			throw new Exception(USER_NOT_FOUND);
 		}
 	}
