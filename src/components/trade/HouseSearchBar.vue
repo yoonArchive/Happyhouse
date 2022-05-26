@@ -83,6 +83,7 @@
         class="form-control d-inline-block"
         placeholder="아파트 또는 법정동 입력"
         style="color: gray; width: 70%; font-size: 0.8em; margin: 0 10px 0 20px"
+        @keyup.enter="keywordSearch"
       />
       <button
         @click="keywordSearch"
@@ -104,7 +105,7 @@
         v-if="listVisible"
         style="height: 440px; overflow: auto; font-size: 12px; color: black"
       >
-        <table>
+        <table class="keywordSearchTable">
           <thead>
             <th style="font-size: 13px; color: black; width: 55%">주소</th>
             <th style="font-size: 13px; color: black; width: 45%">아파트명</th>
@@ -273,5 +274,9 @@ select {
   margin-right: 10px;
   text-align: center;
   padding: 0 0.5em;
+}
+.keywordSearchTable {
+  margin-right: 75px;
+  width: 100%;
 }
 </style>

@@ -27,7 +27,7 @@
               </tr>
             </tbody>
           </table>
-          <div style="height: 250px; overflow: auto">
+          <div style="height: 100%; overflow: auto">
             <table>
               <thead>
                 <th>거래일자</th>
@@ -126,5 +126,23 @@ th,
 td {
   color: black;
   padding: 2px;
+}
+img {
+  width: 100%;
+}
+button {
+  background-color: #dfdfdf;
+  padding-left: 30px;
+  padding-right: 30px;
+  padding-bottom: 40px;
+  text-align: center;
+  width: 100px;
+  height: 30px;
+  margin-top: -20px;
+  margin-bottom: 10px;
+}
+input {
+  width: 70px;
+  font-size: small;
 }
 </style>
