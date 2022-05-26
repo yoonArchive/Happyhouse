@@ -8,7 +8,7 @@
         <tbody>
         <tr>
           <td>
-            <div @click="goMyArea"><a>나의 관심 지역</a></div>
+            <div @click="goMyArea"><a>나의 관심 매물</a></div>
           </td>
         </tr>
         <tr>
