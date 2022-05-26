@@ -51,6 +51,7 @@
               id="registQuestionBtn"
               @click="moveWrite"
               style="float: right"
+              v-show="userInfo"
             >
               등록
             </button>
@@ -94,6 +95,9 @@
 
 <script>
 import QuestionListItem from "@/components/qna/item/QuestionListItem.vue";
+import {mapState} from "vuex";
+
+const userStore = "userStore";
 
 export default {
   name: "QuestionList",
@@ -112,6 +116,9 @@ export default {
     this.$axios.get(`/qnas`).then(({ data }) => {
       this.questions = data;
     });
+  },
+  computed: {
+    ...mapState(userStore, ["userInfo"])
   },
   methods: {
     moveWrite() {

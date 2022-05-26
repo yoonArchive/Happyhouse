@@ -17,7 +17,7 @@
           <div>
             <ul class="actions aln-center">
               <li>
-                <button v-show="userInfo.authority==='관리자'"
+                <button v-show="userInfo != null && userInfo.authority==='관리자'"
                   type="button"
                   class="primary"
                   id="modifyBtn"
@@ -27,7 +27,7 @@
                 </button>
               </li>
               <li>
-                <button v-show="userInfo.authority === '관리자'"
+                <button v-show="userInfo != null && userInfo.authority === '관리자'"
                   type="button"
                   class="button"
                   id="deleteNoticeBtn"

@@ -66,7 +66,7 @@
         </div>
       </section>
       <section class="spotlight">
-        <div class="image"><img src="@/images/main2.png" style="height: 417.82px; width: 555.59px;" alt=""/></div>
+        <div class="image" style="width: 555.59px"><img src="@/images/main2.png" style="height: 417.82px; width: 100%;" alt=""/></div>
         <div class="content">
           <h2>
             내 집 마련의 꿈, 거래내역 확인에서부터

@@ -3,7 +3,7 @@
     <div v-if="house">
       <div id="detailBox" class="card">
         <div class="table-wrapper">
-          <img src="@/assets/img/apt.jpg" alt="My Image" height="180" />
+          <img src="@/assets/img/apt.jpg" alt="My Image" style="height: 180px"/>
           <div class="row">
             <h4>{{ houseInfo.apartmentName }}</h4>
             <h4 v-if="isInWishList" @click="removeItem">💗</h4>

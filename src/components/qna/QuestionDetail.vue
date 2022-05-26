@@ -16,7 +16,7 @@
           <div>
             <ul class="actions aln-center">
               <li>
-                <button v-show="userInfo.id === questionForm.author || userInfo.authority === '관리자'"
+                <button v-show="userInfo != null && (userInfo.id === questionForm.author || userInfo.authority === '관리자')"
                   type="button"
                   class="primary"
                   id="modifyBtn"
@@ -26,7 +26,7 @@
                 </button>
               </li>
               <li>
-                <button v-show="userInfo.id === questionForm.author || userInfo.authority === '관리자'"
+                <button v-show="userInfo != null && (userInfo.id === questionForm.author || userInfo.authority === '관리자')"
                   type="button"
                   class="button"
                   id="deleteQuestionBtn"
@@ -48,7 +48,7 @@
             </ul>
           </div>
         </div>
-        <div>
+        <div v-show="userInfo">
           <textarea
             class="ta"
             name="comment"
