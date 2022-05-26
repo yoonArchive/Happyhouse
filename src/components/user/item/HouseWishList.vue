@@ -43,8 +43,8 @@ import { mapState, mapActions, mapMutations } from "vuex";
 
 const userStore = "userStore";
 export default {
-  created() {
-    this.getWishList();
+  async created() {
+    await this.getWishList();
     if (this.houseWishListInfos.length == 0) {
       this.$swal({
         className: "swal",

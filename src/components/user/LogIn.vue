@@ -85,7 +85,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(userStore, ["isLogin", "isLoginError", "getWishHouses"]),
+    ...mapState(userStore, ["isLogin", "isLoginError"]),
   },
   methods: {
     ...mapActions(userStore, ["login", "getWishList"]),

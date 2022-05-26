@@ -82,6 +82,7 @@ export default {
         }
       }
       let likeId = this.houseWishListInfos[index].likeId;
+      console.log(likeId);
       this.deleteWishHouse(likeId);
     },
   },

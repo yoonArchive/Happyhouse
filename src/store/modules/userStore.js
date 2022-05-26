@@ -37,11 +37,13 @@ const userStore = {
     },
     SET_HOUSE_WISH_LIST: (state, data) => {
       console.log(data);
-      for (let i = 0; i < data.length; i++) {
-        state.houseWishList.push([data[i].likeId, data[i].aptCode]);
-      }
+      state.houseWishList = data.map((el) => [el.likeId, el.aptCode]);
+      // for (let i = 0; i < data.length; i++) {
+      //   state.houseWishList.push([data[i].likeId, data[i].aptCode]);
+      // }
     },
     SET_HOUSE_WISH_LIST_INFOS: (state, houseWishListInfos) => {
+      console.log(houseWishListInfos);
       state.houseWishListInfos = houseWishListInfos;
     },
     SET_IS_IN_WISH_LIST: (state) => {
@@ -77,10 +79,10 @@ const userStore = {
       state.clickUserDelete = false;
     },
     CLEAR_HOUSE_WISH_LIST_INFOS: (state) => {
-      state.houseWishListInfos = null;
+      state.houseWishListInfos = [];
     },
     CLEAR_HOUSE_WISH_LIST: (state) => {
-      state.houseWishList = null;
+      state.houseWishList = [];
     },
     CLEAR_IS_IN_WISH_LIST: (state) => {
       state.isInWishList = false;
@@ -106,9 +108,11 @@ const userStore = {
       commit("CLEAR_USER_INFO");
       commit("CLEAR_HOUSE_WISH_LIST_INFOS");
       commit("CLEAR_HOUSE_WISH_LIST");
-      router.push({
-        name: "home",
-      });
+      router
+        .push({
+          name: "home",
+        })
+        .catch(() => {});
     },
     async getDetail({ commit }) {
       let token = {
@@ -179,7 +183,7 @@ const userStore = {
         .get(`user/like`)
         .then(({ data }) => {
           commit("SET_HOUSE_WISH_LIST_INFOS", data);
-          //commit("SET_HOUSE_WISH_LIST", data);
+          commit("SET_HOUSE_WISH_LIST", data);
         })
         .catch((error) => {
           alert("목록을 불러오는 중 문제가 발생하였습니다.");
